@@ -1,6 +1,6 @@
-CREATE SCHEMA `cookbook_group3` ;
+CREATE SCHEMA `cookbook` ;
 
-CREATE TABLE `cookbook_group3`.`user` (
+CREATE TABLE `cookbook`.`user` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(20) NOT NULL,
   `password` VARCHAR(50) NOT NULL,

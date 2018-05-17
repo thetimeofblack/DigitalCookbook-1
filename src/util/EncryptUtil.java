@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
 /**
  * Utilities for password encryption. The main job of this class is to offer MD5 encryption.
  * 

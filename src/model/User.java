@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import util.EncryptUtil;
 
 /**
@@ -28,7 +30,13 @@ public final class User {
 	 * Status of user: 1 for valid 0 for deleted.
 	 */
 	private Integer status;
-
+	
+	/**
+	 * recipes owned by the user.
+	 * */
+	private List<Recipe> recipes;
+	
+	/** ==============Constructors============== */
 	/**
 	 * Default constructor.
 	 */
@@ -47,10 +55,7 @@ public final class User {
 		this.status = status;
 	}
 
-	/**
-	 * Getters and Setters
-	 * 
-	 */
+	/** ==============Getters and setters.============== */
 	public Integer getUserId() {
 		return userId;
 	}
@@ -82,6 +87,20 @@ public final class User {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	
+	/**
+	 * @return the recipes
+	 */
+	public List<Recipe> getRecipes() {
+		return recipes;
+	}
+
+	/**
+	 * @param recipes the recipes to set
+	 */
+	public void setRecipes(List<Recipe> recipes) {
+		this.recipes = recipes;
+	}
 
 	/**
 	 * Override toString method, print basic information of a user.
@@ -89,7 +108,7 @@ public final class User {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", status=" + status
-				+ "]";
+				+ ", recipes=" + recipes + "]";
 	}
 
 }
