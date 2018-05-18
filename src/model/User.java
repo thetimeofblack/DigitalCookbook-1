@@ -34,7 +34,12 @@ public final class User {
 	/**
 	 * recipes owned by the user.
 	 * */
-	private List<Recipe> recipes;
+	private List<Recipe> ownRecipes;
+	
+	/**
+	 * recipes favorite to the user.
+	 * */
+	private List<Recipe> favoriteRecipes;
 	
 	/** ==============Constructors============== */
 	/**
@@ -77,7 +82,7 @@ public final class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = EncryptUtil.MD5(password);
 	}
 
 	public Integer getStatus() {
@@ -87,19 +92,21 @@ public final class User {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
-	/**
-	 * @return the recipes
-	 */
-	public List<Recipe> getRecipes() {
-		return recipes;
+
+	public List<Recipe> getOwnRecipes() {
+		return ownRecipes;
 	}
 
-	/**
-	 * @param recipes the recipes to set
-	 */
-	public void setRecipes(List<Recipe> recipes) {
-		this.recipes = recipes;
+	public void setOwnRecipes(List<Recipe> ownRecipes) {
+		this.ownRecipes = ownRecipes;
+	}
+
+	public List<Recipe> getFavoriteRecipes() {
+		return favoriteRecipes;
+	}
+
+	public void setFavoriteRecipes(List<Recipe> favoriteRecipes) {
+		this.favoriteRecipes = favoriteRecipes;
 	}
 
 	/**
@@ -108,7 +115,7 @@ public final class User {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", status=" + status
-				+ ", recipes=" + recipes + "]";
+				+ ", ownRecipes=" + ownRecipes + ", favoriteRecipes=" + favoriteRecipes + "]";
 	}
 
 }
