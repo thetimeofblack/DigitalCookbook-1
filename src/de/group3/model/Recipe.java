@@ -1,4 +1,4 @@
-package model;
+package de.group3.model;
 
 import java.util.List;
 

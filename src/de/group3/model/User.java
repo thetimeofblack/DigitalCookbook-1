@@ -1,8 +1,8 @@
-package model;
+package de.group3.model;
 
 import java.util.List;
 
-import util.EncryptUtil;
+import de.group3.util.EncryptUtil;
 
 /**
  * The User is mapped with User table in DB.

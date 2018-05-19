@@ -1,4 +1,4 @@
-package model;
+package de.group3.model;
 
 /**
  * The Step is mapped with Step table in DB.

@@ -1,4 +1,4 @@
-package model;
+package de.group3.model;
 
 /**
  * The Ingredient is mapped with Ingredient table in DB.

@@ -1,4 +1,4 @@
-package util;
+package de.group3.util;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
