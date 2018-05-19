@@ -3,9 +3,12 @@ package model;
 /**
  * The Step is mapped with Step table in DB.
  * 
+ * This class implements Comparable<Step> to give specific rules for making comparison
+ * between two steps. Later in the project we just use List.sort() to sort the list.
+ * 
  * @author Eason.Hua on 2018/05/13.
  */
-public final class Step {
+public final class Step implements Comparable<Step>{
 
 	/**
 	 * id of the step
@@ -122,6 +125,15 @@ public final class Step {
 	public String toString() {
 		return "Step [stepID=" + stepID + ", content=" + content + ", stepOrder=" + stepOrder + ", recipeID=" + recipeID
 				+ "]";
+	}
+
+	/**
+	 * Override compareTo method in Comparator, give specific rules for comparing two steps
+	 * according to their step order.
+	 * */
+	@Override
+	public int compareTo(Step otherStep) {
+		return this.getStepOrder().compareTo(otherStep.getStepOrder());
 	}
 
 }
