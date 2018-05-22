@@ -16,7 +16,7 @@ public final class BaseDAO {
 	 * */
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost:3306/cookbook_group3?characterEncoding=utf-8";
-	private static final String USERNAME = "easonhua";
+	private static final String USERNAME = "root";
 	private static final String PASSWORD = "970216Hyc";
 
 	/**
@@ -71,7 +71,7 @@ public final class BaseDAO {
 	 * 
 	 * @throws ClassNotFoundException: when the driver class is not found.
 	 * */
-	public ResultSet executeSQL(String preparedSql, Object[] param) throws ClassNotFoundException {
+	public static ResultSet executeSQL(String preparedSql, Object[] param) throws ClassNotFoundException {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -87,13 +87,8 @@ public final class BaseDAO {
         rs = pstmt.executeQuery(); // execute the SQL expression
         } catch (SQLException e) {
             e.printStackTrace(); // handle SQLException
-        } finally {
-            try {
-            	closeAll(conn, pstmt, null);
-            } catch (SQLException e) {    
-                e.printStackTrace();
-            }
-        }
+        } 
+        
         return rs;
     }
 	
