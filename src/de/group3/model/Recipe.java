@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * The Recipe is mapped with Recipe table in DB.
  * 
- * @author Eason.Hua on 2018/05/13.
+ * @author Yichen.Hua on 2018/05/13.
  */
 public final class Recipe {
 

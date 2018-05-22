@@ -7,7 +7,7 @@ import de.group3.util.EncryptUtil;
 /**
  * The User is mapped with User table in DB.
  * 
- * @author Eason.Hua on 2018/05/13.
+ * @author Yichen.Hua on 2018/05/13.
  */
 public final class User {
 

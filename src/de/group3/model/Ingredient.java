@@ -3,7 +3,7 @@ package de.group3.model;
 /**
  * The Ingredient is mapped with Ingredient table in DB.
  * 
- * @author Eason.Hua on 2018/05/13.
+ * @author Yichen.Hua on 2018/05/13.
  */
 public final class Ingredient {
 

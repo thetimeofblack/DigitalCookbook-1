@@ -1,5 +1,7 @@
+-- Create database schema.
 CREATE SCHEMA `cookbook_group3` ;
 
+-- Create tables.
 CREATE TABLE `cookbook_group3`.`user` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(20) NOT NULL,
@@ -45,5 +47,12 @@ CREATE TABLE `cookbook_group3`.`user-recipe-table` (
   `userID` INT NULL,
   `recipeID` INT NULL)
 COMMENT = 'to store user\'s favorite recipes';
+
+-- Insert informations into the table.
+INSERT INTO `cookbook_group3`.`user` (`username`, `password`, `status`) VALUES ('admin', '8106417f482b5b3a30a433f4a31704bf', '1');
+INSERT INTO `cookbook_group3`.`user` (`username`, `password`, `status`) VALUES ('eason', '8106417f482b5b3a30a433f4a31704bf', '1');
+INSERT INTO `cookbook_group3`.`user` (`username`, `password`, `status`) VALUES ('jungang', '8106417f482b5b3a30a433f4a31704bf', '0');
+INSERT INTO `cookbook_group3`.`user` (`username`, `password`, `status`) VALUES ('jiaxiang', '8106417f482b5b3a30a433f4a31704bf', '1');
+INSERT INTO `cookbook_group3`.`user` (`username`, `password`, `status`) VALUES ('kongyu', '8106417f482b5b3a30a433f4a31704bf', '1');
 
 

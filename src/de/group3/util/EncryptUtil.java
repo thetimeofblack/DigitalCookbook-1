@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Utilities for password encryption. The main job of this class is to offer MD5 encryption.
  * 
- * @author Eason.Hua on 2018/05/08.
+ * @author Yichen.Hua on 2018/05/08.
  * */
 public class EncryptUtil {
 
