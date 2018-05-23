@@ -1,5 +1,6 @@
 package de.group3.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,6 +59,22 @@ public final class Recipe {
 	 * Status of recipe: 1 for valid 0 for deleted.
 	 */
 	private Integer status;
+	
+	/** ==============Operation Functions============== */
+	/**
+	 * Add Ingredients to the Recipe.
+	 * */
+	public void addIngredient(Ingredient newIngredient) {
+		this.ingredients.add(newIngredient);
+	}
+	
+	/**
+	 * Add Preparation Steps to the Recipe.
+	 * */
+	public void addPreparationStep(String stepContent) {
+		Step step = new Step(stepContent);
+		this.steps.add(step);
+	}
 
 	/** ==============Constructors============== */
 	/**
@@ -65,6 +82,20 @@ public final class Recipe {
 	 */
 	public Recipe() {
 		super();
+	}
+	
+	/**
+	 * constructor with attributes except recipeID and status -> for insertions;
+	 */
+	public Recipe(String recipeName, String description, Integer preparationTime, Integer cookingTime) {
+		super();
+		this.recipeName = recipeName;
+		this.description = description;
+		this.preparationTime = preparationTime;
+		this.cookingTime = cookingTime;
+		this.status = 1;
+		this.steps = new ArrayList<>();
+		this.ingredients = new ArrayList<>();
 	}
 
 	/**
@@ -252,7 +283,7 @@ public final class Recipe {
 	public String toString() {
 		return "Recipe [recipeID=" + recipeID + ", recipeName=" + recipeName + ", description=" + description
 				+ ", preparationTime=" + preparationTime + ", cookingTime=" + cookingTime + ", imagePath=" + imagePath
-				+ ", owner=" + owner + ", steps=" + steps + ", ingredients=" + ingredients + ", status=" + status + "]";
+				+ ", owner=" + owner  + "\n, steps=" + steps + ",\n ingredients=" + ingredients + ", status=" + status + "]";
 	}
 
 }

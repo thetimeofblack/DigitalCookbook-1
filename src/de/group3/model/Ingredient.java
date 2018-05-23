@@ -10,10 +10,14 @@ public final class Ingredient {
 	/**
 	 * static strings for units -> kilogram, gram, liter, ml
 	 */
-	public static final String KILOGRAM = "KG";
-	public static final String GRAM = "G";
+	public static final String KILOGRAM = "kg";
+	public static final String GRAM = "g";
 	public static final String LITER = "L";
-	public static final String MILLIONLITTER = "ML";
+	public static final String MILLIONLITTER = "ml";
+	public static final String TABLE_SPOON = "tablespoon";
+	public static final String PIECES = "pieces";
+	public static final String CLOVES = "cloves";
+	public static final String CUPS = "cups";
 
 	/**
 	 * id of the ingredient.

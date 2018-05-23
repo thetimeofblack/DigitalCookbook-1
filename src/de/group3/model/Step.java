@@ -38,6 +38,11 @@ public final class Step implements Comparable<Step>{
 		super();
 	}
 
+	public Step(String content) {
+		super();
+		this.content = content;
+	}
+
 	/**
 	 * constructor with attributes except stepID;
 	 */
