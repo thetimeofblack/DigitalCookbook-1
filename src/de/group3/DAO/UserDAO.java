@@ -11,9 +11,9 @@ import de.group3.model.User;
  */
 public final class UserDAO {
 
-	private Connection conn = null;
-	private PreparedStatement pstmt = null;
-	private ResultSet rs = null;
+	private static Connection conn = null;
+	private static PreparedStatement pstmt = null;
+	private static ResultSet rs = null;
 
 	/**
 	 * Validate the input credentials and return user object if exists.
@@ -23,26 +23,28 @@ public final class UserDAO {
 	 * 
 	 * @return User: entity object if user exists.
 	 * */
-	public User validatePassword(String username, String password) {
+	public static User validatePassword(String username, String password) {
 		User user = null;
 		try {
 			String preparedSql = "SELECT * from user where username = ? and password = ?";
 			Object[] parameters = { username, password };
-			this.rs = BaseDAO.executeSQL(preparedSql, parameters);
-			if (this.rs != null) {
-				while (this.rs.next()) {
+			UserDAO.rs = BaseDAO.executeSQL(preparedSql, parameters);
+			if (UserDAO.rs != null) {
+				while (UserDAO.rs.next()) {
 					user = new User();
-					user.setUserId((Integer.getInteger(this.rs.getString("user_id"))));
-					user.setUsername(this.rs.getString("username"));
-					user.setPassword(this.rs.getString("password"));
-					user.setUserId(Integer.getInteger(this.rs.getString("status")));
+					user.setUserId((Integer.getInteger(UserDAO.rs.getString("user_id"))));
+					user.setUsername(UserDAO.rs.getString("username"));
+					user.setPassword(UserDAO.rs.getString("password"));
+					user.setUserId(Integer.getInteger(UserDAO.rs.getString("status")));
 				}
 			}
+			//TODO also we have to fill its favorite recipes and ownRecipes Lists to make a full user.
+			// which will involve code in RecipeDAO.
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {	//finally close and release resources.
             try {
-            	BaseDAO.closeAll(conn, pstmt, null);
+            	BaseDAO.closeAll(UserDAO.conn, UserDAO.pstmt, UserDAO.rs);
             } catch (SQLException e) {    
                 e.printStackTrace();
             }
@@ -54,8 +56,7 @@ public final class UserDAO {
 	 * Unit test
 	 * */
 	public static void main(String[] args) {
-		UserDAO userDAO = new UserDAO();
-		User user = userDAO.validatePassword("admin", "8106417f482b5b3a30a433f4a31704bf");
+		User user = UserDAO.validatePassword("admin", "8106417f482b5b3a30a433f4a31704bf");
 		System.out.println(user);
 	}
 

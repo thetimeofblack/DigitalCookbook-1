@@ -17,7 +17,7 @@ public final class BaseDAO {
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost:3306/cookbook_group3?characterEncoding=utf-8";
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "970216Hyc";
+	private static final String PASSWORD = "root";
 
 	/**
 	 * Load the driver for database connection at the beginning of the system.
