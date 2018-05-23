@@ -30,17 +30,17 @@ public final class User {
 	 * Status of user: 1 for valid 0 for deleted.
 	 */
 	private Integer status;
-	
+
 	/**
 	 * recipes owned by the user.
-	 * */
+	 */
 	private List<Recipe> ownRecipes;
-	
+
 	/**
 	 * recipes favorite to the user.
-	 * */
+	 */
 	private List<Recipe> favoriteRecipes;
-	
+
 	/** ==============Constructors============== */
 	/**
 	 * Default constructor.

@@ -7,12 +7,10 @@ import java.util.List;
  * 
  * */
 public class CookBook {
-	
+
 	private List<Recipe> recipes;
-	
+
 	private String name;
-	
-	
 
 	public CookBook() {
 		super();
@@ -22,7 +20,7 @@ public class CookBook {
 		this.name = name;
 		this.recipes = new ArrayList<>();
 	}
-	
+
 	public CookBook(List<Recipe> recipes, String name) {
 		super();
 		this.recipes = recipes;
@@ -31,17 +29,17 @@ public class CookBook {
 
 	public Recipe getRecipe(String name) {
 		Recipe recipe = null;
-		
-		for(Recipe index_recipe : this.recipes) {
-			if(name.equals(index_recipe.getRecipeName())) {
+
+		for (Recipe index_recipe : this.recipes) {
+			if (name.equals(index_recipe.getRecipeName())) {
 				recipe = index_recipe;
 				break;
 			}
 		}
-		
+
 		return recipe;
 	}
-	
+
 	public void add(Recipe recipe) {
 		this.recipes.add(recipe);
 	}
@@ -54,7 +52,8 @@ public class CookBook {
 	}
 
 	/**
-	 * @param recipes the recipes to set
+	 * @param recipes
+	 *            the recipes to set
 	 */
 	public void setRecipes(List<Recipe> recipes) {
 		this.recipes = recipes;
@@ -68,7 +67,8 @@ public class CookBook {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
