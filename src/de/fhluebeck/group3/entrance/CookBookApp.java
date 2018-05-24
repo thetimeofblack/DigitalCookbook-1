@@ -1,8 +1,8 @@
-package de.group3.entrance;
+package de.fhluebeck.group3.entrance;
 
-import de.group3.model.CookBook;
-import de.group3.model.Ingredient;
-import de.group3.model.Recipe;
+import de.fhluebeck.group3.model.CookBook;
+import de.fhluebeck.group3.model.Ingredient;
+import de.fhluebeck.group3.model.Recipe;
 
 /**
  * A class for the program entry point and some test recipes.

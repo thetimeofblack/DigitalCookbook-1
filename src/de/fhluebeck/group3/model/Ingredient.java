@@ -1,4 +1,4 @@
-package de.group3.model;
+package de.fhluebeck.group3.model;
 
 /**
  * The Ingredient is mapped with Ingredient table in DB.

@@ -1,7 +1,8 @@
-package de.group3.DAO;
+package de.fhluebeck.group3.DAO;
 
 import java.sql.*;
-import de.group3.model.User;
+
+import de.fhluebeck.group3.model.User;
 
 /**
  * UserDAO is major responsible for Data Access in User table, functions like

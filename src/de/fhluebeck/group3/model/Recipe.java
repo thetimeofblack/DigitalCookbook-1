@@ -1,4 +1,4 @@
-package de.group3.model;
+package de.fhluebeck.group3.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package de.group3.DAO;
+package de.fhluebeck.group3.DAO;
 
 import java.sql.*;
 
