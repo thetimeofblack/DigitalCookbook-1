@@ -6,7 +6,7 @@ import de.fhluebeck.group3.model.User;
 
 /**
  * UserDAO is major responsible for Data Access in User table, functions like
- * validate user, findUserById is provided.
+ * validate user, findUserById are provided.
  * 
  * @author Yichen.Hua on 2018/05/22.
  */
@@ -81,8 +81,8 @@ public final class UserDAO {
 	 */
 	public static void main(String[] args) {
 
-		 User user = UserDAO.validatePassword("admin","8106417f482b5b3a30a433f4a31704bf");
-		 System.out.println(user);	//success
+//		 User user = UserDAO.validatePassword("admin","8106417f482b5b3a30a433f4a31704bf");
+//		 System.out.println(user);	//success
 
 //		deleteUser(2); //success
 	}

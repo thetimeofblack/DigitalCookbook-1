@@ -43,6 +43,11 @@ public final class Ingredient {
 	 * unit of quantity.
 	 */
 	private String unit;
+	
+	/**
+	 * Status of user: 1 for valid 0 for deleted.
+	 */
+	private Integer status;
 
 	/**
 	 * comments of recipe
@@ -78,6 +83,7 @@ public final class Ingredient {
 		this.recipeID = recipeID;
 		this.unit = unit;
 		this.comment = comment;
+		this.status = 1;
 	}
 
 	/** ==============Getters and setters.============== */
@@ -170,6 +176,21 @@ public final class Ingredient {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+	
+	/**
+	 * @return the status
+	 */
+	public Integer getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status
+	 *            the status to set
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	/**
 	 * Override toString method, print basic information of an ingredient.
@@ -177,7 +198,8 @@ public final class Ingredient {
 	@Override
 	public String toString() {
 		return "Ingredient [ingredientID=" + ingredientID + ", ingredientName=" + ingredientName + ", quantity="
-				+ quantity + ", recipeID=" + recipeID + ", unit=" + unit + ", comment=" + comment + "]";
+				+ quantity + ", recipeID=" + recipeID + ", unit=" + unit + ", status=" + status + ", comment=" + comment
+				+ "]";
 	}
 
 }

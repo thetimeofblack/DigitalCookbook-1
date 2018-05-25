@@ -25,6 +25,11 @@ public final class Step implements Comparable<Step> {
 	 * order of a step in an recipe, used for find the proper order.
 	 */
 	private Integer stepOrder;
+	
+	/**
+	 * Status of user: 1 for valid 0 for deleted.
+	 */
+	private Integer status;
 
 	/**
 	 * recipe id that this step belongs to.
@@ -61,6 +66,7 @@ public final class Step implements Comparable<Step> {
 		this.content = content;
 		this.stepOrder = stepOrder;
 		this.recipeID = recipeID;
+		this.status = 1;
 	}
 
 	/** ==============Getters and setters.============== */
@@ -123,14 +129,29 @@ public final class Step implements Comparable<Step> {
 	public void setStepOrder(Integer stepOrder) {
 		this.stepOrder = stepOrder;
 	}
+	
+	/**
+	 * @return the status
+	 */
+	public Integer getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status
+	 *            the status to set
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	/**
 	 * Override toString method, print basic information of a step.
 	 */
 	@Override
 	public String toString() {
-		return "Step [stepID=" + stepID + ", content=" + content + ", stepOrder=" + stepOrder + ", recipeID=" + recipeID
-				+ "]";
+		return "Step [stepID=" + stepID + ", content=" + content + ", stepOrder=" + stepOrder + ", status=" + status
+				+ ", recipeID=" + recipeID + "]";
 	}
 
 	/**
@@ -141,5 +162,7 @@ public final class Step implements Comparable<Step> {
 	public int compareTo(Step otherStep) {
 		return this.getStepOrder().compareTo(otherStep.getStepOrder());
 	}
+
+
 
 }
