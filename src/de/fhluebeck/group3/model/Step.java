@@ -163,6 +163,4 @@ public final class Step implements Comparable<Step> {
 		return this.getStepOrder().compareTo(otherStep.getStepOrder());
 	}
 
-
-
 }

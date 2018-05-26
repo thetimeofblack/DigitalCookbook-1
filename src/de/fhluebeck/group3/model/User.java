@@ -48,17 +48,31 @@ public final class User {
 	public User() {
 		super();
 	}
+	
+	/**
+	 * constructor with necessary(create) attributes, with password automatically encrypted.
+	 */
+	public User(String username, String password) {
+		super();
+		this.username = username;
+		this.password = EncryptUtil.MD5(password);
+		this.status = 1;
+	}
 
 	/**
 	 * constructor with all attributes, with password automatically encrypted.
 	 */
-	public User(Integer userId, String username, String password, Integer status) {
+	public User(Integer userId, String username, String password, Integer status, List<Recipe> ownRecipes,
+			List<Recipe> favoriteRecipes) {
 		super();
 		this.userId = userId;
 		this.username = username;
-		this.password = EncryptUtil.MD5(password);
+		this.password = password;
 		this.status = status;
+		this.ownRecipes = ownRecipes;
+		this.favoriteRecipes = favoriteRecipes;
 	}
+	
 
 	/** ==============Getters and setters.============== */
 	public Integer getUserId() {
