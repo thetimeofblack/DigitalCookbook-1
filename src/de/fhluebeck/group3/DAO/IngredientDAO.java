@@ -4,7 +4,7 @@ package de.fhluebeck.group3.DAO;
  * IngredientDAO is major responsible for Data Access in Ingredient table, functions like
  * addRecipe, getRecipeByName, updateRecipe are provided.
  * 
- * Wang Jungang
+ * @author Wang Jungang on 2018/5/27.
  */
 public class IngredientDAO {
 
