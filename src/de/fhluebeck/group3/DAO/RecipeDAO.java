@@ -10,7 +10,7 @@ import de.fhluebeck.group3.model.User;
  * RecipeDAO is major responsible for Data Access in Recipe table, functions
  * like addRecipe, getRecipeByName, updateRecipe are provided.
  * 
- * shanjiaxiang
+ * @author Shan Jiaxiang on 2018/5/27.
  */
 public class RecipeDAO {
 	

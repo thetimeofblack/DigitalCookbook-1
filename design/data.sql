@@ -23,6 +23,7 @@ CREATE SCHEMA `cookbook_group3` ;
 -- Table structure for table `ingredient`
 --
 
+USE `cookbook_group3` ;
 DROP TABLE IF EXISTS `ingredient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -214,7 +215,7 @@ CREATE TABLE `user-recipe-table` (
   `userID` int(11) DEFAULT NULL,
   `recipeID` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='to store user''s favorite recipes';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='to store users favorite recipes';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
