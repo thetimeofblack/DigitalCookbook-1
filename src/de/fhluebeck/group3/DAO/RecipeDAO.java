@@ -12,7 +12,7 @@ import de.fhluebeck.group3.model.User;
  * 
  * @author Shan Jiaxiang on 2018/5/27.
  */
-public class RecipeDAO {
+public final class RecipeDAO {
 	
 	/**
 	 * Search for the recipes that owned by specific user.
@@ -79,7 +79,7 @@ public class RecipeDAO {
 	}
 	
 	/**
-	 * delete the recipe according to its ID, here we do not have to delete ingredients and steps
+	 * Delete the recipe according to its ID, here we do not have to delete ingredients and steps
 	 * owned by the recipe.  
 	 * 
 	 * @param recipeIds:
@@ -96,7 +96,7 @@ public class RecipeDAO {
 	}
 	
 	/**
-	 * update the recipe according to its ID, here we do have to do "patch-update" which means
+	 * Update the recipe according to its ID, here we do have to do "patch-update" which means
 	 * while update the information of recipe, we call the function from ingredientDAO and stepDAO
 	 * to update corresponding ingredients and steps.
 	 * 

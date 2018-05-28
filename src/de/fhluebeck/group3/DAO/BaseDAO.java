@@ -65,7 +65,7 @@ public final class BaseDAO {
 			rs.close();
 		}
 		if (stmt != null && !stmt.isClosed()) {
-			stmt.close();
+			stmt.close(); 
 		}
 		if (conn != null && !conn.isClosed()) {
 			conn.close();
