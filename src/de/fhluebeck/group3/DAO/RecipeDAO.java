@@ -13,7 +13,7 @@ import de.fhluebeck.group3.model.User;
  * @author Shan Jiaxiang on 2018/5/27.
  */
 public final class RecipeDAO {
-	
+
 	/**
 	 * Search for the recipes that owned by specific user.
 	 * 
@@ -77,10 +77,10 @@ public final class RecipeDAO {
 
 		return recipes;
 	}
-	
+
 	/**
-	 * Delete the recipe according to its ID, here we do not have to delete ingredients and steps
-	 * owned by the recipe.  
+	 * Delete the recipe according to its ID, here we do not have to delete
+	 * ingredients and steps owned by the recipe.
 	 * 
 	 * @param recipeIds:
 	 *            recipe ID which the user wants to delete from DB.
@@ -90,15 +90,14 @@ public final class RecipeDAO {
 	 */
 	public static boolean deleteRecipe(Integer recipeID) {
 		boolean flag = false;
-		
-		
+
 		return flag;
 	}
-	
+
 	/**
-	 * Update the recipe according to its ID, here we do have to do "patch-update" which means
-	 * while update the information of recipe, we call the function from ingredientDAO and stepDAO
-	 * to update corresponding ingredients and steps.
+	 * Update the recipe according to its ID, here we do have to do "patch-update"
+	 * which means while update the information of recipe, we call the function from
+	 * ingredientDAO and stepDAO to update corresponding ingredients and steps.
 	 * 
 	 * @param recipe:
 	 *            new version of recipe which we want to update in the DB.
@@ -108,15 +107,14 @@ public final class RecipeDAO {
 	 */
 	public static boolean updateRecipe(Recipe recipe) {
 		boolean flag = false;
-		
-		
+
 		return flag;
 	}
-	
+
 	/**
 	 * Add the recipe to the DB, here we do have to do "patch-insertion" which means
-	 * while insert the basic information of recipe, we call the function from ingredientDAO and stepDAO
-	 * to insert corresponding ingredients and steps.
+	 * while insert the basic information of recipe, we call the function from
+	 * ingredientDAO and stepDAO to insert corresponding ingredients and steps.
 	 * 
 	 * @param recipe:
 	 *            new version of recipe which we want to insert into the DB.
@@ -126,20 +124,20 @@ public final class RecipeDAO {
 	 */
 	public static boolean addRecipe(Recipe recipe) {
 		boolean flag = false;
-		
-		
+
 		return flag;
 	}
-	
+
 	/**
 	 * Search for the recipes which the current user likes.
 	 * 
-	 * @param user:	specific user.
+	 * @param user:
+	 *            specific user.
 	 * 
 	 * @return recipes: a list of recipes that the user favorites.
 	 * 
 	 */
-	public static List<Recipe> getFavoritedRecipes(User user){
+	public static List<Recipe> getFavoritedRecipes(User user) {
 		List<Recipe> recipes = new ArrayList<Recipe>();
 
 		return recipes;

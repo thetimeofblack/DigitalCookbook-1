@@ -11,16 +11,16 @@ import java.sql.*;
  * @author Yichen.Hua on 2018/05/22.
  */
 public final class BaseDAO {
-	
+
 	private static Connection conn = null;
 	private static PreparedStatement pstmt = null;
 	private static ResultSet rs = null;
-	
+
 	/**
 	 * Basic attributes for database.
 	 */
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	private static final String URL = "jdbc:mysql://localhost:3306/cookbook_group3?characterEncoding=utf-8";
+	private static final String URL = "jdbc:mysql://localhost:3306/cookbook_group3?characterEncoding=utf-8&useSSL=false";
 	private static final String USERNAME = "root";
 	private static final String PASSWORD = "root";
 
@@ -65,7 +65,7 @@ public final class BaseDAO {
 			rs.close();
 		}
 		if (stmt != null && !stmt.isClosed()) {
-			stmt.close(); 
+			stmt.close();
 		}
 		if (conn != null && !conn.isClosed()) {
 			conn.close();
@@ -74,8 +74,8 @@ public final class BaseDAO {
 
 	/**
 	 * Fill in the wild-cards with attribute in the Object[] and Execute SQL query,
-	 * returns the result set.
-	 * Note that you do have to close the resources by calling our closeAll function.
+	 * returns the result set. Note that you do have to close the resources by
+	 * calling our closeAll function.
 	 * 
 	 * @param preparedSql:
 	 *            raw SQL statements with wild-cards.
@@ -100,14 +100,14 @@ public final class BaseDAO {
 			rs = pstmt.executeQuery(); // execute the SQL expression
 		} catch (SQLException e) {
 			e.printStackTrace(); // handle SQLException
-		} 
+		}
 		return rs;
 	}
 
 	/**
 	 * Fill in the wild-cards with attribute in the Object[] and Execute SQL query,
-	 * returns a boolean attribute. 
-	 * Note that you do not have to close the resources since they are automatically closed by us.
+	 * returns a boolean attribute. Note that you do not have to close the resources
+	 * since they are automatically closed by us.
 	 * 
 	 * @param preparedSql:
 	 *            raw SQL statements with wild-cards.
@@ -132,7 +132,8 @@ public final class BaseDAO {
 					pstmt.setObject(i + 1, param[i]); // set parameters for prepared statement
 				}
 			}
-			flag = pstmt.execute(); // execute the SQL expression
+			pstmt.execute(); // execute the SQL expression
+			flag = true;
 		} catch (SQLException e) {
 			flag = false;
 			e.printStackTrace(); // handle SQLException
@@ -155,7 +156,8 @@ public final class BaseDAO {
 	}
 
 	/**
-	 * @param conn the conn to set
+	 * @param conn
+	 *            the conn to set
 	 */
 	public static void setConn(Connection conn) {
 		BaseDAO.conn = conn;
@@ -169,7 +171,8 @@ public final class BaseDAO {
 	}
 
 	/**
-	 * @param pstmt the pstmt to set
+	 * @param pstmt
+	 *            the pstmt to set
 	 */
 	public static void setPstmt(PreparedStatement pstmt) {
 		BaseDAO.pstmt = pstmt;
@@ -183,7 +186,8 @@ public final class BaseDAO {
 	}
 
 	/**
-	 * @param rs the rs to set
+	 * @param rs
+	 *            the rs to set
 	 */
 	public static void setRs(ResultSet rs) {
 		BaseDAO.rs = rs;

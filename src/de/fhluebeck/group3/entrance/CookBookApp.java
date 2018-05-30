@@ -3,6 +3,8 @@ package de.fhluebeck.group3.entrance;
 import de.fhluebeck.group3.model.CookBook;
 import de.fhluebeck.group3.model.Ingredient;
 import de.fhluebeck.group3.model.Recipe;
+import de.fhluebeck.group3.view.Template;
+import javafx.application.Application;
 
 /**
  * A class for the program entry point and some test recipes.
@@ -12,47 +14,90 @@ import de.fhluebeck.group3.model.Recipe;
 public class CookBookApp {
 
 	/**
-	 * Creates a Gong Bao Jiding recipe.
+	 * Program entry point.
 	 * 
-	 * @return the new recipe
+	 * @param args
+	 *            command line arguments; not used.
 	 */
-	private static Recipe createGongBaoJiding() {
-		Recipe recipe = new Recipe("Gong Bao Jiding", "Sichuan Dish", 4, 5, 4);
+	public static void main(String[] args) {
 
-		recipe.addIngredient(new Ingredient("cornstarch", 1.0, 1, Ingredient.TABLE_SPOON, "comment"));
-		recipe.addIngredient(new Ingredient("soy sauce", 4.0, 1, Ingredient.TABLE_SPOON, "comment"));
-		recipe.addIngredient(new Ingredient("chicken breast", 0.5, 1, Ingredient.KILOGRAM, "comment"));
-		recipe.addIngredient(new Ingredient("Shaoxin rice wine", 3.0, 1, "tablespoon", "comment"));
-		recipe.addIngredient(new Ingredient("sugar", 2.0, 1, "tablespoon", "comment"));
-		recipe.addIngredient(new Ingredient("chicken stock", 3.0, 1, Ingredient.TABLE_SPOON, "comment"));
-		recipe.addIngredient(new Ingredient("Chiangang vinegar", 4.0, 1, Ingredient.TABLE_SPOON, "comment"));
-		recipe.addIngredient(new Ingredient("sesame oil", 4.0, 1, Ingredient.TABLE_SPOON, "comment"));
-		recipe.addIngredient(new Ingredient("dark soy sauce", 2.0, 1, Ingredient.TABLE_SPOON, "comment"));
-		recipe.addIngredient(new Ingredient("peanut oil", 3.0, 1, Ingredient.TABLE_SPOON, "comment"));
-		recipe.addIngredient(new Ingredient("dried red chilis", 12.0, 1, Ingredient.PIECES, "comment"));
-		recipe.addIngredient(new Ingredient("scallions", 5.0, 1, Ingredient.PIECES, "comment"));
-		recipe.addIngredient(new Ingredient("garlic", 1.0, 1, Ingredient.CLOVES, "comment"));
-		recipe.addIngredient(new Ingredient("ginger", 0.5, 1, Ingredient.PIECES, "comment"));
-		recipe.addIngredient(new Ingredient("peanuts", 0.5, 1, Ingredient.CUPS, "comment"));
+		Application.launch(Template.class, args);
 
-		recipe.addPreparationStep("Mix together cornstarch and 1 tbsp. of the soy sauce in a medium bowl.");
-		recipe.addPreparationStep("Add chicken, toss well, and set aside to marinate for 30 minutes.");
-		recipe.addPreparationStep(
-				"Meanwhile, mix together the remaining 3 tbsp. soy sauce, rice wine, sugar, stock, vinegar, sesame oil, and dark soy sauce.");
-		recipe.addPreparationStep("Set aside.");
-		recipe.addPreparationStep(
-				"Heat peanut oil in a wok or large nonstick skillet over high heat until just beginning to smoke.");
-		recipe.addPreparationStep(
-				"Add chilis, half the scallions, garlic, ginger, and chicken and stir-fry until chicken is golden, 3-5 minutes.");
-		recipe.addPreparationStep("Add soy sauce mixture and stir-fry until sauce thickens, about 2 minutes.");
-		recipe.addPreparationStep("Stir in peanuts.");
-		recipe.addPreparationStep("Garnish with remaining scallions.");
-
-		recipe.setPreparationTime(30);
-		recipe.setCookingTime(10);
-
-		return recipe;
+		// CookBook cb = new CookBook("Chinese Cuisine");
+		//
+		// cb.add(createGongBaoJiding());
+		// // cb.add(createHongShaoRou());
+		// // cb.add(createSuanLaFen());
+		//
+		// Recipe recipe = cb.getRecipe("Gong Bao Jiding");
+		// if (recipe != null) {
+		// System.out.println(recipe);
+		// }
 	}
+
+	// /**
+	// * Creates a Gong Bao Jiding recipe.
+	// *
+	// * @return the new recipe
+	// */
+	// private static Recipe createGongBaoJiding() {
+	// Recipe recipe = new Recipe("Gong Bao Jiding", "Sichuan Dish", 4, 5, 4);
+	//
+	// recipe.addIngredient(new Ingredient("cornstarch", 1.0, 1,
+	// Ingredient.TABLE_SPOON, "comment"));
+	// recipe.addIngredient(new Ingredient("soy sauce", 4.0, 1,
+	// Ingredient.TABLE_SPOON, "comment"));
+	// recipe.addIngredient(new Ingredient("chicken breast", 0.5, 1,
+	// Ingredient.KILOGRAM, "comment"));
+	// recipe.addIngredient(new Ingredient("Shaoxin rice wine", 3.0, 1,
+	// "tablespoon", "comment"));
+	// recipe.addIngredient(new Ingredient("sugar", 2.0, 1, "tablespoon",
+	// "comment"));
+	// recipe.addIngredient(new Ingredient("chicken stock", 3.0, 1,
+	// Ingredient.TABLE_SPOON, "comment"));
+	// recipe.addIngredient(new Ingredient("Chiangang vinegar", 4.0, 1,
+	// Ingredient.TABLE_SPOON, "comment"));
+	// recipe.addIngredient(new Ingredient("sesame oil", 4.0, 1,
+	// Ingredient.TABLE_SPOON, "comment"));
+	// recipe.addIngredient(new Ingredient("dark soy sauce", 2.0, 1,
+	// Ingredient.TABLE_SPOON, "comment"));
+	// recipe.addIngredient(new Ingredient("peanut oil", 3.0, 1,
+	// Ingredient.TABLE_SPOON, "comment"));
+	// recipe.addIngredient(new Ingredient("dried red chilis", 12.0, 1,
+	// Ingredient.PIECES, "comment"));
+	// recipe.addIngredient(new Ingredient("scallions", 5.0, 1, Ingredient.PIECES,
+	// "comment"));
+	// recipe.addIngredient(new Ingredient("garlic", 1.0, 1, Ingredient.CLOVES,
+	// "comment"));
+	// recipe.addIngredient(new Ingredient("ginger", 0.5, 1, Ingredient.PIECES,
+	// "comment"));
+	// recipe.addIngredient(new Ingredient("peanuts", 0.5, 1, Ingredient.CUPS,
+	// "comment"));
+	//
+	// recipe.addPreparationStep("Mix together cornstarch and 1 tbsp. of the soy
+	// sauce in a medium bowl.");
+	// recipe.addPreparationStep("Add chicken, toss well, and set aside to marinate
+	// for 30 minutes.");
+	// recipe.addPreparationStep(
+	// "Meanwhile, mix together the remaining 3 tbsp. soy sauce, rice wine, sugar,
+	// stock, vinegar, sesame oil, and dark soy sauce.");
+	// recipe.addPreparationStep("Set aside.");
+	// recipe.addPreparationStep(
+	// "Heat peanut oil in a wok or large nonstick skillet over high heat until just
+	// beginning to smoke.");
+	// recipe.addPreparationStep(
+	// "Add chilis, half the scallions, garlic, ginger, and chicken and stir-fry
+	// until chicken is golden, 3-5 minutes.");
+	// recipe.addPreparationStep("Add soy sauce mixture and stir-fry until sauce
+	// thickens, about 2 minutes.");
+	// recipe.addPreparationStep("Stir in peanuts.");
+	// recipe.addPreparationStep("Garnish with remaining scallions.");
+	//
+	// recipe.setPreparationTime(30);
+	// recipe.setCookingTime(10);
+	//
+	// return recipe;
+	// }
 
 	// /**
 	// * Creates a Hong Shao Rou recipe.
@@ -151,22 +196,4 @@ public class CookBookApp {
 	// return recipe;
 	// }
 
-	/**
-	 * Program entry point.
-	 * 
-	 * @param args
-	 *            command line arguments; not used.
-	 */
-	public static void main(String[] args) {
-		CookBook cb = new CookBook("Chinese Cuisine");
-
-		cb.add(createGongBaoJiding());
-		// cb.add(createHongShaoRou());
-		// cb.add(createSuanLaFen());
-
-		Recipe recipe = cb.getRecipe("Gong Bao Jiding");
-		if (recipe != null) {
-			System.out.println(recipe);
-		}
-	}
 }
