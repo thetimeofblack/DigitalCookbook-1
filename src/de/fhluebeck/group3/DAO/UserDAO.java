@@ -33,8 +33,8 @@ public final class UserDAO {
 		ResultSet resultSet = null;
 		try {
 			password = EncryptUtil.MD5(password);
-			String preparedSql = "SELECT * FROM user WHERE username = ? and password = ?";
-			Object[] parameters = { username, password };
+			String preparedSql = "SELECT * FROM user WHERE username = ? AND password = ? AND status = 1";
+			Object[] parameters = { username, password }; 
 			resultSet = BaseDAO.executeQuery(preparedSql, parameters);
 			if (resultSet != null) {
 				while (resultSet.next()) {
@@ -45,9 +45,13 @@ public final class UserDAO {
 					user.setPassword(resultSet.getString("password"));
 					user.setStatus(Integer.valueOf(resultSet.getString("status")));
 				}
+				// also we have to fill its favorite recipes and ownRecipes Lists to make a full user.
+				user.setOwnRecipes(RecipeDAO.getRecipesByUser(user));
+				user.setFavoriteRecipes(RecipeDAO.getFavoritedRecipes(user));
+			}else {
+				System.out.println("sorry, user not found");
 			}
-			// TODO also we have to fill its favorite recipes and ownRecipes Lists to make a full user.
-			// which will involve code in RecipeDAO.
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally { // finally close and release resources.

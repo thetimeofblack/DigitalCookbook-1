@@ -130,5 +130,19 @@ public final class RecipeDAO {
 		
 		return flag;
 	}
+	
+	/**
+	 * Search for the recipes which the current user likes.
+	 * 
+	 * @param user:	specific user.
+	 * 
+	 * @return recipes: a list of recipes that the user favorites.
+	 * 
+	 */
+	public static List<Recipe> getFavoritedRecipes(User user){
+		List<Recipe> recipes = new ArrayList<Recipe>();
+
+		return recipes;
+	}
 
 }
