@@ -34,7 +34,7 @@ import javafx.util.Pair;
  * 
  * @author Eason.Hua on 2018.05.30.
  */
-public class TemplateController implements Initializable {
+public final class TemplateController implements Initializable {
 
 	@FXML
 	private TextField username_field;
