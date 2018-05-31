@@ -69,8 +69,12 @@ public final class TemplateController implements Initializable {
 				this.hideErrorInformation();
 				Template.setCurrentUser(user);
 
-				// TODO shift the stage to the main Scene.
-
+				//shift the stage to the main Scene.
+				try {
+					Template.replaceSceneContent("./MainRecipeFrame.fxml");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			} else { // validation fails
 				this.setErrorInformation(); // set error information to notice user.
 			}

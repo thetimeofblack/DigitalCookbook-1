@@ -1,13 +1,12 @@
 package de.fhluebeck.group3.view;
 
-import java.io.IOException;
 
 import de.fhluebeck.group3.model.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
@@ -19,10 +18,13 @@ public class Template extends Application {
 
 	private static Stage primaryStage;
 
-	private static GridPane rootLayout;
+//	private static GridPane rootLayout;
 
-	private static AnchorPane layOutAP;
+//	private static AnchorPane layOutAP;
 
+	/**
+	 * Current login user, when the user login, we load all the relevant informations into the user.
+	 * */
 	private static User currentUser;
 
 	@Override
@@ -30,26 +32,28 @@ public class Template extends Application {
 
 		Template.primaryStage = stage;
 
-		initRootLayout();
+		initLayout();
 	}
 
 	/**
 	 * Initializes the root layout.
 	 */
-	private void initRootLayout() {
+	private void initLayout() {
 		try {
-			// Load root layout from FXML file.
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Template.class.getResource("./Template.fxml"));
-			layOutAP = (AnchorPane) loader.load();
-
-			// Show the scene containing the Root Layout(set as the layout).
-			Scene scene = new Scene(layOutAP);
-
-			Template.primaryStage.setScene(scene);
+//			// Load root layout from FXML file.
+//			FXMLLoader loader = new FXMLLoader();
+//			loader.setLocation(Template.class.getResource("./Template.fxml"));
+//			layOutAP = (AnchorPane) loader.load();
+//
+//			// Show the scene containing the Root Layout (set as the layout).
+//			Scene scene = new Scene(layOutAP);
+//
+//			Template.primaryStage.setScene(scene);
+//			replaceSceneContent("./Template.fxml");
+			replaceSceneContent("./MainRecipeFrame.fxml");
 			Template.primaryStage.show();
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -64,6 +68,26 @@ public class Template extends Application {
 
 	public static Stage getPrimaryStage() {
 		return primaryStage;
+	}
+	
+	/**
+	 * The common function for scene change in the root stage. This is quite useful and effieient 
+	 * when we want to change the scene.
+	 * 
+	 * @author huayichen
+	 * */
+	public static Parent replaceSceneContent(String fxml) throws Exception{
+		Parent page = (Parent) FXMLLoader.load(Template.class.getResource(fxml), null, new JavaFXBuilderFactory());
+        Scene scene = primaryStage.getScene();
+        if (scene == null) {	//at the first time, create a new scene.
+            scene = new Scene(page);
+//            scene.getStylesheets().add(Template.class.getResource("demo.css").toExternalForm());
+            primaryStage.setScene(scene);
+        } else {
+        	primaryStage.getScene().setRoot(page);
+        }
+        primaryStage.sizeToScene();
+        return page;
 	}
 
 }
