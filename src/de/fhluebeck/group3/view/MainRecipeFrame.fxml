@@ -19,9 +19,9 @@
 	<children>
 		<VBox prefHeight="831.0" prefWidth="60.0">
 			<children>
-            <Button fx:id="homeButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="95.0" style="-fx-background-color: Transparent;" />
-            <Button fx:id="FavButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="97.0" style="-fx-background-color: Transparent;" />
-            <Button fx:id="LogoutButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="95.0" style="-fx-background-color: Transparent;" />
+				<Button fx:id="homeButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="95.0" style="-fx-background-color: Transparent;" />
+				<Button fx:id="FavButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="97.0" style="-fx-background-color: Transparent;" />
+				<Button fx:id="LogoutButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="95.0" style="-fx-background-color: Transparent;" />
 			</children>
 		</VBox>
 		<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
@@ -29,21 +29,26 @@
 				<HBox prefHeight="37.0" prefWidth="320.0">
 					<children>
 						<TextField prefHeight="37.0" prefWidth="324.0" promptText="Enter recipe name or ingredient name please..." />
-                  <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="95.0" style="-fx-background-color: Transparent;" />
+						<Button fx:id="searchButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="95.0" style="-fx-background-color: Transparent;" />
 					</children>
 				</HBox>
 				<AnchorPane prefHeight="56.0" prefWidth="346.0">
 					<children>
-						<RadioButton fx:id="searchByName" layoutX="35.0" layoutY="20.0" mnemonicParsing="false" text="recipe name">
+						<RadioButton fx:id="searchByName" layoutX="103.0" layoutY="17.0" mnemonicParsing="false" text="recipe name">
 							<font>
 								<Font size="15.0" />
 							</font>
 						</RadioButton>
-						<RadioButton fx:id="searchByIngredient" layoutX="160.0" layoutY="20.0" mnemonicParsing="false" text="Ingredient">
+						<RadioButton fx:id="searchByIngredient" layoutX="228.0" layoutY="17.0" mnemonicParsing="false" text="Ingredient">
 							<font>
 								<Font size="15.0" />
 							</font>
 						</RadioButton>
+                  <Label prefHeight="55.0" prefWidth="103.0" text="Search By :">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
 					</children>
 				</AnchorPane>
 				<ListView fx:id="recipesList" prefHeight="739.0" prefWidth="303.0" />
@@ -106,14 +111,15 @@
 				</HBox>
 				<HBox prefHeight="55.0" prefWidth="627.0">
 					<children>
-						<Label prefHeight="55.0" prefWidth="345.0" text="Ingredients">
+						<Label prefHeight="55.0" prefWidth="224.0" text="Ingredients">
 							<font>
 								<Font size="25.0" />
 							</font>
 						</Label>
-                  <Button fx:id="exportPDFButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="97.0" style="-fx-background-color: Transparent;" />
-                  <Button fx:id="addFavoriteButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="97.0" style="-fx-background-color: Transparent;" />
-                  <Button fx:id="editRecipeButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="97.0" style="-fx-background-color: Transparent;" />
+						<Button fx:id="exportPDFButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="97.0" style="-fx-background-color: Transparent;" />
+						<Button fx:id="addFavoriteButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="97.0" style="-fx-background-color: Transparent;" />
+						<Button fx:id="editRecipeButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="97.0" style="-fx-background-color: Transparent;" />
+						<Button fx:id="deleteRecipeButton" mnemonicParsing="false" prefHeight="55.0" prefWidth="95.0" style="-fx-background-color: Transparent;" />
 					</children>
 				</HBox>
 				<TableView fx:id="ingredientTable" prefHeight="195.0" prefWidth="627.0">

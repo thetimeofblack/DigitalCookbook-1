@@ -50,6 +50,9 @@ public final class MainFrameController implements Initializable {
 
 	@FXML
 	private Button exportPDFButton;
+	
+	@FXML
+	private Button deleteRecipeButton;
 
 	@FXML
 	private RadioButton searchByName;
@@ -91,7 +94,8 @@ public final class MainFrameController implements Initializable {
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/search_out.png", this.searchButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/pdf_out.png", this.exportPDFButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/edit_out.png", this.editRecipeButton);
-		//TODO add favorite button.
+		this.setIconImage("src/de/fhluebeck/group3/resources/system/delete_out.png", this.deleteRecipeButton);
+		//TODO add favorite button.delete_out
 		
 		// set radio button as a group
 		this.searchByIngredient.setToggleGroup(radioGroup);
@@ -103,6 +107,7 @@ public final class MainFrameController implements Initializable {
 		setButtonIconAction(this.searchButton,"search_on.png","search_out.png");
 		setButtonIconAction(this.exportPDFButton,"pdf_on.png","pdf_out.png");
 		setButtonIconAction(this.editRecipeButton,"edit_on.png","edit_out.png");
+		setButtonIconAction(this.deleteRecipeButton,"delete_on.png","delete_out.png");
 		
 		//when click the home button, return to the home page.
 		this.homeButton.setOnAction((event) ->{

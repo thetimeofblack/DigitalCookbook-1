@@ -50,8 +50,8 @@ public class Template extends Application {
 //
 //			Template.primaryStage.setScene(scene);
 			
-			replaceSceneContent("./Template.fxml");
-//			replaceSceneContent("./MainRecipeFrame.fxml");
+//			replaceSceneContent("./Template.fxml");
+			replaceSceneContent("./MainRecipeFrame.fxml");
 			Template.primaryStage.show();
 
 		} catch (Exception e) {
