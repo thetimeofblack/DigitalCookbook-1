@@ -95,7 +95,7 @@ public final class RecipeDAO {
 	}
 
 	/**
-	 * Update the recipe according to its ID, here we do have to do "patch-update"
+	 * Update the recipe according to its ID, here we do have to do "batch-update"
 	 * which means while update the information of recipe, we call the function from
 	 * ingredientDAO and stepDAO to update corresponding ingredients and steps.
 	 * 
@@ -112,7 +112,7 @@ public final class RecipeDAO {
 	}
 
 	/**
-	 * Add the recipe to the DB, here we do have to do "patch-insertion" which means
+	 * Add the recipe to the DB, here we do have to do "batch-insertion" which means
 	 * while insert the basic information of recipe, we call the function from
 	 * ingredientDAO and stepDAO to insert corresponding ingredients and steps.
 	 * 
