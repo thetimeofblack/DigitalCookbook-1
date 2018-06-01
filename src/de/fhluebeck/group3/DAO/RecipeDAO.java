@@ -142,5 +142,17 @@ public final class RecipeDAO {
 
 		return recipes;
 	}
+	
+	
+	/**
+	 * Unit test for RecipeDAO.
+	 * 
+	 * @param args: string from console input.
+	 */
+	public static void main(String[] args) {
+		
+		
+		
+	}
 
 }

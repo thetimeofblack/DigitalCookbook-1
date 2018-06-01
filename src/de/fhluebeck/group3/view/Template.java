@@ -49,6 +49,7 @@ public class Template extends Application {
 //			Scene scene = new Scene(layOutAP);
 //
 //			Template.primaryStage.setScene(scene);
+			
 			replaceSceneContent("./Template.fxml");
 //			replaceSceneContent("./MainRecipeFrame.fxml");
 			Template.primaryStage.show();
@@ -68,6 +69,10 @@ public class Template extends Application {
 
 	public static Stage getPrimaryStage() {
 		return primaryStage;
+	}
+	
+	public static void clearCurrentUser() {
+		currentUser = null;
 	}
 	
 	/**

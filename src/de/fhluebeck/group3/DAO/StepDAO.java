@@ -14,28 +14,28 @@ import de.fhluebeck.group3.model.Step;
 public final class StepDAO {
 
 	/**
-	 * Patch update multiple steps.
+	 * Batch update multiple steps.
 	 * 
 	 * @param ingredients:
 	 *            the steps to be updated.
 	 * 
 	 * @return flag: whether the function is succeeded or not.
 	 */
-	public static boolean updatePatchSteps(List<Step> steps) {
+	public static boolean updateBatchSteps(List<Step> steps) {
 		boolean flag = false;
 
 		return flag;
 	}
 
 	/**
-	 * Patch add multiple steps.
+	 * Batch add multiple steps.
 	 * 
 	 * @param ingredients:
 	 *            the steps to be added.
 	 * 
 	 * @return flag: whether the function is succeeded or not.
 	 */
-	public static boolean addPatchSteps(List<Step> steps) {
+	public static boolean addBatchSteps(List<Step> steps) {
 		boolean flag = false;
 
 		return flag;
@@ -67,6 +67,17 @@ public final class StepDAO {
 		boolean flag = false;
 
 		return flag;
+	}
+	
+	/**
+	 * Unit test for StepDAO.
+	 * 
+	 * @param args: string from console input.
+	 */
+	public static void main(String[] args) {
+		
+		
+		
 	}
 
 }

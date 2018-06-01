@@ -118,8 +118,10 @@ public final class UserDAO {
 		return flag;
 	}
 
-	/*
-	 * Unit test
+	/**
+	 * Unit test for UserDAO
+	 * 
+	 * @param args: string from console input.
 	 */
 	public static void main(String[] args) {
 

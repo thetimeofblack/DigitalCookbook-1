@@ -29,8 +29,9 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Pair;
 
 /**
- * The controller of the login view - Template.fxml. This controller includes basic loading functions
- * of the login & welcoming user interface and calls the functions from userDAO to alter the user table.
+ * The controller of the login view - Template.fxml. This controller includes
+ * basic loading functions of the login & welcoming user interface and calls the
+ * functions from userDAO to alter the user table.
  * 
  * @author Eason.Hua on 2018.05.30.
  */
@@ -53,11 +54,13 @@ public final class TemplateController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		System.out.println("welcome to the template page");
 
 		//
 		Template.getPrimaryStage().setTitle("Digital Cookbook");
 
-		Template.getPrimaryStage().getIcons().add(new Image("/de/fhluebeck/group3/resources/cookbook.jpg"));
+		Template.getPrimaryStage().getIcons().add(new Image("/de/fhluebeck/group3/resources/system/cookbook.jpg"));
 
 		// set the trigger to the login_button;
 		this.login_button.setOnAction(event -> {
@@ -69,7 +72,7 @@ public final class TemplateController implements Initializable {
 				this.hideErrorInformation();
 				Template.setCurrentUser(user);
 
-				//shift the stage to the main Scene.
+				// shift the stage to the main Scene.
 				try {
 					Template.replaceSceneContent("./MainRecipeFrame.fxml");
 				} catch (Exception e) {
