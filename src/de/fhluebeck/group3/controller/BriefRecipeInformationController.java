@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import de.fhluebeck.group3.model.Recipe;
-import de.fhluebeck.group3.view.Template;
+import de.fhluebeck.group3.util.StringUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -14,6 +14,8 @@ import javafx.scene.image.ImageView;
 
 /**
  * 
+ * 
+ * @author Hua Yichen on 2018.06.02.
  * */
 public final class BriefRecipeInformationController implements Initializable {
 
@@ -42,7 +44,7 @@ public final class BriefRecipeInformationController implements Initializable {
 
 		recipeName.setText(selectedRecipe.getRecipeName());
 
-		recipeDescription.setText(textProcessingBeforeOutput());
+		recipeDescription.setText(StringUtil.textProcessingBeforeOutput(selectedRecipe.getDescription(), 27, 65));
 
 		String uri = MainFrameController.RECIPE_IMAGE_DEFAULT_PATH + selectedRecipe.getImagePath();
 		
@@ -51,49 +53,11 @@ public final class BriefRecipeInformationController implements Initializable {
 
 	}
 
-	/**
-	 * Handle the text before output. This function will make the text more
-	 * beautiful and readable and set the text suitable for presentation.
-	 * 
-	 * @return formatted string.
-	 */
-	private String textProcessingBeforeOutput() {
 
-		StringBuilder stringBuilder = new StringBuilder();
-		try {
-
-			char[] text = selectedRecipe.getDescription().toCharArray();
-
-			int textSize = text.length;
-
-			for (int i = 0; i < textSize; i++) {
-
-				stringBuilder.append(text[i]);
-
-				if (i % 30 == 0 && i != 0) {
-
-					stringBuilder.append("-\n");
-
-				}
-
-				if (i > 65) {
-
-					stringBuilder.append("...");
-
-					break;
-
-				}
-
-			}
-
-		} catch (NullPointerException exception) {
-
-		} finally {
-
-			return stringBuilder.toString();
-
-		}
-
+	public Recipe getSelectedRecipe() {
+		return selectedRecipe;
 	}
+	
+	
 
 }

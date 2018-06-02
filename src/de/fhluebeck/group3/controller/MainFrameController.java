@@ -8,7 +8,10 @@ import java.util.ResourceBundle;
 
 import de.fhluebeck.group3.DAO.RecipeDAO;
 import de.fhluebeck.group3.model.Recipe;
+import de.fhluebeck.group3.util.StringUtil;
 import de.fhluebeck.group3.view.Template;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -39,6 +42,10 @@ public final class MainFrameController implements Initializable {
 	public static final String SYSTEM_IMAGE_DEFAULT_PATH = "src/de/fhluebeck/group3/resources/system/";
 	
 	public static final String RECIPE_IMAGE_DEFAULT_PATH = "src/de/fhluebeck/group3/resources/recipe/";
+	
+	protected List<Recipe> currentRecipe;
+	
+	protected Recipe selectedRecipe;
 
 	@FXML
 	private Button homeButton;
@@ -78,6 +85,9 @@ public final class MainFrameController implements Initializable {
 
 	@FXML
 	private Label ServingPeopleLabel;
+	
+	@FXML
+	private Label recipeName;
 
 	@FXML
 	private Label cookingTimeLabel;
@@ -92,7 +102,7 @@ public final class MainFrameController implements Initializable {
 	// private TableView<?> stepsTable;
 	
 	@FXML
-	private ListView<AnchorPane> recipesList;
+	protected ListView<AnchorPane> recipesList;
 
 	@FXML
 	private ImageView recipePic;
@@ -113,6 +123,8 @@ public final class MainFrameController implements Initializable {
 		// set radio button as a group
 		this.searchByIngredient.setToggleGroup(radioGroup);
 		this.searchByName.setToggleGroup(radioGroup);
+		
+		this.searchByName.setSelected(true);
 		
 		setButtonIconAction(this.homeButton,"home_on.png","home_out.png");
 		setButtonIconAction(this.FavButton,"like_on.png","like_out.png");
@@ -145,10 +157,35 @@ public final class MainFrameController implements Initializable {
 		
 		//load information of recipes on ListView panel.
 		try {
-			this.showRecipeList(RecipeDAO.getAllRecipes());
+			this.currentRecipe = RecipeDAO.getAllRecipes();
+			this.showRecipeList(this.currentRecipe);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//add listener to the Element in the list view.
+		this.recipesList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AnchorPane>() {
+
+			@Override
+			public void changed(ObservableValue<? extends AnchorPane> observable, AnchorPane oldValue,
+					AnchorPane newValue) {
+				
+				selectedRecipe = currentRecipe.get(recipesList.getSelectionModel().getSelectedIndex()); 
+				
+				//set picture of recipe
+				String uri = MainFrameController.RECIPE_IMAGE_DEFAULT_PATH + selectedRecipe.getImagePath();
+				recipePic.setImage(new Image(new File(uri).toURI().toString(), 80, 80, false, false));
+				
+				
+				//print basic information of recipe.
+				DescriptionLabel.setText(StringUtil.textProcessingBeforeOutput(selectedRecipe.getDescription(), 50, 100));
+				recipeName.setText(selectedRecipe.getRecipeName());
+				ServingPeopleLabel.setText(new Integer(selectedRecipe.getAvailablePeople()).toString());
+				preparationTimeLabel.setText(new Integer(selectedRecipe.getPreparationTime()).toString());
+				cookingTimeLabel.setText(new Integer(selectedRecipe.getCookingTime()).toString());
+				
+			}
+		});
 
 	}
 	
@@ -156,10 +193,10 @@ public final class MainFrameController implements Initializable {
 	/**
 	 * Given recipes to show, and display them in the listView.
 	 * 
-	 * @param ArrayList<Recipe> results, the searching results(matching recipes) after clicking the search button.
+	 * @param ArrayList<Recipe> results, the searching results(matching recipes) after clicking the search button
+	 * or first time loading we search the whole recipe table.
 	 * 
 	 */
-
 	private void showRecipeList(List<Recipe> results) throws IOException {
 		
 		ObservableList<AnchorPane> anchorPaneList = FXCollections.observableArrayList();
@@ -173,9 +210,9 @@ public final class MainFrameController implements Initializable {
 
 			loader.load();
 			
-			BriefRecipeInformationController mBriefRecipeInMainPageController = loader.getController();
+			BriefRecipeInformationController BriefRecipeInMainPageController = loader.getController();
 			
-			mBriefRecipeInMainPageController.setSelectedRecipe(results.get(i));
+			BriefRecipeInMainPageController.setSelectedRecipe(results.get(i));
 
 			anchorPaneList.add(loader.getRoot());
 
