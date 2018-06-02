@@ -33,38 +33,33 @@ public final class BriefRecipeInformationController implements Initializable {
 
 	}
 
-//	/**
-//	 * 
-//	 * */
-//	public void setSelectedRecipe(Recipe selectedRecipe) throws NullPointerException {
-//
-//		this.selectedRecipe = selectedRecipe;
-//
-//		recipeName.setText(selectedRecipe.getRecipeName());
-//
-//		recipeDescription.setText(textProcessingBeforeOutput());
-//
-//		String uri = "src/de/fhluebeck/group3/resources/recipe/" + selectedRecipe.getImagePath();
-//
-//		if (Template.getCurrentUser().getFavoriteRecipes() == null) {
-//
-//			recipeImg.setImage(new Image(new File("src/resources/COOKING_NAVIGATOR.png").toURI().toString(), 80, 80,
-//					false, false));
-//
-//		} else {
-//			recipeImg.setImage(new Image(new File("src/resources/" + selectedRecipe.getThumbnail()).toURI().toString(),
-//					80, 80, false, false));
-//
-//		}
-//
-//	}
+	/**
+	 * Set the basic information of the recipe.
+	 */
+	public void setSelectedRecipe(Recipe selectedRecipe) throws NullPointerException {
+
+		this.selectedRecipe = selectedRecipe;
+
+		recipeName.setText(selectedRecipe.getRecipeName());
+
+		recipeDescription.setText(textProcessingBeforeOutput());
+
+		String uri = MainFrameController.RECIPE_IMAGE_DEFAULT_PATH + selectedRecipe.getImagePath();
+		
+		recipeImg.setImage(new Image(new File(uri).toURI().toString(), 80, 80, false, false));
+		
+
+	}
 
 	/**
+	 * Handle the text before output. This function will make the text more
+	 * beautiful and readable and set the text suitable for presentation.
 	 * 
-	 * */
+	 * @return formatted string.
+	 */
 	private String textProcessingBeforeOutput() {
 
-		String outputText = "";
+		StringBuilder stringBuilder = new StringBuilder();
 		try {
 
 			char[] text = selectedRecipe.getDescription().toCharArray();
@@ -73,17 +68,17 @@ public final class BriefRecipeInformationController implements Initializable {
 
 			for (int i = 0; i < textSize; i++) {
 
-				outputText += text[i];
+				stringBuilder.append(text[i]);
 
-				if (i % 25 == 0 && i != 0) {
+				if (i % 30 == 0 && i != 0) {
 
-					outputText += "-\n";
+					stringBuilder.append("-\n");
 
 				}
 
 				if (i > 65) {
 
-					outputText += "...";
+					stringBuilder.append("...");
 
 					break;
 
@@ -95,7 +90,7 @@ public final class BriefRecipeInformationController implements Initializable {
 
 		} finally {
 
-			return outputText;
+			return stringBuilder.toString();
 
 		}
 

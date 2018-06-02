@@ -1,5 +1,7 @@
 package de.fhluebeck.group3.DAO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,52 @@ public final class RecipeDAO {
 	public static List<Recipe> getRecipesByUser(User user) {
 		List<Recipe> recipes = new ArrayList<Recipe>();
 
+		return recipes;
+	}
+	
+	/**
+	 * Search for all recipes.
+	 * 
+	 * @return recipes: a list of recipes.
+	 */
+	public static List<Recipe> getAllRecipes() {
+		List<Recipe> recipes = new ArrayList<Recipe>();
+		ResultSet resultSet = null;
+		
+		try {
+			String preparedSql = "SELECT * FROM recipe WHERE status = 1";
+			resultSet = BaseDAO.executeQuery(preparedSql, null);
+			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
+				while (resultSet.next()) {
+					Recipe recipe = new Recipe();
+					recipe.setRecipeID(Integer.valueOf(resultSet.getString("id")));
+					recipe.setRecipeName(resultSet.getString("recipeName"));
+					recipe.setImagePath(resultSet.getString("imagePath"));
+					recipe.setPreparationTime(Integer.valueOf(resultSet.getString("preparationTime")));
+					recipe.setCookingTime(Integer.valueOf(resultSet.getString("cookingTime")));
+					recipe.setAvailablePeople(Integer.valueOf(resultSet.getString("peopleAvailable")));
+					recipe.setStatus(Integer.valueOf(resultSet.getString("status")));
+					recipe.setDescription(resultSet.getString("description"));
+					recipe.setOwnerId(Integer.valueOf(resultSet.getString("ownerUserid")));
+					
+					//TODO fill the ingredients and steps..
+					
+					recipes.add(recipe);
+				}
+
+			} else {
+				System.out.println("sorry, recipe not found");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally { // finally close and release resources.
+			try {
+				BaseDAO.closeAll(BaseDAO.getConn(), BaseDAO.getPstmt(), BaseDAO.getRs());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return recipes;
 	}
 
@@ -150,8 +198,15 @@ public final class RecipeDAO {
 	 * @param args: string from console input.
 	 */
 	public static void main(String[] args) {
+		List<Recipe> recipes = getAllRecipes();
 		
-		
+		/**
+		 * print basic information of step, you can set, in the database, some step's status as 0, 
+		 * to test if they will be printed out.
+		 * */
+		for(Recipe recipe : recipes) {
+			System.out.println(recipe);
+		}
 		
 	}
 

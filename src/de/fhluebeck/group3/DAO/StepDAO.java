@@ -64,7 +64,7 @@ public final class StepDAO {
 		try {
 			//TODO create String preparedSql and parameters. see UserDAO.
 
-			//TODO call the function in BaseDAO, executeQuery; see how I did it in UserDAO.
+			//TODO call the function in BaseDAO, createConnections;
 			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
 				steps = new ArrayList<>();
 				

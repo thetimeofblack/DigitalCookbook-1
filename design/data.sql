@@ -111,8 +111,8 @@ CREATE TABLE `recipe` (
 
 LOCK TABLES `recipe` WRITE;
 /*!40000 ALTER TABLE `recipe` DISABLE KEYS */;
-INSERT INTO `recipe` VALUES (1,1,'Gong Bao Jiding','Sichuan Dish',30,10,4,'/src/gbjd.png',1),
-(2,3,'Suan La Fen','Sichuan Dish',10,60,2,'/src/slf.jpg',1),
+INSERT INTO `recipe` VALUES (1,1,'Gong Bao Jiding','Sichuan Dish very decilious positive comments good',30,10,4,'/src/gbjd.png',1),
+(2,3,'Suan La Fen','Sichuan Dish very decilious positive comments good',10,60,2,'/src/slf.jpg',1),
 (3,4,'Hong Shao Rou','Hunan Dish',25,50,4,'/src/hsr.png',0);
 /*!40000 ALTER TABLE `recipe` ENABLE KEYS */;
 UNLOCK TABLES;

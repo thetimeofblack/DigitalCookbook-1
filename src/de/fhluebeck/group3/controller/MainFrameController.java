@@ -1,11 +1,18 @@
 package de.fhluebeck.group3.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import de.fhluebeck.group3.DAO.RecipeDAO;
+import de.fhluebeck.group3.model.Recipe;
 import de.fhluebeck.group3.view.Template;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * The controller of the main recipe view - MainRecipeFrame.fxml. This
@@ -28,7 +36,9 @@ public final class MainFrameController implements Initializable {
 
 	final ToggleGroup radioGroup = new ToggleGroup();
 	
-	private final String systemImageBasePath = "src/de/fhluebeck/group3/resources/system/";
+	public static final String SYSTEM_IMAGE_DEFAULT_PATH = "src/de/fhluebeck/group3/resources/system/";
+	
+	public static final String RECIPE_IMAGE_DEFAULT_PATH = "src/de/fhluebeck/group3/resources/recipe/";
 
 	@FXML
 	private Button homeButton;
@@ -80,6 +90,9 @@ public final class MainFrameController implements Initializable {
 
 	// @FXML
 	// private TableView<?> stepsTable;
+	
+	@FXML
+	private ListView<AnchorPane> recipesList;
 
 	@FXML
 	private ImageView recipePic;
@@ -129,6 +142,47 @@ public final class MainFrameController implements Initializable {
 				e.printStackTrace();
 			}
 		});
+		
+		//load information of recipes on ListView panel.
+		try {
+			this.showRecipeList(RecipeDAO.getAllRecipes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	/**
+	 * Given recipes to show, and display them in the listView.
+	 * 
+	 * @param ArrayList<Recipe> results, the searching results(matching recipes) after clicking the search button.
+	 * 
+	 */
+
+	private void showRecipeList(List<Recipe> results) throws IOException {
+		
+		ObservableList<AnchorPane> anchorPaneList = FXCollections.observableArrayList();
+
+		for (int i = 0; i < results.size(); i++) {
+
+			// Load root layout from FXML file.
+			FXMLLoader loader = new FXMLLoader();
+
+			loader.setLocation(Template.class.getResource("./BriefRecipeInformation.fxml"));
+
+			loader.load();
+			
+			BriefRecipeInformationController mBriefRecipeInMainPageController = loader.getController();
+			
+			mBriefRecipeInMainPageController.setSelectedRecipe(results.get(i));
+
+			anchorPaneList.add(loader.getRoot());
+
+		}
+
+
+		recipesList.setItems(anchorPaneList);
 
 	}
 
@@ -145,11 +199,11 @@ public final class MainFrameController implements Initializable {
 	private void setButtonIconAction(Button button, String mouseIn, String mouseOut) {
 		
 		button.setOnMouseEntered((event) -> {
-			this.setIconImage(systemImageBasePath + mouseIn, button);
+			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + mouseIn, button);
 		});
 		
 		button.setOnMouseExited((event) -> {
-			this.setIconImage(systemImageBasePath + mouseOut, button);
+			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + mouseOut, button);
 		});
 		
 	}
