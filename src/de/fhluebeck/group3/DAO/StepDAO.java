@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+
 import de.fhluebeck.group3.model.Recipe;
 import de.fhluebeck.group3.model.Step;
 import de.fhluebeck.group3.model.User;
@@ -57,15 +60,19 @@ public final class StepDAO {
 	public static List<Step> searchStepByRecipeId(Integer recipeId) {
 		List<Step> steps = null;
 		Step step = null;
+		Connection connection = null;
+		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
 		
 		//TODO Here if-clause, to check whether recipeId is null, if so, return null;
 		
 		try {
-			//TODO create String preparedSql and parameters. see UserDAO.
+			//TODO create String preparedSql and parameters, connection(BaseDAO.getConnection). refer to UserDAO.
 
 			//TODO call the function in BaseDAO, createConnections;
-			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
+			//TODO search for data.
+			if (resultSet != null && resultSet.isBeforeFirst()) { 
+				// ensure that there are some data in result set.
 				steps = new ArrayList<>();
 				
 			} else {
@@ -76,7 +83,7 @@ public final class StepDAO {
 			e.printStackTrace();
 		} 
 		
-		//TODO Finally, close all the resources, see BaseDAO and UserDAO.
+		//TODO Finally, close all the resources, use close function in BaseDAO.
 		
 		return steps;
 	}

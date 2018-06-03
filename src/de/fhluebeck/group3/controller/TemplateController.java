@@ -55,8 +55,6 @@ public final class TemplateController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		System.out.println("welcome to the template page");
-
 		//
 		Template.getPrimaryStage().setTitle("Digital Cookbook");
 

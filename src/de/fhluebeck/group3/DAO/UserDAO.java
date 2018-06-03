@@ -44,7 +44,6 @@ public final class UserDAO {
 			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
 				while (resultSet.next()) {
 					user = new User();
-					System.out.println(Integer.valueOf(resultSet.getString("user_id")));
 					user.setUserId((Integer.valueOf(resultSet.getString("user_id"))));
 					user.setUsername(resultSet.getString("username"));
 					user.setPassword(resultSet.getString("password"));
