@@ -68,16 +68,15 @@ public final class IngredientDAO {
 
 		return flag;
 	}
-	
+
 	/**
 	 * Unit test for IngredientDAO.
 	 * 
-	 * @param args: string from console input.
+	 * @param args:
+	 *            string from console input.
 	 */
 	public static void main(String[] args) {
-		
-		
-		
+
 	}
 
 }

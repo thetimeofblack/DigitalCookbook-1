@@ -14,61 +14,56 @@
 		<ColumnConstraints hgrow="SOMETIMES" maxWidth="627.0" minWidth="10.0" prefWidth="627.0" />
 	</columnConstraints>
 	<rowConstraints>
-		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="409.0" minHeight="8.0" prefHeight="28.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="823.0" minHeight="10.0" prefHeight="803.0" vgrow="SOMETIMES" />
 	</rowConstraints>
 	<children>
-		<VBox prefHeight="831.0" prefWidth="60.0">
+		<VBox prefHeight="831.0" prefWidth="60.0" GridPane.rowIndex="1">
 			<children>
 				<Button fx:id="homeButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="95.0" style="-fx-background-color: Transparent;" />
 				<Button fx:id="FavButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="97.0" style="-fx-background-color: Transparent;" />
 				<Button fx:id="LogoutButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="95.0" style="-fx-background-color: Transparent;" />
-            <Label prefHeight="35.0" prefWidth="95.0" text="Hello,">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="currentUserName" prefHeight="38.0" prefWidth="97.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
 			</children>
 		</VBox>
-		<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
-			<children>
-				<HBox prefHeight="37.0" prefWidth="320.0">
-					<children>
-						<TextField prefHeight="37.0" prefWidth="324.0" promptText="Enter recipe name or ingredient name please..." />
-						<Button fx:id="searchButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="95.0" style="-fx-background-color: Transparent;" />
-					</children>
-				</HBox>
-				<AnchorPane prefHeight="56.0" prefWidth="346.0">
-					<children>
-						<RadioButton fx:id="searchByName" layoutX="103.0" layoutY="17.0" mnemonicParsing="false" text="recipe name">
-							<font>
-								<Font size="15.0" />
-							</font>
-						</RadioButton>
-						<RadioButton fx:id="searchByIngredient" layoutX="228.0" layoutY="17.0" mnemonicParsing="false" text="Ingredient">
-							<font>
-								<Font size="15.0" />
-							</font>
-						</RadioButton>
-						<Label prefHeight="55.0" prefWidth="103.0" text="Search By :">
-							<font>
-								<Font size="18.0" />
-							</font>
-						</Label>
-					</children>
-				</AnchorPane>
-				<ListView fx:id="recipesList" prefHeight="739.0" prefWidth="303.0" />
-			</children>
-		</VBox>
-		<VBox prefHeight="758.0" prefWidth="592.0" GridPane.columnIndex="2">
+      <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+      		<VBox prefHeight="803.0" prefWidth="377.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      			<children>
+      				<HBox prefHeight="37.0" prefWidth="320.0">
+      					<children>
+      						<TextField prefHeight="37.0" prefWidth="324.0" promptText="Enter recipe name or ingredient name please..." />
+      						<Button fx:id="searchButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="95.0" style="-fx-background-color: Transparent;" />
+      					</children>
+      				</HBox>
+      				<AnchorPane prefHeight="56.0" prefWidth="346.0">
+      					<children>
+      						<RadioButton fx:id="searchByName" layoutX="103.0" layoutY="17.0" mnemonicParsing="false" text="recipe name">
+      							<font>
+      								<Font size="15.0" />
+      							</font>
+      						</RadioButton>
+      						<RadioButton fx:id="searchByIngredient" layoutX="228.0" layoutY="17.0" mnemonicParsing="false" text="Ingredient">
+      							<font>
+      								<Font size="15.0" />
+      							</font>
+      						</RadioButton>
+      						<Label prefHeight="55.0" prefWidth="103.0" text="Search By :">
+      							<font>
+      								<Font size="18.0" />
+      							</font>
+      						</Label>
+      					</children>
+      				</AnchorPane>
+      				<ListView fx:id="recipesList" prefHeight="739.0" prefWidth="303.0" />
+      			</children>
+      		</VBox>
+         </children>
+      </HBox>
+		<VBox prefHeight="758.0" prefWidth="592.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
 			<children>
 				<Label fx:id="recipeName" prefHeight="42.0" prefWidth="352.0" text="">
 					<font>
-						<Font size="20.0" />
+						<Font name="System Bold" size="22.0" />
 					</font>
 				</Label>
 				<HBox prefHeight="45.0" prefWidth="627.0">
@@ -144,10 +139,10 @@
 				</HBox>
 				<TableView fx:id="ingredientTable" prefHeight="195.0" prefWidth="627.0">
 					<columns>
-						<TableColumn prefWidth="84.0" text="Name" />
-						<TableColumn prefWidth="82.0" text="Quantity" />
-						<TableColumn prefWidth="75.0" text="Unit" />
-						<TableColumn prefWidth="385.0" text="Comments" />
+						<TableColumn fx:id="ingredientNameColumn" prefWidth="84.0" text="Name" />
+						<TableColumn fx:id="ingredientQuantityColumn" prefWidth="82.0" text="Quantity" />
+						<TableColumn fx:id="ingredientUnitColumn" prefWidth="75.0" text="Unit" />
+						<TableColumn fx:id="ingredientCommentColumn" prefWidth="385.0" text="Comments" />
 					</columns>
 				</TableView>
 				<Label prefHeight="55.0" prefWidth="345.0" text="Steps">
@@ -163,5 +158,29 @@
 				</TableView>
 			</children>
 		</VBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+         <children>
+            <Label prefHeight="28.0" prefWidth="54.0" text="Hello, ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="currentUserName" prefHeight="28.0" prefWidth="70.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="28.0" prefWidth="115.0" text="Current Time:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="currentTimeLabel" prefHeight="28.0" prefWidth="390.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
 	</children>
 </GridPane>

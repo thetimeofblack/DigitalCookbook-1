@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import de.fhluebeck.group3.model.Step;
 
 /**
@@ -62,7 +61,7 @@ public final class StepDAO {
 		ResultSet resultSet = null;
 		List<Step> steps = new ArrayList<Step>();
 
-		if (recipeId == null) {	//if null, return null;
+		if (recipeId == null) { // if null, return null;
 			return null;
 		}
 
@@ -95,9 +94,9 @@ public final class StepDAO {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally { // finally close and release resources.
+		} finally { // finally close and release resources.
 			try {
-				BaseDAO.closeAll(connection,pstmt,resultSet);
+				BaseDAO.closeAll(connection, pstmt, resultSet);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -131,7 +130,7 @@ public final class StepDAO {
 		List<Step> steptest1 = searchStepByRecipeId(1);
 
 		// should print "sorry step not found"
-//		List<Step> steptest2 = searchStepByRecipeId(100);
+		// List<Step> steptest2 = searchStepByRecipeId(100);
 
 		/**
 		 * print basic information of step, you can set, in the database, some step's
