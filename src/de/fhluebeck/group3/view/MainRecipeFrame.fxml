@@ -22,6 +22,16 @@
 				<Button fx:id="homeButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="95.0" style="-fx-background-color: Transparent;" />
 				<Button fx:id="FavButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="97.0" style="-fx-background-color: Transparent;" />
 				<Button fx:id="LogoutButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="95.0" style="-fx-background-color: Transparent;" />
+            <Label prefHeight="35.0" prefWidth="95.0" text="Hello,">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="currentUserName" prefHeight="38.0" prefWidth="97.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
 			</children>
 		</VBox>
 		<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
@@ -147,8 +157,8 @@
 				</Label>
 				<TableView fx:id="stepsTable" prefHeight="238.0" prefWidth="627.0">
 					<columns>
-						<TableColumn prefWidth="75.0" text="Order" />
-						<TableColumn prefWidth="551.0" text="Contents" />
+						<TableColumn fx:id="stepOrderColumn" prefWidth="75.0" text="Order" />
+						<TableColumn fx:id="stepContentColumn" prefWidth="551.0" text="Contents" />
 					</columns>
 				</TableView>
 			</children>

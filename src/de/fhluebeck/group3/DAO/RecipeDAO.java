@@ -56,6 +56,7 @@ public final class RecipeDAO {
 					recipe.setOwnerId(Integer.valueOf(resultSet.getString("ownerUserid")));
 					
 					//TODO fill the ingredients and steps..
+					recipe.setSteps(StepDAO.searchStepByRecipeId(recipe.getRecipeID()));
 					
 					recipes.add(recipe);
 				}
@@ -205,7 +206,7 @@ public final class RecipeDAO {
 		 * to test if they will be printed out.
 		 * */
 		for(Recipe recipe : recipes) {
-			System.out.println(recipe);
+			System.out.println(recipe.getSteps());
 		}
 		
 	}

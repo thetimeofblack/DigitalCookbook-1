@@ -1,5 +1,10 @@
 package de.fhluebeck.group3.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 /**
  * The Step is mapped with Step table in DB.
  * 
@@ -99,6 +104,11 @@ public final class Step implements Comparable<Step> {
 	public void setStepID(Integer stepID) {
 		this.stepID = stepID;
 	}
+	
+	public ObservableValue<Integer> getIntegerProperityStepOrder() {
+		ObservableValue<Integer> obsInt = new SimpleIntegerProperty(this.stepOrder).asObject();
+		return obsInt;
+	}
 
 	/**
 	 * @return the content
@@ -120,6 +130,11 @@ public final class Step implements Comparable<Step> {
 	 */
 	public Integer getStepOrder() {
 		return stepOrder;
+	}
+	
+	public ObservableValue<String> getStringProperityStepContent() {
+		ObservableValue<String> obsString = new SimpleStringProperty(this.content);
+		return obsString;
 	}
 
 	/**

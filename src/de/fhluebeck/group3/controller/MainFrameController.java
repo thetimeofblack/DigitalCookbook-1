@@ -8,8 +8,11 @@ import java.util.ResourceBundle;
 
 import de.fhluebeck.group3.DAO.RecipeDAO;
 import de.fhluebeck.group3.model.Recipe;
+import de.fhluebeck.group3.model.Step;
 import de.fhluebeck.group3.util.StringUtil;
 import de.fhluebeck.group3.view.Template;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -21,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -38,14 +42,16 @@ import javafx.scene.layout.AnchorPane;
 public final class MainFrameController implements Initializable {
 
 	final ToggleGroup radioGroup = new ToggleGroup();
-	
+
 	public static final String SYSTEM_IMAGE_DEFAULT_PATH = "src/de/fhluebeck/group3/resources/system/";
-	
+
 	public static final String RECIPE_IMAGE_DEFAULT_PATH = "src/de/fhluebeck/group3/resources/recipe/";
-	
+
 	protected List<Recipe> currentRecipe;
-	
+
 	protected Recipe selectedRecipe;
+	
+	protected ObservableList<Step> stepData;
 
 	@FXML
 	private Button homeButton;
@@ -67,9 +73,12 @@ public final class MainFrameController implements Initializable {
 
 	@FXML
 	private Button exportPDFButton;
-	
+
 	@FXML
 	private Button deleteRecipeButton;
+	
+	@FXML
+	private Label currentUserName;
 
 	@FXML
 	private RadioButton searchByName;
@@ -85,7 +94,7 @@ public final class MainFrameController implements Initializable {
 
 	@FXML
 	private Label ServingPeopleLabel;
-	
+
 	@FXML
 	private Label recipeName;
 
@@ -98,9 +107,15 @@ public final class MainFrameController implements Initializable {
 	// @FXML
 	// private TableView<?> ingredientTable;
 
-	// @FXML
-	// private TableView<?> stepsTable;
-	
+	@FXML
+	private TableView<Step> stepsTable;
+
+	@FXML
+	private TableColumn<Step, Integer> stepOrderColumn;
+
+	@FXML
+	private TableColumn<Step, String> stepContentColumn;
+
 	@FXML
 	protected ListView<AnchorPane> recipesList;
 
@@ -109,6 +124,9 @@ public final class MainFrameController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		//set the current user namne as welcome sentence.
+		this.currentUserName.setText(Template.getCurrentUser().getUsername());
 
 		// TODO set button images.
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/home_out.png", this.homeButton);
@@ -118,34 +136,34 @@ public final class MainFrameController implements Initializable {
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/pdf_out.png", this.exportPDFButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/edit_out.png", this.editRecipeButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/delete_out.png", this.deleteRecipeButton);
-		//TODO add favorite button.delete_out
-		
+		// TODO add favorite button.delete_out
+
 		// set radio button as a group
 		this.searchByIngredient.setToggleGroup(radioGroup);
 		this.searchByName.setToggleGroup(radioGroup);
-		
+
 		this.searchByName.setSelected(true);
-		
-		setButtonIconAction(this.homeButton,"home_on.png","home_out.png");
-		setButtonIconAction(this.FavButton,"like_on.png","like_out.png");
-		setButtonIconAction(this.LogoutButton,"logout_on.png","logout_out.png");
-		setButtonIconAction(this.searchButton,"search_on.png","search_out.png");
-		setButtonIconAction(this.exportPDFButton,"pdf_on.png","pdf_out.png");
-		setButtonIconAction(this.editRecipeButton,"edit_on.png","edit_out.png");
-		setButtonIconAction(this.deleteRecipeButton,"delete_on.png","delete_out.png");
-		
-		//when click the home button, return to the home page.
-		this.homeButton.setOnAction((event) ->{
-			//TODO show all the recipes.
+
+		setButtonIconAction(this.homeButton, "home_on.png", "home_out.png");
+		setButtonIconAction(this.FavButton, "like_on.png", "like_out.png");
+		setButtonIconAction(this.LogoutButton, "logout_on.png", "logout_out.png");
+		setButtonIconAction(this.searchButton, "search_on.png", "search_out.png");
+		setButtonIconAction(this.exportPDFButton, "pdf_on.png", "pdf_out.png");
+		setButtonIconAction(this.editRecipeButton, "edit_on.png", "edit_out.png");
+		setButtonIconAction(this.deleteRecipeButton, "delete_on.png", "delete_out.png");
+
+		// when click the home button, return to the home page.
+		this.homeButton.setOnAction((event) -> {
+			// TODO show all the recipes.
 		});
-		
-		//when click the home button, return to the home page.
-		this.FavButton.setOnAction((event) ->{
-			//TODO show favorite recipes of current user.
+
+		// when click the home button, return to the home page.
+		this.FavButton.setOnAction((event) -> {
+			// TODO show favorite recipes of current user.
 		});
-		
-		//when click the home button, return to the home page.
-		this.LogoutButton.setOnAction((event) ->{
+
+		// when click the home button, return to the home page.
+		this.LogoutButton.setOnAction((event) -> {
 			// shift the stage to the main Scene.
 			try {
 				Template.clearCurrentUser();
@@ -154,51 +172,66 @@ public final class MainFrameController implements Initializable {
 				e.printStackTrace();
 			}
 		});
-		
-		//load information of recipes on ListView panel.
+
+		// load information of recipes on ListView panel.
 		try {
 			this.currentRecipe = RecipeDAO.getAllRecipes();
 			this.showRecipeList(this.currentRecipe);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		//add listener to the Element in the list view.
+
+		// add listener to the Element in the list view.
 		this.recipesList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AnchorPane>() {
 
 			@Override
 			public void changed(ObservableValue<? extends AnchorPane> observable, AnchorPane oldValue,
 					AnchorPane newValue) {
-				
-				selectedRecipe = currentRecipe.get(recipesList.getSelectionModel().getSelectedIndex()); 
-				
-				//set picture of recipe
+
+				selectedRecipe = currentRecipe.get(recipesList.getSelectionModel().getSelectedIndex());
+
+				// set picture of recipe
 				String uri = MainFrameController.RECIPE_IMAGE_DEFAULT_PATH + selectedRecipe.getImagePath();
 				recipePic.setImage(new Image(new File(uri).toURI().toString(), 80, 80, false, false));
-				
-				
-				//print basic information of recipe.
-				DescriptionLabel.setText(StringUtil.textProcessingBeforeOutput(selectedRecipe.getDescription(), 50, 100));
+
+				// print basic information of recipe.
+				DescriptionLabel
+						.setText(StringUtil.textProcessingBeforeOutput(selectedRecipe.getDescription(), 50, 100));
 				recipeName.setText(selectedRecipe.getRecipeName());
 				ServingPeopleLabel.setText(new Integer(selectedRecipe.getAvailablePeople()).toString());
 				preparationTimeLabel.setText(new Integer(selectedRecipe.getPreparationTime()).toString());
 				cookingTimeLabel.setText(new Integer(selectedRecipe.getCookingTime()).toString());
 				
+				
+				stepData = FXCollections.observableArrayList();
+				for(Step step : selectedRecipe.getSteps()) {
+					stepData.add(step);
+				}
+				
+				stepsTable.setItems(stepData);
+				
+				// add steps into the step table.
+				stepOrderColumn.setCellValueFactory(cellData -> 
+					cellData.getValue().getIntegerProperityStepOrder()
+				);
+				stepContentColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityStepContent());
+
 			}
 		});
 
 	}
-	
-	
+
 	/**
 	 * Given recipes to show, and display them in the listView.
 	 * 
-	 * @param ArrayList<Recipe> results, the searching results(matching recipes) after clicking the search button
-	 * or first time loading we search the whole recipe table.
+	 * @param ArrayList<Recipe>
+	 *            results, the searching results(matching recipes) after clicking
+	 *            the search button or first time loading we search the whole recipe
+	 *            table.
 	 * 
 	 */
 	private void showRecipeList(List<Recipe> results) throws IOException {
-		
+
 		ObservableList<AnchorPane> anchorPaneList = FXCollections.observableArrayList();
 
 		for (int i = 0; i < results.size(); i++) {
@@ -209,15 +242,14 @@ public final class MainFrameController implements Initializable {
 			loader.setLocation(Template.class.getResource("./BriefRecipeInformation.fxml"));
 
 			loader.load();
-			
+
 			BriefRecipeInformationController BriefRecipeInMainPageController = loader.getController();
-			
+
 			BriefRecipeInMainPageController.setSelectedRecipe(results.get(i));
 
 			anchorPaneList.add(loader.getRoot());
 
 		}
-
 
 		recipesList.setItems(anchorPaneList);
 
@@ -229,20 +261,19 @@ public final class MainFrameController implements Initializable {
 	 * 
 	 * */
 	private void setIconImage(String imagePath, Button button) {
-		button.setGraphic(new ImageView(new Image(new File(imagePath).toURI().toString(), 35,
-				30, false, false)));
+		button.setGraphic(new ImageView(new Image(new File(imagePath).toURI().toString(), 35, 30, false, false)));
 	}
-	
+
 	private void setButtonIconAction(Button button, String mouseIn, String mouseOut) {
-		
+
 		button.setOnMouseEntered((event) -> {
 			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + mouseIn, button);
 		});
-		
+
 		button.setOnMouseExited((event) -> {
 			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + mouseOut, button);
 		});
-		
+
 	}
 
 }
