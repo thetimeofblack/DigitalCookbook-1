@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 
  * @author Eason.Hua on 2018-05-25.
- * */
+ */
 public class CookBook {
 
 	private List<Recipe> recipes;

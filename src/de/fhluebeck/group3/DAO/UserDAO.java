@@ -31,11 +31,11 @@ public final class UserDAO {
 	public static User validatePassword(String username, String password) {
 		User user = null;
 		ResultSet resultSet = null;
-		
-		if(username.equals("") || password.equals("")) {
+
+		if (username.equals("") || password.equals("")) {
 			return user;
 		}
-		
+
 		try {
 			password = EncryptUtil.MD5(password);
 			String preparedSql = "SELECT * FROM user WHERE username = ? AND password = ? AND status = 1";
@@ -54,7 +54,6 @@ public final class UserDAO {
 				// user.setOwnRecipes(RecipeDAO.getRecipesByUser(user));
 				// user.setFavoriteRecipes(RecipeDAO.getFavoritedRecipes(user));
 			} else {
-				System.out.println("sorry, user not found");
 			}
 
 		} catch (Exception e) {
@@ -104,7 +103,6 @@ public final class UserDAO {
 
 		// If user has already existed.
 		if (user.getUserId() != null) {
-			System.out.println("user already exists");
 			return false;
 		}
 		try {
@@ -120,13 +118,14 @@ public final class UserDAO {
 	/**
 	 * Unit test for UserDAO
 	 * 
-	 * @param args: string from console input.
+	 * @param args:
+	 *            string from console input.
 	 */
 	public static void main(String[] args) {
 
-//		User user = UserDAO.validatePassword("admin", "1234");
-//		user = UserDAO.validatePassword("admin", "123");
-//		System.out.println(user == null);
+		// User user = UserDAO.validatePassword("admin", "1234");
+		// user = UserDAO.validatePassword("admin", "123");
+		// System.out.println(user == null);
 		// System.out.println(user); //success
 
 		 //deleteUser(2); //success

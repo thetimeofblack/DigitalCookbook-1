@@ -243,10 +243,7 @@ public final class RecipeDAO {
 	 * @param args: string from console input.
 	 */
 	public static void main(String[] args) {
-		List<Recipe> recipes = getAllRecipes();		//success
-		//List<Recipe> recipes = getRecipesByName("Rou");		//success
-		//deleteRecipe(1);		//success
-		
+		List<Recipe> recipes = getAllRecipes();
 		
 		/**
 		 * print basic information of step, you can set, in the database, some step's
