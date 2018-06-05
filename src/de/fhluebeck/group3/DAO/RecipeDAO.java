@@ -89,7 +89,45 @@ public final class RecipeDAO {
 	 */
 	public static List<Recipe> getRecipesByName(String recipeName) {
 		List<Recipe> recipes = new ArrayList<Recipe>();
+		ResultSet resultSet = null;
+		
+		try {
+			//GET KEYWORD FROM USER INPUT
+			String searchName = "'%" + recipeName + "%'";
+			//SHOW RECIPE
+			String preparedSql = "SELECT * FROM recipe WHERE status = 1 AND recipeName LIKE " + searchName;
+			resultSet = BaseDAO.executeQuery(preparedSql, null);
+			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
+				while (resultSet.next()) {
+					Recipe recipe = new Recipe();
+					recipe.setRecipeID(Integer.valueOf(resultSet.getString("id")));
+					recipe.setRecipeName(resultSet.getString("recipeName"));
+					recipe.setImagePath(resultSet.getString("imagePath"));
+					recipe.setPreparationTime(Integer.valueOf(resultSet.getString("preparationTime")));
+					recipe.setCookingTime(Integer.valueOf(resultSet.getString("cookingTime")));
+					recipe.setAvailablePeople(Integer.valueOf(resultSet.getString("peopleAvailable")));
+					recipe.setStatus(Integer.valueOf(resultSet.getString("status")));
+					recipe.setDescription(resultSet.getString("description"));
+					recipe.setOwnerId(Integer.valueOf(resultSet.getString("ownerUserid")));
+					
+					//TODO fill the ingredients and steps..
+					
+					recipes.add(recipe);
+				}
 
+			} else {
+				System.out.println("sorry, recipe not found");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally { // finally close and release resources.
+			try {
+				BaseDAO.closeAll(BaseDAO.getConn(), BaseDAO.getPstmt(), BaseDAO.getRs());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return recipes;
 	}
 
@@ -138,7 +176,14 @@ public final class RecipeDAO {
 	 */
 	public static boolean deleteRecipe(Integer recipeID) {
 		boolean flag = false;
-
+		
+		try {
+			String preparedSql = "UPDATE `recipe` SET `status` = 0 WHERE `id` = ?";
+			Object[] parameters = { recipeID };
+			flag = BaseDAO.executeSql(preparedSql, parameters);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		return flag;
 	}
 
@@ -198,16 +243,19 @@ public final class RecipeDAO {
 	 * @param args: string from console input.
 	 */
 	public static void main(String[] args) {
-		List<Recipe> recipes = getAllRecipes();
+		List<Recipe> recipes = getAllRecipes();		//success
+		//List<Recipe> recipes = getRecipesByName("Rou");		//success
+		//deleteRecipe(1);		//success
+		
 		
 		/**
-		 * print basic information of step, you can set, in the database, some step's status as 0, 
-		 * to test if they will be printed out.
-		 * */
-		for(Recipe recipe : recipes) {
-			System.out.println(recipe);
+		 * print basic information of step, you can set, in the database, some step's
+		 * status as 0, to test if they will be printed out.
+		 */
+		for (Recipe recipe : recipes) {
+			System.out.println(recipe.getSteps());
 		}
-		
+
 	}
 
 }
