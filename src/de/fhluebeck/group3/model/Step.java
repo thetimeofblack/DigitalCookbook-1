@@ -1,5 +1,9 @@
 package de.fhluebeck.group3.model;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 /**
  * The Step is mapped with Step table in DB.
  * 
@@ -25,7 +29,7 @@ public final class Step implements Comparable<Step> {
 	 * order of a step in an recipe, used for find the proper order.
 	 */
 	private Integer stepOrder;
-	
+
 	/**
 	 * Status of user: 1 for valid 0 for deleted.
 	 */
@@ -100,6 +104,11 @@ public final class Step implements Comparable<Step> {
 		this.stepID = stepID;
 	}
 
+	public ObservableValue<Integer> getIntegerProperityStepOrder() {
+		ObservableValue<Integer> obsInt = new SimpleIntegerProperty(this.stepOrder).asObject();
+		return obsInt;
+	}
+
 	/**
 	 * @return the content
 	 */
@@ -122,6 +131,11 @@ public final class Step implements Comparable<Step> {
 		return stepOrder;
 	}
 
+	public ObservableValue<String> getStringProperityStepContent() {
+		ObservableValue<String> obsString = new SimpleStringProperty(this.content);
+		return obsString;
+	}
+
 	/**
 	 * @param stepOrder
 	 *            the stepOrder to set
@@ -129,7 +143,7 @@ public final class Step implements Comparable<Step> {
 	public void setStepOrder(Integer stepOrder) {
 		this.stepOrder = stepOrder;
 	}
-	
+
 	/**
 	 * @return the status
 	 */

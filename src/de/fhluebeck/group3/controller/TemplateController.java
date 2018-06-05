@@ -54,7 +54,7 @@ public final class TemplateController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		//
 		Template.getPrimaryStage().setTitle("Digital Cookbook");
 
@@ -65,7 +65,6 @@ public final class TemplateController implements Initializable {
 			String username = username_field.getText();
 			String password = password_field.getText();
 			User user = UserDAO.validatePassword(username, password);
-			System.out.println(user);
 			if (user != null) { // validation succeed
 				this.hideErrorInformation();
 				Template.setCurrentUser(user);
@@ -150,7 +149,7 @@ public final class TemplateController implements Initializable {
 		PasswordField password = new PasswordField();
 		password.setPromptText("Password");
 		PasswordField reEnterPassword = new PasswordField();
-		password.setPromptText("Re-Enter your Password");
+		reEnterPassword.setPromptText("Re-Enter your Password");
 
 		Label error_Label = new Label("re-enter password not matched");
 		error_Label.setFont(Font.font("Arial", FontWeight.BOLD, 15));

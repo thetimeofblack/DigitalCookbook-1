@@ -3,10 +3,9 @@ package de.fhluebeck.group3.util;
 /**
  * 
  * @author Eason.Hua on 2018/06/02
- * */
+ */
 public final class StringUtil {
 
-	
 	/**
 	 * Handle the text before output. This function will make the text more
 	 * beautiful and readable and set the text suitable for presentation.
@@ -44,12 +43,10 @@ public final class StringUtil {
 
 		} catch (NullPointerException exception) {
 
-		} finally {
-
-			return stringBuilder.toString();
-
 		}
 
+		return stringBuilder.toString();
+
 	}
-	
+
 }

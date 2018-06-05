@@ -139,11 +139,12 @@ public final class IngredientDAO {
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * Unit test for IngredientDAO.
 	 * 
-	 * @param args: string from console input.
+	 * @param args:
+	 *            string from console input.
 	 */
 	public static void main(String[] args) {	
 		//test the function of addPatchIngredients()
@@ -168,5 +169,4 @@ public final class IngredientDAO {
 		deleteIngredientById(66);
 		System.out.println("Delete success");
 	}
-
 }

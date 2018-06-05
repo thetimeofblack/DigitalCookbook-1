@@ -16,7 +16,7 @@ import javafx.scene.image.ImageView;
  * 
  * 
  * @author Hua Yichen on 2018.06.02.
- * */
+ */
 public final class BriefRecipeInformationController implements Initializable {
 
 	@FXML
@@ -47,17 +47,13 @@ public final class BriefRecipeInformationController implements Initializable {
 		recipeDescription.setText(StringUtil.textProcessingBeforeOutput(selectedRecipe.getDescription(), 27, 65));
 
 		String uri = MainFrameController.RECIPE_IMAGE_DEFAULT_PATH + selectedRecipe.getImagePath();
-		
+
 		recipeImg.setImage(new Image(new File(uri).toURI().toString(), 80, 80, false, false));
-		
 
 	}
-
 
 	public Recipe getSelectedRecipe() {
 		return selectedRecipe;
 	}
-	
-	
 
 }

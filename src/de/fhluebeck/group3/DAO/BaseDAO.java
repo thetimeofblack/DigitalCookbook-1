@@ -92,7 +92,7 @@ public final class BaseDAO {
 		try {
 			conn = getConnection(); // get database link from this class
 			pstmt = conn.prepareStatement(preparedSql); // get PreparedStatement object
-			if (param != null) {
+			if (param != null && param.length > 0) {
 				for (int i = 0; i < param.length; i++) {
 					pstmt.setObject(i + 1, param[i]); // set parameters for prepared statement
 				}

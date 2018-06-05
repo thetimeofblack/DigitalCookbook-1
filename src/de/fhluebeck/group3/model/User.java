@@ -16,7 +16,7 @@ public final class User {
 	 */
 	private Integer userId;
 
-	/** 
+	/**
 	 * userName -> unique in database
 	 */
 	private String username;
@@ -30,17 +30,17 @@ public final class User {
 	 * Status of user: 1 for valid 0 for deleted.
 	 */
 	private Integer status;
-	
+
 	/**
 	 * recipes owned by the user.
-	 * */
+	 */
 	private List<Recipe> ownRecipes;
-	
+
 	/**
 	 * recipes favorite to the user.
-	 * */
+	 */
 	private List<Recipe> favoriteRecipes;
-	
+
 	/** ==============Constructors============== */
 	/**
 	 * Default constructor.
@@ -48,9 +48,10 @@ public final class User {
 	public User() {
 		super();
 	}
-	
+
 	/**
-	 * constructor with necessary(create) attributes, with password automatically encrypted.
+	 * constructor with necessary(create) attributes, with password automatically
+	 * encrypted.
 	 */
 	public User(String username, String password) {
 		super();
@@ -72,7 +73,6 @@ public final class User {
 		this.ownRecipes = ownRecipes;
 		this.favoriteRecipes = favoriteRecipes;
 	}
-	
 
 	/** ==============Getters and setters.============== */
 	public Integer getUserId() {

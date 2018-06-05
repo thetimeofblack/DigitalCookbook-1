@@ -1,5 +1,9 @@
 package de.fhluebeck.group3.model;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 /**
  * The Ingredient is mapped with Ingredient table in DB.
  * 
@@ -43,7 +47,7 @@ public final class Ingredient {
 	 * unit of quantity.
 	 */
 	private String unit;
-	
+
 	/**
 	 * Status of user: 1 for valid 0 for deleted.
 	 */
@@ -176,7 +180,7 @@ public final class Ingredient {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
+
 	/**
 	 * @return the status
 	 */
@@ -190,6 +194,26 @@ public final class Ingredient {
 	 */
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+	public ObservableValue<String> getStringProperityIngredientName() {
+		ObservableValue<String> obsString = new SimpleStringProperty(this.ingredientName);
+		return obsString;
+	}
+	
+	public ObservableValue<String> getStringProperityComment() {
+		ObservableValue<String> obsString = new SimpleStringProperty(this.comment);
+		return obsString;
+	}
+	
+	public ObservableValue<String> getStringProperityUnit() {
+		ObservableValue<String> obsString = new SimpleStringProperty(this.unit);
+		return obsString;
+	}
+	
+	public ObservableValue<Double> getDoubleProperityQuantity() {
+		ObservableValue<Double> obsDouble = new SimpleDoubleProperty(this.quantity).asObject();
+		return obsDouble;
 	}
 
 	/**
