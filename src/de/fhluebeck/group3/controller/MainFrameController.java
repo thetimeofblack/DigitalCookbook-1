@@ -191,9 +191,9 @@ public final class MainFrameController implements Initializable {
 		// set radio button as a group
 		this.searchByIngredient.setToggleGroup(radioGroup);
 		this.searchByName.setToggleGroup(radioGroup);
-
 		this.searchByName.setSelected(true);
 
+		//Set button on actions.
 		setButtonIconAction(this.homeButton, "home_on.png", "home_out.png");
 		setButtonIconAction(this.FavButton, "like_on.png", "like_out.png");
 		setButtonIconAction(this.LogoutButton, "logout_on.png", "logout_out.png");
