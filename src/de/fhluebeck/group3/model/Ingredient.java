@@ -211,7 +211,7 @@ public final class Ingredient {
 		return obsString;
 	}
 	
-	public ObservableValue<Double> getIntegerProperityUnit() {
+	public ObservableValue<Double> getDoubleProperityQuantity() {
 		ObservableValue<Double> obsDouble = new SimpleDoubleProperty(this.quantity).asObject();
 		return obsDouble;
 	}
