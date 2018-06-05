@@ -275,16 +275,16 @@ public final class MainFrameController implements Initializable {
 				stepOrderColumn.setCellValueFactory(cellData -> cellData.getValue().getIntegerProperityStepOrder());
 				stepContentColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityStepContent());
 				
-				// Add ingredients into the ingredient table.
-//				ingredientData = FXCollections.observableArrayList();
-//				for (Ingredient ingredient : selectedRecipe.getIngredients()) {
-//					ingredientData.add(ingredient);
-//				}
-//				ingredientTable.setItems(ingredientData);
-//				ingredientNameColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityIngredientName());
-//				ingredientQuantityColumn.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
-//				ingredientUnitColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
-//				ingredientCommentColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
+//				 Add ingredients into the ingredient table.
+				ingredientData = FXCollections.observableArrayList();
+				for (Ingredient ingredient : selectedRecipe.getIngredients()) {
+					ingredientData.add(ingredient);
+				}
+				ingredientTable.setItems(ingredientData);
+				ingredientNameColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityIngredientName());
+				ingredientQuantityColumn.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
+				ingredientUnitColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
+				ingredientCommentColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
 
 			}
 		});

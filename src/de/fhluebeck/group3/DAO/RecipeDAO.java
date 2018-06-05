@@ -57,6 +57,7 @@ public final class RecipeDAO {
 					
 					//TODO fill the ingredients and steps..
 					recipe.setSteps(StepDAO.searchStepByRecipeId(recipe.getRecipeID()));
+					recipe.setIngredients(IngredientDAO.searchIngredientByRecipeId(recipe.getRecipeID()));
 					
 					recipes.add(recipe);
 				}
@@ -113,7 +114,7 @@ public final class RecipeDAO {
 					
 					//TODO fill the ingredients and steps..
 					recipe.setSteps(StepDAO.searchStepByRecipeId(recipe.getRecipeID()));
-//					recipe.setIngredients(IngredientDAO.searchIngredientByRecipeId(recipe.getRecipeID()));
+					recipe.setIngredients(IngredientDAO.searchIngredientByRecipeId(recipe.getRecipeID()));
 					
 					recipes.add(recipe);
 				}
