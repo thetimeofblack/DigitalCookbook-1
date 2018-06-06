@@ -149,7 +149,7 @@ public final class TemplateController implements Initializable {
 		PasswordField password = new PasswordField();
 		password.setPromptText("Password");
 		PasswordField reEnterPassword = new PasswordField();
-		password.setPromptText("Re-Enter your Password");
+		reEnterPassword.setPromptText("Re-Enter your Password");
 
 		Label error_Label = new Label("re-enter password not matched");
 		error_Label.setFont(Font.font("Arial", FontWeight.BOLD, 15));

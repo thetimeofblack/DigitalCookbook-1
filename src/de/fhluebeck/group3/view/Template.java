@@ -40,18 +40,8 @@ public class Template extends Application {
 	 */
 	private void initLayout() {
 		try {
-			// // Load root layout from FXML file.
-			// FXMLLoader loader = new FXMLLoader();
-			// loader.setLocation(Template.class.getResource("./Template.fxml"));
-			// layOutAP = (AnchorPane) loader.load();
-			//
-			// // Show the scene containing the Root Layout (set as the layout).
-			// Scene scene = new Scene(layOutAP);
-			//
-			// Template.primaryStage.setScene(scene);
 
 			replaceSceneContent("./Template.fxml");
-			// Template.replaceSceneContent("./MainRecipeFrame.fxml");
 			Template.primaryStage.show();
 
 		} catch (Exception e) {
@@ -77,7 +67,7 @@ public class Template extends Application {
 
 	/**
 	 * The common function for scene change in the root stage. This is quite useful
-	 * and effieient when we want to change the scene.
+	 * and efficient when we want to change the scene.
 	 * 
 	 * @author huayichen
 	 */

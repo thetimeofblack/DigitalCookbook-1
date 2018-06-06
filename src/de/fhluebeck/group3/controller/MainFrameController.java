@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.itextpdf.text.DocumentException;
+
+import de.fhluebeck.group3.DAO.ExportPDF;
 import de.fhluebeck.group3.DAO.RecipeDAO;
 import de.fhluebeck.group3.model.Ingredient;
 import de.fhluebeck.group3.model.Recipe;
@@ -26,6 +29,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -59,6 +64,10 @@ public final class MainFrameController implements Initializable {
 	protected Recipe selectedRecipe;
 
 	protected ObservableList<Step> stepData;
+	
+	protected ObservableList<Ingredient> ingredientData;
+	
+	protected ExportPDF exportPDF = null;
 
 	@FXML
 	private Button homeButton;
@@ -115,16 +124,16 @@ public final class MainFrameController implements Initializable {
 	private TableView<Ingredient> ingredientTable;
 
 	@FXML
-	private TableColumn<Ingredient, Integer> ingredientNameColumn;
+	private TableColumn<Ingredient, String> ingredientNameColumn;
 
 	@FXML
-	private TableColumn<Ingredient, Integer> ingredientQuantityColumn;
+	private TableColumn<Ingredient, Double> ingredientQuantityColumn;
 
 	@FXML
-	private TableColumn<Ingredient, Integer> ingredientUnitColumn;
+	private TableColumn<Ingredient, String> ingredientUnitColumn;
 
 	@FXML
-	private TableColumn<Ingredient, Integer> ingredientCommentColumn;
+	private TableColumn<Ingredient, String> ingredientCommentColumn;
 
 	@FXML
 	private TableView<Step> stepsTable;
@@ -144,8 +153,17 @@ public final class MainFrameController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		// Set the current user namne as welcome sentence.
+		// Set the current user name as welcome sentence.
 		this.currentUserName.setText(Template.getCurrentUser().getUsername());
+		
+		//Initialize the PDF exporter.
+		try {
+			this.exportPDF = new ExportPDF();
+		} catch (DocumentException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 
 		// Realized the Time on the top of system.
 		DateFormat timeFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
@@ -173,9 +191,9 @@ public final class MainFrameController implements Initializable {
 		// set radio button as a group
 		this.searchByIngredient.setToggleGroup(radioGroup);
 		this.searchByName.setToggleGroup(radioGroup);
-
 		this.searchByName.setSelected(true);
 
+		//Set button on actions.
 		setButtonIconAction(this.homeButton, "home_on.png", "home_out.png");
 		setButtonIconAction(this.FavButton, "like_on.png", "like_out.png");
 		setButtonIconAction(this.LogoutButton, "logout_on.png", "logout_out.png");
@@ -203,6 +221,20 @@ public final class MainFrameController implements Initializable {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		});
+		
+		//Set on action when you click the export PDF button.
+		exportPDFButton.setOnAction((event) -> {
+			
+			if(exportPDF.createFile(selectedRecipe)) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText("Export PDF Succeeded");
+				alert.setContentText("We have exported the PDF file of " + selectedRecipe.getRecipeName());
+
+				alert.showAndWait();
+			}
+			
 		});
 
 		// load information of recipes on ListView panel.
@@ -242,6 +274,17 @@ public final class MainFrameController implements Initializable {
 				stepsTable.setItems(stepData);
 				stepOrderColumn.setCellValueFactory(cellData -> cellData.getValue().getIntegerProperityStepOrder());
 				stepContentColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityStepContent());
+				
+//				 Add ingredients into the ingredient table.
+				ingredientData = FXCollections.observableArrayList();
+				for (Ingredient ingredient : selectedRecipe.getIngredients()) {
+					ingredientData.add(ingredient);
+				}
+				ingredientTable.setItems(ingredientData);
+				ingredientNameColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityIngredientName());
+				ingredientQuantityColumn.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
+				ingredientUnitColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
+				ingredientCommentColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
 
 			}
 		});
