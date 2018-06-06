@@ -64,9 +64,9 @@ public final class MainFrameController implements Initializable {
 	protected Recipe selectedRecipe;
 
 	protected ObservableList<Step> stepData;
-	
+
 	protected ObservableList<Ingredient> ingredientData;
-	
+
 	protected ExportPDF exportPDF = null;
 
 	@FXML
@@ -153,10 +153,7 @@ public final class MainFrameController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		// Set the current user name as welcome sentence.
-		this.currentUserName.setText(Template.getCurrentUser().getUsername());
-		
-		//Initialize the PDF exporter.
+		// Initialize the PDF exporter.
 		try {
 			this.exportPDF = new ExportPDF();
 		} catch (DocumentException e1) {
@@ -165,129 +162,9 @@ public final class MainFrameController implements Initializable {
 			e1.printStackTrace();
 		}
 
-		// Realized the Time on the top of system.
-		DateFormat timeFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
-		final Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, (e) -> {
-			Date date = new Date();
-			currentTimeLabel.setText(timeFormat.format(date));
-		}), new KeyFrame(Duration.seconds(1)));
-		clock.setCycleCount(Animation.INDEFINITE);
-		clock.play();
+		this.setAllElementProperities();
 
-		// Set alignment = center of table column.
-		stepOrderColumn.setStyle("-fx-alignment: CENTER;");
-		ingredientNameColumn.setStyle("-fx-alignment: CENTER;");
-		ingredientQuantityColumn.setStyle("-fx-alignment: CENTER;");
-		ingredientUnitColumn.setStyle("-fx-alignment: CENTER;");
-
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/home_out.png", this.homeButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/like_out.png", this.FavButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/logout_out.png", this.LogoutButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/search_out.png", this.searchButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/pdf_out.png", this.exportPDFButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/edit_out.png", this.editRecipeButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/delete_out.png", this.deleteRecipeButton);
-
-		// set radio button as a group
-		this.searchByIngredient.setToggleGroup(radioGroup);
-		this.searchByName.setToggleGroup(radioGroup);
-		this.searchByName.setSelected(true);
-
-		//Set button on actions.
-		setButtonIconAction(this.homeButton, "home_on.png", "home_out.png");
-		setButtonIconAction(this.FavButton, "like_on.png", "like_out.png");
-		setButtonIconAction(this.LogoutButton, "logout_on.png", "logout_out.png");
-		setButtonIconAction(this.searchButton, "search_on.png", "search_out.png");
-		setButtonIconAction(this.exportPDFButton, "pdf_on.png", "pdf_out.png");
-		setButtonIconAction(this.editRecipeButton, "edit_on.png", "edit_out.png");
-		setButtonIconAction(this.deleteRecipeButton, "delete_on.png", "delete_out.png");
-
-		// when click the home button, return to the home page.
-		this.homeButton.setOnAction((event) -> {
-			// TODO show all the recipes.
-		});
-
-		// when click the home button, return to the home page.
-		this.FavButton.setOnAction((event) -> {
-			// TODO show favorite recipes of current user.
-		});
-
-		// when click the home button, return to the home page.
-		this.LogoutButton.setOnAction((event) -> {
-			// shift the stage to the main Scene.
-			try {
-				Template.clearCurrentUser();
-				Template.replaceSceneContent("./Template.fxml");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-		
-		//Set on action when you click the export PDF button.
-		exportPDFButton.setOnAction((event) -> {
-			
-			if(exportPDF.createFile(selectedRecipe)) {
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Information Dialog");
-				alert.setHeaderText("Export PDF Succeeded");
-				alert.setContentText("We have exported the PDF file of " + selectedRecipe.getRecipeName());
-
-				alert.showAndWait();
-			}
-			
-		});
-
-		// load information of recipes on ListView panel.
-		try {
-			this.currentRecipe = RecipeDAO.getAllRecipes();
-			this.showRecipeList(this.currentRecipe);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		// add listener to the Element in the list view.
-		this.recipesList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AnchorPane>() {
-
-			@Override
-			public void changed(ObservableValue<? extends AnchorPane> observable, AnchorPane oldValue,
-					AnchorPane newValue) {
-
-				selectedRecipe = currentRecipe.get(recipesList.getSelectionModel().getSelectedIndex());
-
-				// set picture of recipe
-				String uri = MainFrameController.RECIPE_IMAGE_DEFAULT_PATH + selectedRecipe.getImagePath();
-				recipePic.setImage(new Image(new File(uri).toURI().toString(), 80, 80, false, false));
-
-				// print basic information of recipe.
-				DescriptionLabel
-						.setText(StringUtil.textProcessingBeforeOutput(selectedRecipe.getDescription(), 50, 100));
-				recipeName.setText(selectedRecipe.getRecipeName());
-				ServingPeopleLabel.setText(new Integer(selectedRecipe.getAvailablePeople()).toString());
-				preparationTimeLabel.setText(new Integer(selectedRecipe.getPreparationTime()).toString());
-				cookingTimeLabel.setText(new Integer(selectedRecipe.getCookingTime()).toString());
-
-				// Add steps into the step table.
-				stepData = FXCollections.observableArrayList();
-				for (Step step : selectedRecipe.getSteps()) {
-					stepData.add(step);
-				}
-				stepsTable.setItems(stepData);
-				stepOrderColumn.setCellValueFactory(cellData -> cellData.getValue().getIntegerProperityStepOrder());
-				stepContentColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityStepContent());
-				
-//				 Add ingredients into the ingredient table.
-				ingredientData = FXCollections.observableArrayList();
-				for (Ingredient ingredient : selectedRecipe.getIngredients()) {
-					ingredientData.add(ingredient);
-				}
-				ingredientTable.setItems(ingredientData);
-				ingredientNameColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityIngredientName());
-				ingredientQuantityColumn.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
-				ingredientUnitColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
-				ingredientCommentColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
-
-			}
-		});
+		this.refreshView();
 
 	}
 
@@ -334,6 +211,9 @@ public final class MainFrameController implements Initializable {
 		button.setGraphic(new ImageView(new Image(new File(imagePath).toURI().toString(), 35, 30, false, false)));
 	}
 
+	/**
+	 * 
+	 * */
 	private void setButtonIconAction(Button button, String mouseIn, String mouseOut) {
 
 		button.setOnMouseEntered((event) -> {
@@ -342,6 +222,148 @@ public final class MainFrameController implements Initializable {
 
 		button.setOnMouseExited((event) -> {
 			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + mouseOut, button);
+		});
+
+	}
+
+	/**
+	 * 
+	 * */
+	private void refreshView() {
+		// load information of recipes on ListView panel.
+		try {
+			this.currentRecipe = RecipeDAO.getAllRecipes();
+			this.showRecipeList(this.currentRecipe);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 
+	 * */
+	private void setAllElementProperities() {
+
+		// Set the current user name as welcome sentence.
+		this.currentUserName.setText(Template.getCurrentUser().getUsername());
+
+		// Realized the Time on the top of system.
+		DateFormat timeFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+		final Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, (e) -> {
+			Date date = new Date();
+			currentTimeLabel.setText(timeFormat.format(date));
+		}), new KeyFrame(Duration.seconds(1)));
+		clock.setCycleCount(Animation.INDEFINITE);
+		clock.play();
+
+		// Set alignment = center of table column.
+		stepOrderColumn.setStyle("-fx-alignment: CENTER;");
+		ingredientNameColumn.setStyle("-fx-alignment: CENTER;");
+		ingredientQuantityColumn.setStyle("-fx-alignment: CENTER;");
+		ingredientUnitColumn.setStyle("-fx-alignment: CENTER;");
+
+		this.setIconImage("src/de/fhluebeck/group3/resources/system/home_out.png", this.homeButton);
+		this.setIconImage("src/de/fhluebeck/group3/resources/system/like_out.png", this.FavButton);
+		this.setIconImage("src/de/fhluebeck/group3/resources/system/logout_out.png", this.LogoutButton);
+		this.setIconImage("src/de/fhluebeck/group3/resources/system/search_out.png", this.searchButton);
+		this.setIconImage("src/de/fhluebeck/group3/resources/system/pdf_out.png", this.exportPDFButton);
+		this.setIconImage("src/de/fhluebeck/group3/resources/system/edit_out.png", this.editRecipeButton);
+		this.setIconImage("src/de/fhluebeck/group3/resources/system/delete_out.png", this.deleteRecipeButton);
+
+		// set radio button as a group
+		this.searchByIngredient.setToggleGroup(radioGroup);
+		this.searchByName.setToggleGroup(radioGroup);
+		this.searchByName.setSelected(true);
+
+		// Set button on actions.
+		setButtonIconAction(this.homeButton, "home_on.png", "home_out.png");
+		setButtonIconAction(this.FavButton, "like_on.png", "like_out.png");
+		setButtonIconAction(this.LogoutButton, "logout_on.png", "logout_out.png");
+		setButtonIconAction(this.searchButton, "search_on.png", "search_out.png");
+		setButtonIconAction(this.exportPDFButton, "pdf_on.png", "pdf_out.png");
+		setButtonIconAction(this.editRecipeButton, "edit_on.png", "edit_out.png");
+		setButtonIconAction(this.deleteRecipeButton, "delete_on.png", "delete_out.png");
+
+		// when click the home button, return to the home page.
+		this.homeButton.setOnAction((event) -> {
+			// TODO show all the recipes.
+		});
+
+		// when click the home button, return to the home page.
+		this.FavButton.setOnAction((event) -> {
+			// TODO show favorite recipes of current user.
+		});
+
+		// when click the home button, return to the home page.
+		this.LogoutButton.setOnAction((event) -> {
+			// shift the stage to the main Scene.
+			try {
+				Template.clearCurrentUser();
+				Template.replaceSceneContent("./Template.fxml");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+
+		// Set on action when you click the export PDF button.
+		exportPDFButton.setOnAction((event) -> {
+
+			if (exportPDF.createFile(selectedRecipe)) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText("Export PDF Succeeded");
+				alert.setContentText("We have exported the PDF file of " + selectedRecipe.getRecipeName());
+
+				alert.showAndWait();
+			}
+
+		});
+
+		// add listener to the Element in the list view.
+		this.recipesList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AnchorPane>() {
+
+			@Override
+			public void changed(ObservableValue<? extends AnchorPane> observable, AnchorPane oldValue,
+					AnchorPane newValue) {
+
+				selectedRecipe = currentRecipe.get(recipesList.getSelectionModel().getSelectedIndex());
+
+				// set picture of recipe
+				String uri = MainFrameController.RECIPE_IMAGE_DEFAULT_PATH + selectedRecipe.getImagePath();
+				recipePic.setImage(new Image(new File(uri).toURI().toString(), 80, 80, false, false));
+
+				// print basic information of recipe.
+				DescriptionLabel
+						.setText(StringUtil.textProcessingBeforeOutput(selectedRecipe.getDescription(), 50, 100));
+				recipeName.setText(selectedRecipe.getRecipeName());
+				ServingPeopleLabel.setText(new Integer(selectedRecipe.getAvailablePeople()).toString());
+				preparationTimeLabel.setText(new Integer(selectedRecipe.getPreparationTime()).toString());
+				cookingTimeLabel.setText(new Integer(selectedRecipe.getCookingTime()).toString());
+
+				// Add steps into the step table.
+				stepData = FXCollections.observableArrayList();
+				for (Step step : selectedRecipe.getSteps()) {
+					stepData.add(step);
+				}
+				stepsTable.setItems(stepData);
+				stepOrderColumn.setCellValueFactory(cellData -> cellData.getValue().getIntegerProperityStepOrder());
+				stepContentColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityStepContent());
+
+				// Add ingredients into the ingredient table.
+				ingredientData = FXCollections.observableArrayList();
+				for (Ingredient ingredient : selectedRecipe.getIngredients()) {
+					ingredientData.add(ingredient);
+				}
+				ingredientTable.setItems(ingredientData);
+				ingredientNameColumn
+						.setCellValueFactory(cellData -> cellData.getValue().getStringProperityIngredientName());
+				ingredientQuantityColumn
+						.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
+				ingredientUnitColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
+				ingredientCommentColumn
+						.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
+
+			}
 		});
 
 	}

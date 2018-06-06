@@ -298,4 +298,19 @@ public final class Recipe {
 				+ ", ingredients=" + ingredients + ", status=" + status + "]";
 	}
 
+	/** 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null || !(obj instanceof Recipe)) {
+			return false;
+		}else {
+			Recipe other = (Recipe) obj;
+			return (this.getRecipeID().equals(other.getRecipeID()));
+		}
+	}
+	
+	
+
 }

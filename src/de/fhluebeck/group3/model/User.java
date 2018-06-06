@@ -131,5 +131,6 @@ public final class User {
 		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", status=" + status
 				+ ", ownRecipes=" + ownRecipes + ", favoriteRecipes=" + favoriteRecipes + "]";
 	}
+	
 
 }

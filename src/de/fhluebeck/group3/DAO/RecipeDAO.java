@@ -29,7 +29,7 @@ public final class RecipeDAO {
 
 		return recipes;
 	}
-	
+
 	/**
 	 * Search for all recipes.
 	 * 
@@ -38,7 +38,7 @@ public final class RecipeDAO {
 	public static List<Recipe> getAllRecipes() {
 		List<Recipe> recipes = new ArrayList<Recipe>();
 		ResultSet resultSet = null;
-		
+
 		try {
 			String preparedSql = "SELECT * FROM recipe WHERE status = 1";
 			resultSet = BaseDAO.executeQuery(preparedSql, null);
@@ -54,11 +54,11 @@ public final class RecipeDAO {
 					recipe.setStatus(Integer.valueOf(resultSet.getString("status")));
 					recipe.setDescription(resultSet.getString("description"));
 					recipe.setOwnerId(Integer.valueOf(resultSet.getString("ownerUserid")));
-					
-					//TODO fill the ingredients and steps..
+
+					// fill the ingredients and steps..
 					recipe.setSteps(StepDAO.searchStepByRecipeId(recipe.getRecipeID()));
 					recipe.setIngredients(IngredientDAO.searchIngredientByRecipeId(recipe.getRecipeID()));
-					
+
 					recipes.add(recipe);
 				}
 
@@ -92,11 +92,11 @@ public final class RecipeDAO {
 	public static List<Recipe> getRecipesByName(String recipeName) {
 		List<Recipe> recipes = new ArrayList<Recipe>();
 		ResultSet resultSet = null;
-		
+
 		try {
-			//GET KEYWORD FROM USER INPUT
+			// GET KEYWORD FROM USER INPUT
 			String searchName = "'%" + recipeName + "%'";
-			//SHOW RECIPE
+			// SHOW RECIPE
 			String preparedSql = "SELECT * FROM recipe WHERE status = 1 AND recipeName LIKE " + searchName;
 			resultSet = BaseDAO.executeQuery(preparedSql, null);
 			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
@@ -111,11 +111,11 @@ public final class RecipeDAO {
 					recipe.setStatus(Integer.valueOf(resultSet.getString("status")));
 					recipe.setDescription(resultSet.getString("description"));
 					recipe.setOwnerId(Integer.valueOf(resultSet.getString("ownerUserid")));
-					
-					//TODO fill the ingredients and steps..
+
+					// TODO fill the ingredients and steps..
 					recipe.setSteps(StepDAO.searchStepByRecipeId(recipe.getRecipeID()));
 					recipe.setIngredients(IngredientDAO.searchIngredientByRecipeId(recipe.getRecipeID()));
-					
+
 					recipes.add(recipe);
 				}
 
@@ -180,7 +180,7 @@ public final class RecipeDAO {
 	 */
 	public static boolean deleteRecipe(Integer recipeID) {
 		boolean flag = false;
-		
+
 		try {
 			String preparedSql = "UPDATE `recipe` SET `status` = 0 WHERE `id` = ?";
 			Object[] parameters = { recipeID };
@@ -239,16 +239,16 @@ public final class RecipeDAO {
 
 		return recipes;
 	}
-	
-	
+
 	/**
 	 * Unit test for RecipeDAO.
 	 * 
-	 * @param args: string from console input.
+	 * @param args:
+	 *            string from console input.
 	 */
 	public static void main(String[] args) {
 		List<Recipe> recipes = getAllRecipes();
-		
+
 		/**
 		 * print basic information of step, you can set, in the database, some step's
 		 * status as 0, to test if they will be printed out.

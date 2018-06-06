@@ -53,9 +53,9 @@ public final class ExportPDF {
 	}
 
 	public boolean createFile(Recipe recipe) {
-		
+
 		boolean flag = false;
-		
+
 		try {
 
 			Document document = new Document();
@@ -83,17 +83,17 @@ public final class ExportPDF {
 			}
 
 			document.close();
-			
+
 			flag = true;
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			
+
 			return false;
 
 		}
-		
+
 		return flag;
 	}
 
@@ -121,7 +121,7 @@ public final class ExportPDF {
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("Digital Cookbook Recipe \n").append(recipe.getRecipeName() + "\n")
-				.append("By Group3 on SWEII, L¨¹beck University of Applied Sciences, Germany");
+				.append("By Group3 on SWEII, Lï¿½ï¿½beck University of Applied Sciences, Germany");
 
 		Paragraph title = new Paragraph(builder.toString(), titleFont);
 
@@ -223,7 +223,7 @@ public final class ExportPDF {
 		details.add(new Paragraph(String.valueOf("Preparation time: " + recipe.getPreparationTime() + "min")));
 
 		details.add(new Paragraph(String.valueOf("Cooking time: " + recipe.getCookingTime() + "min")));
-		
+
 		details.add(new Paragraph(String.valueOf("Cooking time: " + recipe.getAvailablePeople())));
 
 		details.add(new Chunk(new LineSeparator()));
@@ -254,7 +254,7 @@ public final class ExportPDF {
 						+ ingredient.getUnit() + "\n"));
 
 				ingredientOrder += 1;
-			} 
+			}
 		}
 		// steps
 		details.add(Chunk.NEWLINE);
@@ -268,7 +268,7 @@ public final class ExportPDF {
 
 				details.add(new Paragraph(String.valueOf(step.getStepOrder()) + ". " + step.getContent()));
 
-			} 
+			}
 		}
 		// add recipe information
 		document.add(details);

@@ -195,22 +195,22 @@ public final class Ingredient {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
+
 	public ObservableValue<String> getStringProperityIngredientName() {
 		ObservableValue<String> obsString = new SimpleStringProperty(this.ingredientName);
 		return obsString;
 	}
-	
+
 	public ObservableValue<String> getStringProperityComment() {
 		ObservableValue<String> obsString = new SimpleStringProperty(this.comment);
 		return obsString;
 	}
-	
+
 	public ObservableValue<String> getStringProperityUnit() {
 		ObservableValue<String> obsString = new SimpleStringProperty(this.unit);
 		return obsString;
 	}
-	
+
 	public ObservableValue<Double> getDoubleProperityQuantity() {
 		ObservableValue<Double> obsDouble = new SimpleDoubleProperty(this.quantity).asObject();
 		return obsDouble;
