@@ -8,6 +8,7 @@ import de.fhluebeck.group3.DAO.UserDAO;
 import de.fhluebeck.group3.model.User;
 import de.fhluebeck.group3.view.Template;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -22,6 +23,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -59,25 +62,21 @@ public final class TemplateController implements Initializable {
 		Template.getPrimaryStage().setTitle("Digital Cookbook");
 
 		Template.getPrimaryStage().getIcons().add(new Image("/de/fhluebeck/group3/resources/system/cookbook.jpg"));
+		
+		this.password_field.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				if(event.getCode().equals(KeyCode.ENTER)) {
+					attemptLogin();
+				}
+			}
+			
+		});
 
 		// set the trigger to the login_button;
 		this.login_button.setOnAction(event -> {
-			String username = username_field.getText();
-			String password = password_field.getText();
-			User user = UserDAO.validatePassword(username, password);
-			if (user != null) { // validation succeed
-				this.hideErrorInformation();
-				Template.setCurrentUser(user);
-
-				// shift the stage to the main Scene.
-				try {
-					Template.replaceSceneContent("./MainRecipeFrame.fxml");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			} else { // validation fails
-				this.setErrorInformation(); // set error information to notice user.
-			}
+			attemptLogin();
 		});
 
 		this.register_button.setOnAction(event -> {
@@ -117,6 +116,28 @@ public final class TemplateController implements Initializable {
 
 	private void hideErrorInformation() {
 		this.error_message.setVisible(false);
+	}
+	
+	/**
+	 * 
+	 * */
+	protected void attemptLogin(){
+		String username = username_field.getText();
+		String password = password_field.getText();
+		User user = UserDAO.validatePassword(username, password);
+		if (user != null) { // validation succeed
+			this.hideErrorInformation();
+			Template.setCurrentUser(user);
+
+			// shift the stage to the main Scene.
+			try {
+				Template.replaceSceneContent("./MainRecipeFrame.fxml");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else { // validation fails
+			this.setErrorInformation(); // set error information to notice user.
+		}
 	}
 
 	/**
