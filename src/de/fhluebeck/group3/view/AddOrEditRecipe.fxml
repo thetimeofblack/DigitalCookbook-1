@@ -83,8 +83,10 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label prefHeight="49.0" prefWidth="609.0" />
-                  <Button id="save" mnemonicParsing="false" prefHeight="36.0" prefWidth="123.0" text="save" />
+                  <Label prefHeight="49.0" prefWidth="333.0" />
+                  <Button id="save" mnemonicParsing="false" prefHeight="47.0" prefWidth="181.0" text="save the recipe" />
+                  <Label prefHeight="24.0" prefWidth="77.0" />
+                  <Button id="cancel" mnemonicParsing="false" prefHeight="44.0" prefWidth="86.0" text="cancel" />
                </children>
             </HBox>
          </children>
