@@ -37,6 +37,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -119,6 +120,9 @@ public final class MainFrameController implements Initializable {
 
 	@FXML
 	private Label DescriptionLabel;
+	
+	@FXML
+	private TextField searchInput;
 
 	@FXML
 	private TableView<Ingredient> ingredientTable;
@@ -162,7 +166,7 @@ public final class MainFrameController implements Initializable {
 			e1.printStackTrace();
 		}
 
-		this.setAllElementProperities();
+		this.initialSetAllElementProperities();
 
 		this.refreshView();
 
@@ -197,7 +201,7 @@ public final class MainFrameController implements Initializable {
 			anchorPaneList.add(loader.getRoot());
 
 		}
-
+		
 		recipesList.setItems(anchorPaneList);
 
 	}
@@ -232,7 +236,6 @@ public final class MainFrameController implements Initializable {
 	private void refreshView() {
 		// load information of recipes on ListView panel.
 		try {
-			this.currentRecipe = RecipeDAO.getAllRecipes();
 			this.showRecipeList(this.currentRecipe);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -242,7 +245,9 @@ public final class MainFrameController implements Initializable {
 	/**
 	 * 
 	 * */
-	private void setAllElementProperities() {
+	private void initialSetAllElementProperities() {
+		
+		this.currentRecipe = RecipeDAO.getAllRecipes();
 
 		// Set the current user name as welcome sentence.
 		this.currentUserName.setText(Template.getCurrentUser().getUsername());
@@ -318,6 +323,19 @@ public final class MainFrameController implements Initializable {
 			}
 
 		});
+		
+		searchInput.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				
+				
+				currentRecipe = RecipeDAO.getRecipesByName(newValue);
+				refreshView();
+				
+			}
+		});
+		
 
 		// add listener to the Element in the list view.
 		this.recipesList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AnchorPane>() {

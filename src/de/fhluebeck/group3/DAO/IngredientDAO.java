@@ -1,6 +1,5 @@
 package de.fhluebeck.group3.DAO;
 
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -54,25 +53,7 @@ public final class IngredientDAO {
 	 */
 	public static boolean addPatchIngredients(List<Ingredient> ingredients) {
 		boolean flag = false;
-		java.sql.Connection conn = null;
-		java.sql.PreparedStatement ps = null;
-		try {
-			String preparedSql = "INSERT INTO `ingredient` VALUES (?, ?, ?, ?, ?, ?,1) ";
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/cookbook_group3?characterEncoding=utf-8&useSSL=false", "root", "root");
-			ps = conn.prepareStatement(preparedSql);
-			for (int n = 0; n < ingredients.size(); n++) {
-				Object[] parameters = { ingredients.get(n).getIngredientID(), ingredients.get(n).getIngredientName(),
-						ingredients.get(n).getQuantity(), ingredients.get(n).getRecipeID(),
-						ingredients.get(n).getUnit(), ingredients.get(n).getComment() };
-				flag = BaseDAO.executeSql(preparedSql, parameters);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
 
-		}
 
 		return flag;
 	}
@@ -131,12 +112,8 @@ public final class IngredientDAO {
 	 */
 	public static boolean deleteIngredientById(Integer ingredientId) {
 		boolean flag = false;
-		java.sql.Connection conn = null;
-		java.sql.PreparedStatement ps = null;
 		try {
 			String preparedSql = "DELETE FROM `ingredient` WHERE `id` = ?";
-			conn = BaseDAO.getConnection();
-			ps = conn.prepareStatement(preparedSql);
 			Object[] parameters = { ingredientId };
 			flag = BaseDAO.executeSql(preparedSql, parameters);
 		} catch (Exception e) {
@@ -160,26 +137,6 @@ public final class IngredientDAO {
 		for (Ingredient ingredient : ingredients) {
 			System.out.println(ingredient);
 		}
-		// //test the function of addPatchIngredients()
-		// List<Ingredient> person=new ArrayList<>();
-		// int a = 66;
-		// String b = "2";
-		// double c = 2.3;
-		// int d = 4;
-		// String e = "5";
-		// String f = "6";
-		// Ingredient test1 = new Ingredient(a,b,c,d,e,f);
-		// person.add(test1);
-		// System.out.println(person);
-		// addPatchIngredients(person);
-		// System.out.println("Add patch ingredients successed.");
-		//
-		// //test the function of searchIngredientByRecipeId(Integer recipeId)
-		// List<Ingredient> abc2 = searchIngredientByRecipeId(1);
-		// System.out.println(abc2);
-		//
-		// //test the function of deleteIngredientById(Integer ingredientId)
-		// deleteIngredientById(66);
-		// System.out.println("Delete success");
+
 	}
 }

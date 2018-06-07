@@ -247,14 +247,16 @@ public final class RecipeDAO {
 	 *            string from console input.
 	 */
 	public static void main(String[] args) {
-		List<Recipe> recipes = getAllRecipes();
+//		List<Recipe> recipes = getAllRecipes();
+		
+		List<Recipe> recipes = getRecipesByName("su");
 
 		/**
 		 * print basic information of step, you can set, in the database, some step's
 		 * status as 0, to test if they will be printed out.
 		 */
 		for (Recipe recipe : recipes) {
-			System.out.println(recipe.getSteps());
+			System.out.println(recipe.getRecipeName());
 		}
 
 	}

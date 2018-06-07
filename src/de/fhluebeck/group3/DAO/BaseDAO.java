@@ -43,7 +43,11 @@ public final class BaseDAO {
 	 *             when connection is not available.
 	 */
 	public static Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+//		if(conn != null && !conn.isClosed()) {
+//			return conn;
+//		}else {
+			return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+//		}
 	}
 
 	/**
@@ -192,5 +196,6 @@ public final class BaseDAO {
 	public static void setRs(ResultSet rs) {
 		BaseDAO.rs = rs;
 	}
+	
 
 }
