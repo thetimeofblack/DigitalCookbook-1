@@ -53,9 +53,10 @@
             <Label prefHeight="43.0" prefWidth="160.0" text="Ingridients" />
             <TableView id="ingredients" prefHeight="266.0" prefWidth="765.0">
               <columns>
-                <TableColumn id="iName" prefWidth="189.0" text="name" />
-                <TableColumn id="iAmount" prefWidth="344.0" text="amount" />
-                  <TableColumn id="iUnit" prefWidth="163.0" text="unit" />
+                <TableColumn id="iName" prefWidth="121.0" text="Name" />
+                <TableColumn id="iQuantity" prefWidth="134.0" text="Quantity" />
+                  <TableColumn id="iUnit" prefWidth="121.0" text="Unit" />
+                  <TableColumn id="iComments" prefWidth="388.0" text="Comments" />
               </columns>
             </TableView>
             <HBox prefHeight="37.0" prefWidth="765.0">
@@ -69,8 +70,8 @@
             <Label prefHeight="26.0" prefWidth="48.0" text="Steps" />
             <TableView id="steps" prefHeight="307.0" prefWidth="765.0">
               <columns>
-                <TableColumn id="Order" prefWidth="75.0" text="order" />
-                <TableColumn id="content" prefWidth="689.0" text="content" />
+                <TableColumn id="Order" prefWidth="75.0" text="Order" />
+                <TableColumn id="contents" prefWidth="689.0" text="Contents" />
               </columns>
             </TableView>
             <HBox prefHeight="52.0" prefWidth="765.0">
