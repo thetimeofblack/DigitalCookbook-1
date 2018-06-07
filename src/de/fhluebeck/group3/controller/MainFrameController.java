@@ -120,7 +120,7 @@ public final class MainFrameController implements Initializable {
 
 	@FXML
 	private Label DescriptionLabel;
-	
+
 	@FXML
 	private TextField searchInput;
 
@@ -201,7 +201,7 @@ public final class MainFrameController implements Initializable {
 			anchorPaneList.add(loader.getRoot());
 
 		}
-		
+
 		recipesList.setItems(anchorPaneList);
 
 	}
@@ -246,7 +246,7 @@ public final class MainFrameController implements Initializable {
 	 * 
 	 * */
 	private void initialSetAllElementProperities() {
-		
+
 		this.currentRecipe = RecipeDAO.getAllRecipes();
 
 		// Set the current user name as welcome sentence.
@@ -323,19 +323,22 @@ public final class MainFrameController implements Initializable {
 			}
 
 		});
-		
+
 		searchInput.textProperty().addListener(new ChangeListener<String>() {
 
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+				if(searchByName.isSelected()) {
+					currentRecipe = RecipeDAO.getRecipesByName(newValue);
+				}else if(searchByIngredient.isSelected()) {
+					currentRecipe = RecipeDAO.getRecipesByIngredient(newValue);
+				}
 				
-				
-				currentRecipe = RecipeDAO.getRecipesByName(newValue);
 				refreshView();
-				
+
 			}
 		});
-		
 
 		// add listener to the Element in the list view.
 		this.recipesList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AnchorPane>() {
@@ -344,42 +347,41 @@ public final class MainFrameController implements Initializable {
 			public void changed(ObservableValue<? extends AnchorPane> observable, AnchorPane oldValue,
 					AnchorPane newValue) {
 
-				selectedRecipe = currentRecipe.get(recipesList.getSelectionModel().getSelectedIndex());
-
-				// set picture of recipe
-				String uri = MainFrameController.RECIPE_IMAGE_DEFAULT_PATH + selectedRecipe.getImagePath();
-				recipePic.setImage(new Image(new File(uri).toURI().toString(), 80, 80, false, false));
-
-				// print basic information of recipe.
-				DescriptionLabel
-						.setText(StringUtil.textProcessingBeforeOutput(selectedRecipe.getDescription(), 50, 100));
-				recipeName.setText(selectedRecipe.getRecipeName());
-				ServingPeopleLabel.setText(new Integer(selectedRecipe.getAvailablePeople()).toString());
-				preparationTimeLabel.setText(new Integer(selectedRecipe.getPreparationTime()).toString());
-				cookingTimeLabel.setText(new Integer(selectedRecipe.getCookingTime()).toString());
-
-				// Add steps into the step table.
-				stepData = FXCollections.observableArrayList();
-				for (Step step : selectedRecipe.getSteps()) {
-					stepData.add(step);
+				if (recipesList.getSelectionModel().getSelectedIndex() > -1) {
+					selectedRecipe = currentRecipe.get(recipesList.getSelectionModel().getSelectedIndex());
+					// set picture of recipe
+					String uri = MainFrameController.RECIPE_IMAGE_DEFAULT_PATH + selectedRecipe.getImagePath();
+					recipePic.setImage(new Image(new File(uri).toURI().toString(), 80, 80, false, false));
+					// print basic information of recipe.
+					DescriptionLabel
+							.setText(StringUtil.textProcessingBeforeOutput(selectedRecipe.getDescription(), 50, 100));
+					recipeName.setText(selectedRecipe.getRecipeName());
+					ServingPeopleLabel.setText(new Integer(selectedRecipe.getAvailablePeople()).toString());
+					preparationTimeLabel.setText(new Integer(selectedRecipe.getPreparationTime()).toString());
+					cookingTimeLabel.setText(new Integer(selectedRecipe.getCookingTime()).toString());
+					// Add steps into the step table.
+					stepData = FXCollections.observableArrayList();
+					for (Step step : selectedRecipe.getSteps()) {
+						stepData.add(step);
+					}
+					stepsTable.setItems(stepData);
+					stepOrderColumn.setCellValueFactory(cellData -> cellData.getValue().getIntegerProperityStepOrder());
+					stepContentColumn
+							.setCellValueFactory(cellData -> cellData.getValue().getStringProperityStepContent());
+					// Add ingredients into the ingredient table.
+					ingredientData = FXCollections.observableArrayList();
+					for (Ingredient ingredient : selectedRecipe.getIngredients()) {
+						ingredientData.add(ingredient);
+					}
+					ingredientTable.setItems(ingredientData);
+					ingredientNameColumn
+							.setCellValueFactory(cellData -> cellData.getValue().getStringProperityIngredientName());
+					ingredientQuantityColumn
+							.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
+					ingredientUnitColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
+					ingredientCommentColumn
+							.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
 				}
-				stepsTable.setItems(stepData);
-				stepOrderColumn.setCellValueFactory(cellData -> cellData.getValue().getIntegerProperityStepOrder());
-				stepContentColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityStepContent());
-
-				// Add ingredients into the ingredient table.
-				ingredientData = FXCollections.observableArrayList();
-				for (Ingredient ingredient : selectedRecipe.getIngredients()) {
-					ingredientData.add(ingredient);
-				}
-				ingredientTable.setItems(ingredientData);
-				ingredientNameColumn
-						.setCellValueFactory(cellData -> cellData.getValue().getStringProperityIngredientName());
-				ingredientQuantityColumn
-						.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
-				ingredientUnitColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
-				ingredientCommentColumn
-						.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
 
 			}
 		});

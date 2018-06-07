@@ -13,11 +13,6 @@ import de.fhluebeck.group3.util.EncryptUtil;
  */
 public final class UserDAO {
 
-	// not necessary at the moment.
-	// private static Connection conn = null;
-	// private static PreparedStatement pstmt = null;
-	// private static ResultSet rs = null;
-
 	/**
 	 * Validate the input credentials and return user object if exists.
 	 * 
@@ -30,6 +25,8 @@ public final class UserDAO {
 	 */
 	public static User validatePassword(String username, String password) {
 		User user = null;
+		Connection connection = null;
+		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
 
 		if (username.equals("") || password.equals("")) {
@@ -37,10 +34,12 @@ public final class UserDAO {
 		}
 
 		try {
+			connection = BaseDAO.getConnection();
 			password = EncryptUtil.MD5(password);
 			String preparedSql = "SELECT * FROM user WHERE username = ? AND password = ? AND status = 1";
+			pstmt = connection.prepareStatement(preparedSql);
 			Object[] parameters = { username, password };
-			resultSet = BaseDAO.executeQuery(preparedSql, parameters);
+			resultSet = BaseDAO.executeQuery(pstmt, parameters);
 			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
 				while (resultSet.next()) {
 					user = new User();
@@ -49,8 +48,7 @@ public final class UserDAO {
 					user.setPassword(resultSet.getString("password"));
 					user.setStatus(Integer.valueOf(resultSet.getString("status")));
 				}
-				// also we have to fill its favorite recipes and ownRecipes Lists to make a full
-				// user.
+				// also we have to fill its favorite recipes and ownRecipes Lists to make a full user.
 				// user.setOwnRecipes(RecipeDAO.getRecipesByUser(user));
 				// user.setFavoriteRecipes(RecipeDAO.getFavoritedRecipes(user));
 			} else {
@@ -60,7 +58,7 @@ public final class UserDAO {
 			e.printStackTrace();
 		} finally { // finally close and release resources.
 			try {
-				BaseDAO.closeAll(BaseDAO.getConn(), BaseDAO.getPstmt(), BaseDAO.getRs());
+				BaseDAO.closeAll(null, pstmt,resultSet);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

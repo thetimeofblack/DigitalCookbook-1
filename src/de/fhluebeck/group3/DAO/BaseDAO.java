@@ -43,11 +43,12 @@ public final class BaseDAO {
 	 *             when connection is not available.
 	 */
 	public static Connection getConnection() throws SQLException {
-//		if(conn != null && !conn.isClosed()) {
-//			return conn;
-//		}else {
+		if (conn != null && !conn.isClosed()) {
+			System.out.println(conn.hashCode());
+			return conn;
+		} else {
 			return DriverManager.getConnection(URL, USERNAME, PASSWORD);
-//		}
+		}
 	}
 
 	/**
@@ -91,21 +92,22 @@ public final class BaseDAO {
 	 * @throws ClassNotFoundException:
 	 *             when the driver class is not found.
 	 */
-	public static ResultSet executeQuery(String preparedSql, Object[] param) throws ClassNotFoundException {
+	public static ResultSet executeQuery(PreparedStatement preparedSql, Object[] param) throws ClassNotFoundException {
+
+		ResultSet resultSet = null;
+		
 		/* deal with and execute SQL */
 		try {
-			conn = getConnection(); // get database link from this class
-			pstmt = conn.prepareStatement(preparedSql); // get PreparedStatement object
 			if (param != null && param.length > 0) {
 				for (int i = 0; i < param.length; i++) {
-					pstmt.setObject(i + 1, param[i]); // set parameters for prepared statement
+					preparedSql.setObject(i + 1, param[i]); // set parameters for prepared statement
 				}
 			}
-			rs = pstmt.executeQuery(); // execute the SQL expression
+			resultSet = preparedSql.executeQuery(); // execute the SQL expression
 		} catch (SQLException e) {
 			e.printStackTrace(); // handle SQLException
 		}
-		return rs;
+		return resultSet;
 	}
 
 	/**
@@ -143,20 +145,13 @@ public final class BaseDAO {
 			e.printStackTrace(); // handle SQLException
 		} finally { // finally close and release resources.
 			try {
-				BaseDAO.closeAll(conn, pstmt, null);
+				BaseDAO.closeAll(null, pstmt, null);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 
 		return flag;
-	}
-
-	/**
-	 * @return the conn
-	 */
-	public static Connection getConn() {
-		return conn;
 	}
 
 	/**
@@ -196,6 +191,5 @@ public final class BaseDAO {
 	public static void setRs(ResultSet rs) {
 		BaseDAO.rs = rs;
 	}
-	
 
 }

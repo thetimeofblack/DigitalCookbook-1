@@ -1,5 +1,7 @@
 package de.fhluebeck.group3.DAO;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,11 +39,16 @@ public final class RecipeDAO {
 	 */
 	public static List<Recipe> getAllRecipes() {
 		List<Recipe> recipes = new ArrayList<Recipe>();
+		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
+		Connection connection = null;
 
 		try {
+			connection = BaseDAO.getConnection();
 			String preparedSql = "SELECT * FROM recipe WHERE status = 1";
-			resultSet = BaseDAO.executeQuery(preparedSql, null);
+			pstmt = connection.prepareStatement(preparedSql);
+			// resultSet = pstmt.executeQuery();
+			resultSet = BaseDAO.executeQuery(pstmt, null);
 			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
 				while (resultSet.next()) {
 					Recipe recipe = new Recipe();
@@ -70,7 +77,7 @@ public final class RecipeDAO {
 			e.printStackTrace();
 		} finally { // finally close and release resources.
 			try {
-				BaseDAO.closeAll(BaseDAO.getConn(), BaseDAO.getPstmt(), BaseDAO.getRs());
+				BaseDAO.closeAll(null, pstmt, resultSet);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -91,14 +98,18 @@ public final class RecipeDAO {
 	 */
 	public static List<Recipe> getRecipesByName(String recipeName) {
 		List<Recipe> recipes = new ArrayList<Recipe>();
+		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
+		Connection connection = null;
 
 		try {
+			connection = BaseDAO.getConnection();
 			// GET KEYWORD FROM USER INPUT
 			String searchName = "'%" + recipeName + "%'";
 			// SHOW RECIPE
 			String preparedSql = "SELECT * FROM recipe WHERE status = 1 AND recipeName LIKE " + searchName;
-			resultSet = BaseDAO.executeQuery(preparedSql, null);
+			pstmt = connection.prepareStatement(preparedSql);
+			resultSet = BaseDAO.executeQuery(pstmt, null);
 			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
 				while (resultSet.next()) {
 					Recipe recipe = new Recipe();
@@ -112,7 +123,7 @@ public final class RecipeDAO {
 					recipe.setDescription(resultSet.getString("description"));
 					recipe.setOwnerId(Integer.valueOf(resultSet.getString("ownerUserid")));
 
-					// TODO fill the ingredients and steps..
+					// Fill the ingredients and steps..
 					recipe.setSteps(StepDAO.searchStepByRecipeId(recipe.getRecipeID()));
 					recipe.setIngredients(IngredientDAO.searchIngredientByRecipeId(recipe.getRecipeID()));
 
@@ -127,7 +138,7 @@ public final class RecipeDAO {
 			e.printStackTrace();
 		} finally { // finally close and release resources.
 			try {
-				BaseDAO.closeAll(BaseDAO.getConn(), BaseDAO.getPstmt(), BaseDAO.getRs());
+				BaseDAO.closeAll(null, pstmt, resultSet);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -147,6 +158,11 @@ public final class RecipeDAO {
 	 */
 	public static List<Recipe> getRecipesByIngredient(String ingredientName) {
 		List<Recipe> recipes = new ArrayList<Recipe>();
+		
+		//First you get all the ingredients name by calling functions in the ingredientDAO.
+		
+		//Second after you get all the List<Integer> recipeId from ingredientDAO, just call function getRecipesByIds
+		//which means you should implement getRecipesByIds, hahahahah!
 
 		return recipes;
 	}
@@ -247,8 +263,8 @@ public final class RecipeDAO {
 	 *            string from console input.
 	 */
 	public static void main(String[] args) {
-//		List<Recipe> recipes = getAllRecipes();
-		
+		// List<Recipe> recipes = getAllRecipes();
+
 		List<Recipe> recipes = getRecipesByName("su");
 
 		/**
@@ -256,7 +272,7 @@ public final class RecipeDAO {
 		 * status as 0, to test if they will be printed out.
 		 */
 		for (Recipe recipe : recipes) {
-			System.out.println(recipe.getRecipeName());
+			System.out.println(recipe);
 		}
 
 	}

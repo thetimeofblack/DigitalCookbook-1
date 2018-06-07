@@ -1,5 +1,7 @@
 package de.fhluebeck.group3.DAO;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import de.fhluebeck.group3.model.Ingredient;
 public final class IngredientDAO {
 
 	/**
-	 * Patch update multiple ingredients.
+	 * Batch update multiple ingredients.
 	 * 
 	 * @param ingredients:
 	 *            the ingredients to be updated.
@@ -25,26 +27,12 @@ public final class IngredientDAO {
 	 */
 	public static boolean updatePatchIngredients(List<Ingredient> ingredients) {
 		boolean flag = false;
-		/*
-		 * java.sql.Connection conn = null; java.sql.PreparedStatement ps = null; try {
-		 * String preparedSql =
-		 * "\"UPDATE `ingredient` VALUES (?, ?, ?, ?, ?, ?, ?) WHERE `recipeID` = ?\" ";
-		 * Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver"); conn =
-		 * DriverManager.getConnection
-		 * ("jdbc:mysql://localhost:3306/cookbook_group3?characterEncoding=utf-8&useSSL=false",
-		 * "root", "root"); ps = conn.prepareStatement(preparedSql); Object[] parameters
-		 * = {ingredients.get(0), ingredients.get(1), ingredients.get(2),
-		 * ingredients.get(3), ingredients.get(4), ingredients.get(5),
-		 * ingredients.get(6)}; flag = BaseDAO.executeSql(preparedSql, parameters);
-		 * }catch(Exception e) { e.printStackTrace(); }finally {
-		 * 
-		 * }
-		 */
+
 		return flag;
 	}
 
 	/**
-	 * Patch add multiple ingredients.
+	 * Batch add multiple ingredients.
 	 * 
 	 * @param ingredients:
 	 *            the ingredients to be added.
@@ -54,12 +42,33 @@ public final class IngredientDAO {
 	public static boolean addPatchIngredients(List<Ingredient> ingredients) {
 		boolean flag = false;
 
-
 		return flag;
 	}
 
 	/**
-	 * Patch search multiple ingredients by recipe id.
+	 * Search for the recipes(only retrieve their id) who has the ingredient that
+	 * matches the ingredientsName, which is regular expression.
+	 * 
+	 * @param ingredientName:
+	 *            the ingredient name used to search for satisfied ingredients.
+	 * 
+	 * @return recipeIds: a list of ingredients that satisfied the regular
+	 *         expression "*ingredientName*"
+	 * 
+	 */
+	public static List<Integer> searchRecipeIdByIngredientsName(String ingredientName) {
+		List<Integer> recipeIds = new ArrayList<Integer>();
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		Connection connection = null;
+
+		// SQL likes: select recipeId from ingredients where status = 1 and ingredientName like "*ingredientName*"
+
+		return recipeIds;
+	}
+
+	/**
+	 * Batch search multiple ingredients by recipe id.
 	 * 
 	 * @param recipeId:
 	 *            recipe id of required ingredients.
@@ -69,14 +78,16 @@ public final class IngredientDAO {
 	public static List<Ingredient> searchIngredientByRecipeId(Integer recipeId) {
 		List<Ingredient> ingredients = new ArrayList<>();
 		Ingredient ingredient = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Connection connection = null;
 		try {
-			// java.sql.Connection conn = null;
-			// java.sql.PreparedStatement ps = null;
-			ResultSet rs = null;
+			connection = BaseDAO.getConnection();
 			String preparedSql = "SELECT * FROM ingredient WHERE recipeID = ? AND status = 1";
 			// conn = BaseDAO.getConnection();
 			Object[] parameters = { recipeId };
-			rs = BaseDAO.executeQuery(preparedSql, parameters);
+			pstmt = connection.prepareStatement(preparedSql);
+			rs = BaseDAO.executeQuery(pstmt, parameters);
 			if (rs != null && rs.isBeforeFirst()) {
 				while (rs.next()) {
 					ingredient = new Ingredient();
@@ -94,7 +105,7 @@ public final class IngredientDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				BaseDAO.closeAll(BaseDAO.getConn(), BaseDAO.getPstmt(), BaseDAO.getRs());
+				BaseDAO.closeAll(null, pstmt, rs);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -113,7 +124,7 @@ public final class IngredientDAO {
 	public static boolean deleteIngredientById(Integer ingredientId) {
 		boolean flag = false;
 		try {
-			String preparedSql = "DELETE FROM `ingredient` WHERE `id` = ?";
+			String preparedSql = "UPDATE `ingredient` SET `status` = 0 WHERE `id` = ?";
 			Object[] parameters = { ingredientId };
 			flag = BaseDAO.executeSql(preparedSql, parameters);
 		} catch (Exception e) {
