@@ -48,7 +48,8 @@ public final class UserDAO {
 					user.setPassword(resultSet.getString("password"));
 					user.setStatus(Integer.valueOf(resultSet.getString("status")));
 				}
-				// also we have to fill its favorite recipes and ownRecipes Lists to make a full user.
+				// also we have to fill its favorite recipes and ownRecipes Lists to make a full
+				// user.
 				// user.setOwnRecipes(RecipeDAO.getRecipesByUser(user));
 				// user.setFavoriteRecipes(RecipeDAO.getFavoritedRecipes(user));
 			} else {
@@ -58,7 +59,7 @@ public final class UserDAO {
 			e.printStackTrace();
 		} finally { // finally close and release resources.
 			try {
-				BaseDAO.closeAll(null, pstmt,resultSet);
+				BaseDAO.closeAll(null, pstmt, resultSet);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

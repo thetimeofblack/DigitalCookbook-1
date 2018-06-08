@@ -158,11 +158,13 @@ public final class RecipeDAO {
 	 */
 	public static List<Recipe> getRecipesByIngredient(String ingredientName) {
 		List<Recipe> recipes = new ArrayList<Recipe>();
-		
-		//First you get all the ingredients name by calling functions in the ingredientDAO.
-		
-		//Second after you get all the List<Integer> recipeId from ingredientDAO, just call function getRecipesByIds
-		//which means you should implement getRecipesByIds, hahahahah!
+
+		// First you get all the ingredients name by calling functions in the
+		// ingredientDAO.
+
+		// Second after you get all the List<Integer> recipeId from ingredientDAO, just
+		// call function getRecipesByIds
+		// which means you should implement getRecipesByIds, hahahahah!
 
 		return recipes;
 	}
@@ -263,17 +265,20 @@ public final class RecipeDAO {
 	 *            string from console input.
 	 */
 	public static void main(String[] args) {
-		// List<Recipe> recipes = getAllRecipes();
+		
+		 List<Recipe> recipes = getAllRecipes();
 
-		List<Recipe> recipes = getRecipesByName("su");
+		// List<Recipe> recipes = getRecipesByName("su");
+
+//		deleteRecipe(1);
 
 		/**
 		 * print basic information of step, you can set, in the database, some step's
 		 * status as 0, to test if they will be printed out.
 		 */
-		for (Recipe recipe : recipes) {
-			System.out.println(recipe);
-		}
+		 for (Recipe recipe : recipes) {
+		 System.out.println(recipe);
+		 }
 
 	}
 

@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.itextpdf.text.DocumentException;
@@ -32,6 +33,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
@@ -235,10 +237,29 @@ public final class MainFrameController implements Initializable {
 	/**
 	 * 
 	 * */
+	private void clearRecipeInformationList() {
+		// clear picture of recipe
+		recipePic.setImage(null);
+		// print basic information of recipe.
+		DescriptionLabel.setText(null);
+		recipeName.setText(null);
+		ServingPeopleLabel.setText(null);
+		preparationTimeLabel.setText(null);
+		cookingTimeLabel.setText(null);
+		// Add steps into the step table.
+		stepsTable.setItems(null);
+		// Add ingredients into the ingredient table.
+		ingredientTable.setItems(null);
+	}
+
+	/**
+	 * 
+	 * */
 	private void refreshView() {
 		// load information of recipes on ListView panel.
 		try {
 			this.showRecipeList(this.currentRecipe);
+			this.clearRecipeInformationList();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -304,7 +325,7 @@ public final class MainFrameController implements Initializable {
 				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_out.png", this.homeButton);
 			}
 		});
-		
+
 		this.FavButton.setOnMouseEntered((event) -> {
 			if (!this.isShowFavorite) {
 				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_on.png", this.FavButton);
@@ -356,6 +377,33 @@ public final class MainFrameController implements Initializable {
 				alert.showAndWait();
 			}
 
+		});
+
+		// Set on action when you click the delete Recipe button.
+		this.deleteRecipeButton.setOnAction((event) -> {
+			Alert alert = new Alert(AlertType.WARNING,
+					"Do you really want to delete " + this.selectedRecipe.getRecipeName() + "?", ButtonType.YES,
+					ButtonType.NO);
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.YES) { // User confirms the deletion.
+
+				if (RecipeDAO.deleteRecipe(this.selectedRecipe.getRecipeID())) {
+
+					new Alert(AlertType.CONFIRMATION, "Recipe has been deleted !", ButtonType.OK).showAndWait();
+
+					// TODO distinguish between favorite recipes and all recipes.
+					this.currentRecipe = RecipeDAO.getAllRecipes();
+
+					this.refreshView();
+
+				}
+
+			} else { // User cancels the deletion.
+
+				/** do nothing */
+
+			}
 		});
 
 		searchInput.textProperty().addListener(new ChangeListener<String>() {

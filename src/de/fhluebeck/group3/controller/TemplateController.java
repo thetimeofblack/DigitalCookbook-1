@@ -62,16 +62,16 @@ public final class TemplateController implements Initializable {
 		Template.getPrimaryStage().setTitle("Digital Cookbook");
 
 		Template.getPrimaryStage().getIcons().add(new Image("/de/fhluebeck/group3/resources/system/cookbook.jpg"));
-		
+
 		this.password_field.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
 			public void handle(KeyEvent event) {
-				if(event.getCode().equals(KeyCode.ENTER)) {
+				if (event.getCode().equals(KeyCode.ENTER)) {
 					attemptLogin();
 				}
 			}
-			
+
 		});
 
 		// set the trigger to the login_button;
@@ -117,11 +117,11 @@ public final class TemplateController implements Initializable {
 	private void hideErrorInformation() {
 		this.error_message.setVisible(false);
 	}
-	
+
 	/**
 	 * 
 	 * */
-	protected void attemptLogin(){
+	protected void attemptLogin() {
 		String username = username_field.getText();
 		String password = password_field.getText();
 		User user = UserDAO.validatePassword(username, password);

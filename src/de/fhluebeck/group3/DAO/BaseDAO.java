@@ -95,7 +95,7 @@ public final class BaseDAO {
 	public static ResultSet executeQuery(PreparedStatement preparedSql, Object[] param) throws ClassNotFoundException {
 
 		ResultSet resultSet = null;
-		
+
 		/* deal with and execute SQL */
 		try {
 			if (param != null && param.length > 0) {
