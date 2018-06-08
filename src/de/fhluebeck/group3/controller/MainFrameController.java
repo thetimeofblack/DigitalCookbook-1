@@ -60,6 +60,8 @@ public final class MainFrameController implements Initializable {
 
 	public static final String RECIPE_IMAGE_DEFAULT_PATH = "src/de/fhluebeck/group3/resources/recipe/";
 
+	protected boolean isShowFavorite;
+
 	protected List<Recipe> currentRecipe;
 
 	protected Recipe selectedRecipe;
@@ -247,6 +249,8 @@ public final class MainFrameController implements Initializable {
 	 * */
 	private void initialSetAllElementProperities() {
 
+		this.isShowFavorite = false;
+
 		this.currentRecipe = RecipeDAO.getAllRecipes();
 
 		// Set the current user name as welcome sentence.
@@ -267,7 +271,7 @@ public final class MainFrameController implements Initializable {
 		ingredientQuantityColumn.setStyle("-fx-alignment: CENTER;");
 		ingredientUnitColumn.setStyle("-fx-alignment: CENTER;");
 
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/home_out.png", this.homeButton);
+		this.setIconImage("src/de/fhluebeck/group3/resources/system/home_on.png", this.homeButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/like_out.png", this.FavButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/logout_out.png", this.LogoutButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/search_out.png", this.searchButton);
@@ -281,22 +285,52 @@ public final class MainFrameController implements Initializable {
 		this.searchByName.setSelected(true);
 
 		// Set button on actions.
-		setButtonIconAction(this.homeButton, "home_on.png", "home_out.png");
-		setButtonIconAction(this.FavButton, "like_on.png", "like_out.png");
+		// setButtonIconAction(this.homeButton, "home_on.png", "home_out.png");
+		// setButtonIconAction(this.FavButton, "like_on.png", "like_out.png");
 		setButtonIconAction(this.LogoutButton, "logout_on.png", "logout_out.png");
 		setButtonIconAction(this.searchButton, "search_on.png", "search_out.png");
 		setButtonIconAction(this.exportPDFButton, "pdf_on.png", "pdf_out.png");
 		setButtonIconAction(this.editRecipeButton, "edit_on.png", "edit_out.png");
 		setButtonIconAction(this.deleteRecipeButton, "delete_on.png", "delete_out.png");
 
+		this.homeButton.setOnMouseEntered((event) -> {
+			if (this.isShowFavorite) {
+				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_on.png", this.homeButton);
+			}
+
+		});
+		this.homeButton.setOnMouseExited((event) -> {
+			if (this.isShowFavorite) {
+				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_out.png", this.homeButton);
+			}
+		});
+		
+		this.FavButton.setOnMouseEntered((event) -> {
+			if (!this.isShowFavorite) {
+				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_on.png", this.FavButton);
+			}
+
+		});
+		this.FavButton.setOnMouseExited((event) -> {
+			if (!this.isShowFavorite) {
+				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", this.FavButton);
+			}
+		});
+
 		// when click the home button, return to the home page.
 		this.homeButton.setOnAction((event) -> {
 			// TODO show all the recipes.
+			this.isShowFavorite = false;
+			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_on.png", this.homeButton);
+			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", this.FavButton);
 		});
 
 		// when click the home button, return to the home page.
 		this.FavButton.setOnAction((event) -> {
 			// TODO show favorite recipes of current user.
+			this.isShowFavorite = true;
+			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_on.png", this.FavButton);
+			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_out.png", this.homeButton);
 		});
 
 		// when click the home button, return to the home page.
@@ -329,12 +363,12 @@ public final class MainFrameController implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
-				if(searchByName.isSelected()) {
+				if (searchByName.isSelected()) {
 					currentRecipe = RecipeDAO.getRecipesByName(newValue);
-				}else if(searchByIngredient.isSelected()) {
+				} else if (searchByIngredient.isSelected()) {
 					currentRecipe = RecipeDAO.getRecipesByIngredient(newValue);
 				}
-				
+
 				refreshView();
 
 			}

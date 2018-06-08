@@ -25,7 +25,7 @@ public final class IngredientDAO {
 	 * 
 	 * @return flag: whether the function is succeeded or not.
 	 */
-	public static boolean updatePatchIngredients(List<Ingredient> ingredients) {
+	public static boolean updateBatchIngredients(List<Ingredient> ingredients) {
 		boolean flag = false;
 
 		return flag;
@@ -39,7 +39,7 @@ public final class IngredientDAO {
 	 * 
 	 * @return flag: whether the function is succeeded or not.
 	 */
-	public static boolean addPatchIngredients(List<Ingredient> ingredients) {
+	public static boolean addBatchIngredients(List<Ingredient> ingredients) {
 		boolean flag = false;
 
 		return flag;
@@ -53,7 +53,7 @@ public final class IngredientDAO {
 	 *            the ingredient name used to search for satisfied ingredients.
 	 * 
 	 * @return recipeIds: a list of ingredients that satisfied the regular
-	 *         expression "*ingredientName*"
+	 *         expression "%ingredientName%"
 	 * 
 	 */
 	public static List<Integer> searchRecipeIdByIngredientsName(String ingredientName) {
@@ -64,8 +64,9 @@ public final class IngredientDAO {
 		
 		try {
 			connection = BaseDAO.getConnection();
-			String preparedSql = "SELECT recipeId FROM ingredient WHERE ingredientName like ? AND status = 1";
-			Object[] parameters = { ingredientName };
+			String ingreString = "%" + ingredientName + "%";
+			String preparedSql = "SELECT distinct(recipeID) FROM ingredient where status = 1 and ingredientName like ?";
+			Object[] parameters = { ingreString };
 			pstmt = connection.prepareStatement(preparedSql);
 			resultSet = BaseDAO.executeQuery(pstmt, parameters);
 			if (resultSet != null && resultSet.isBeforeFirst()) {
@@ -85,7 +86,6 @@ public final class IngredientDAO {
 			}
 		}
 		return recipeIds;
-		// SQL likes: select recipeId from ingredients where status = 1 and ingredientName like "*ingredientName*"
 	}
 
 	/**
@@ -169,7 +169,7 @@ public final class IngredientDAO {
 			System.out.println(ingredient);*/
 		
 		//test the function of searchRecipeIdByIngredientsName(String ingredientName)
-		List<Integer> ids = searchRecipeIdByIngredientsName("Shaoxin rice wine");
+		List<Integer> ids = searchRecipeIdByIngredientsName("i");
 		for(int id : ids) 
 		{System.out.println(id);}
 		}
