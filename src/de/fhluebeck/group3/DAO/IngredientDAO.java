@@ -61,10 +61,31 @@ public final class IngredientDAO {
 		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
 		Connection connection = null;
-
-		// SQL likes: select recipeId from ingredients where status = 1 and ingredientName like "*ingredientName*"
-
+		
+		try {
+			connection = BaseDAO.getConnection();
+			String preparedSql = "SELECT recipeId FROM ingredient WHERE ingredientName like ? AND status = 1";
+			Object[] parameters = { ingredientName };
+			pstmt = connection.prepareStatement(preparedSql);
+			resultSet = BaseDAO.executeQuery(pstmt, parameters);
+			if (resultSet != null && resultSet.isBeforeFirst()) {
+				while (resultSet.next()) {
+					int recipeID;
+					recipeID = resultSet.getInt("recipeID");
+					recipeIds.add(recipeID);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				BaseDAO.closeAll(null, pstmt, resultSet);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return recipeIds;
+		// SQL likes: select recipeId from ingredients where status = 1 and ingredientName like "*ingredientName*"
 	}
 
 	/**
@@ -84,7 +105,6 @@ public final class IngredientDAO {
 		try {
 			connection = BaseDAO.getConnection();
 			String preparedSql = "SELECT * FROM ingredient WHERE recipeID = ? AND status = 1";
-			// conn = BaseDAO.getConnection();
 			Object[] parameters = { recipeId };
 			pstmt = connection.prepareStatement(preparedSql);
 			rs = BaseDAO.executeQuery(pstmt, parameters);
@@ -143,11 +163,14 @@ public final class IngredientDAO {
 	 */
 	public static void main(String[] args) {
 
-		List<Ingredient> ingredients = searchIngredientByRecipeId(1);
+		/*List<Ingredient> ingredients = searchIngredientByRecipeId(1);
 
 		for (Ingredient ingredient : ingredients) {
-			System.out.println(ingredient);
+			System.out.println(ingredient);*/
+		
+		//test the function of searchRecipeIdByIngredientsName(String ingredientName)
+		List<Integer> ids = searchRecipeIdByIngredientsName("Shaoxin rice wine");
+		for(int id : ids) 
+		{System.out.println(id);}
 		}
-
-	}
 }
