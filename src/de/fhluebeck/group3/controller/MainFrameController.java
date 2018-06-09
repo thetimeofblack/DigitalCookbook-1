@@ -352,6 +352,15 @@ public final class MainFrameController implements Initializable {
 			this.isShowFavorite = true;
 			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_on.png", this.FavButton);
 			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_out.png", this.homeButton);
+			
+			this.currentRecipe = RecipeDAO.getFavoritedRecipes(Template.getCurrentUser().getUserId());
+			
+			try {
+				this.showRecipeList(this.currentRecipe);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 		});
 
 		// when click the home button, return to the home page.
@@ -381,28 +390,34 @@ public final class MainFrameController implements Initializable {
 
 		// Set on action when you click the delete Recipe button.
 		this.deleteRecipeButton.setOnAction((event) -> {
-			Alert alert = new Alert(AlertType.WARNING,
-					"Do you really want to delete " + this.selectedRecipe.getRecipeName() + "?", ButtonType.YES,
-					ButtonType.NO);
-
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == ButtonType.YES) { // User confirms the deletion.
-
-				if (RecipeDAO.deleteRecipe(this.selectedRecipe.getRecipeID())) {
-
-					new Alert(AlertType.CONFIRMATION, "Recipe has been deleted !", ButtonType.OK).showAndWait();
-
-					// TODO distinguish between favorite recipes and all recipes.
-					this.currentRecipe = RecipeDAO.getAllRecipes();
-
-					this.refreshView();
-
+			if(this.selectedRecipe.getOwnerId().equals(Template.getCurrentUser().getUserId())) {
+				Alert alert = new Alert(AlertType.WARNING,
+						"Do you really want to delete " + this.selectedRecipe.getRecipeName() + "?", ButtonType.YES,
+						ButtonType.NO);
+	
+				Optional<ButtonType> result = alert.showAndWait();
+				
+				if (result.get() == ButtonType.YES) { // User confirms the deletion.
+	
+					if (RecipeDAO.deleteRecipe(this.selectedRecipe.getRecipeID())) {
+	
+						new Alert(AlertType.CONFIRMATION, "Recipe has been deleted !", ButtonType.OK).showAndWait();
+	
+						// TODO distinguish between favorite recipes and all recipes.
+						this.currentRecipe = RecipeDAO.getAllRecipes();
+	
+						this.refreshView();
+	
+					}
+	
+				} else { // User cancels the deletion.
+	
+					/** do nothing */
+	
 				}
-
-			} else { // User cancels the deletion.
-
-				/** do nothing */
-
+			}else {
+				Alert alert = new Alert(AlertType.ERROR,"Error: No Permission to delete!!", ButtonType.OK);
+				alert.showAndWait();
 			}
 		});
 
