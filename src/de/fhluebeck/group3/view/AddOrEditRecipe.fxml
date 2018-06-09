@@ -67,41 +67,56 @@
                            </font></Label>
                         <HBox>
                            <children>
-      								<TextArea id="preparingTime" prefHeight="57.0" prefWidth="193.0" promptText="eg. 20 minutes" />
+      								<TextArea id="preparingTime" prefHeight="57.0" prefWidth="193.0" promptText="e.g. 20 minutes" />
                            </children>
                         </HBox>
 							</children>
 						</VBox>
 						<VBox prefHeight="80.0" prefWidth="210.0">
 							<children>
-								<Label prefHeight="39.0" prefWidth="266.0" text="cooking time" />
+								<Label prefHeight="39.0" prefWidth="266.0" text="cooking time">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font></Label>
                         <HBox>
                            <children>
-      								<TextArea id="cookingTime" prefHeight="50.0" prefWidth="210.0" promptText="eg. 1hour" />
+      								<TextArea id="cookingTime" prefHeight="50.0" prefWidth="210.0" promptText="e.g. 1hour" />
                            </children>
                         </HBox>
 							</children>
 						</VBox>
 					</children>
 				</TilePane>
-				<Label prefHeight="60.0" prefWidth="195.0" text="Now upload a picture!" />
+				<Label prefHeight="60.0" prefWidth="230.0" text="Now upload a picture!">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font></Label>
             <HBox prefHeight="393.0" prefWidth="766.0">
                <children>
                   <StackPane prefHeight="329.0" prefWidth="646.0">
                      <children>
                         <ImageView fitHeight="392.0" fitWidth="646.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label id="noImage" prefHeight="44.0" prefWidth="153.0" text="No image!" />
+                        <Label id="noImage" prefHeight="44.0" prefWidth="191.0" text="No image!">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font></Label>
                      </children>
                   </StackPane>
                </children>
             </HBox>
             <Label prefHeight="32.0" prefWidth="116.0" />
-				<Button id="choosePicture" mnemonicParsing="false" prefHeight="43.0" prefWidth="164.0" text="Choose Picture" />
+				<Button id="choosePicture" mnemonicParsing="false" prefHeight="43.0" prefWidth="164.0" text="Choose Picture">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font></Button>
 			</children>
 		</VBox>
 		<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
 			<children>
-				<Label prefHeight="43.0" prefWidth="160.0" text="Ingridients" />
+				<Label prefHeight="43.0" prefWidth="160.0" text="Ingridients">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font></Label>
 				<TableView id="ingredients" prefHeight="266.0" prefWidth="765.0">
 					<columns>
 						<TableColumn id="iName" prefWidth="121.0" text="Name" />
@@ -112,13 +127,22 @@
 				</TableView>
 				<HBox prefHeight="37.0" prefWidth="765.0">
 					<children>
-						<Button id="addIngredient" mnemonicParsing="false" prefHeight="36.0" prefWidth="178.0" text="add ingredient" />
+						<Button id="addIngredient" mnemonicParsing="false" prefHeight="36.0" prefWidth="178.0" text="add ingredient">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font></Button>
 						<Label prefHeight="24.0" prefWidth="85.0" />
-						<Button id="removeIngredient" mnemonicParsing="false" prefHeight="36.0" prefWidth="202.0" text="remove ingredient" />
+						<Button id="removeIngredient" mnemonicParsing="false" prefHeight="36.0" prefWidth="202.0" text="remove ingredient">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font></Button>
 					</children>
 				</HBox>
 				<Label prefHeight="57.0" prefWidth="46.0" />
-				<Label prefHeight="26.0" prefWidth="48.0" text="Steps" />
+				<Label prefHeight="25.0" prefWidth="72.0" text="Steps">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font></Label>
 				<TableView id="steps" prefHeight="307.0" prefWidth="765.0">
 					<columns>
 						<TableColumn id="Order" prefWidth="75.0" text="Order" />
@@ -127,17 +151,29 @@
 				</TableView>
 				<HBox prefHeight="52.0" prefWidth="765.0">
 					<children>
-						<Button id="addStep" mnemonicParsing="false" prefHeight="36.0" prefWidth="140.0" text="add step" />
+						<Button id="addStep" mnemonicParsing="false" prefHeight="36.0" prefWidth="140.0" text="add step">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font></Button>
 						<Label prefHeight="24.0" prefWidth="117.0" />
-						<Button id="removeStep" mnemonicParsing="false" prefHeight="36.0" prefWidth="154.0" text="remove step" />
+						<Button id="removeStep" mnemonicParsing="false" prefHeight="36.0" prefWidth="154.0" text="remove step">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font></Button>
 					</children>
 				</HBox>
 				<HBox prefHeight="100.0" prefWidth="200.0">
 					<children>
 						<Label prefHeight="49.0" prefWidth="333.0" />
-						<Button id="save" mnemonicParsing="false" prefHeight="47.0" prefWidth="181.0" text="save the recipe" />
+						<Button id="save" mnemonicParsing="false" prefHeight="47.0" prefWidth="181.0" text="save the recipe">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font></Button>
 						<Label prefHeight="24.0" prefWidth="77.0" />
-						<Button id="cancel" mnemonicParsing="false" prefHeight="51.0" prefWidth="165.0" text="Cancel" />
+						<Button id="cancel" mnemonicParsing="false" prefHeight="46.0" prefWidth="165.0" text="Cancel">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font></Button>
 					</children>
 				</HBox>
 			</children>
