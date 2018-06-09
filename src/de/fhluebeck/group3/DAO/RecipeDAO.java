@@ -158,13 +158,34 @@ public final class RecipeDAO {
 	 */
 	public static List<Recipe> getRecipesByIngredient(String ingredientName) {
 		List<Recipe> recipes = new ArrayList<Recipe>();
-
-		// First you get all the ingredients name by calling functions in the
-		// ingredientDAO.
-
-		// Second after you get all the List<Integer> recipeId from ingredientDAO, just
-		// call function getRecipesByIds
-		// which means you should implement getRecipesByIds, hahahahah!
+		PreparedStatement pstmt = null;
+		List<Integer> resultList = null;
+		Connection connection = null;
+		
+		
+		try {
+			connection = BaseDAO.getConnection();
+			// First you get all the ingredients name by calling functions in the
+			// ingredientDAO.
+			
+			resultList = IngredientDAO.searchRecipeIdByIngredientsName(ingredientName);
+			
+			// Second after you get all the List<Integer> recipeId from ingredientDAO, just
+			// call function getRecipesByIds
+			// which means you should implement getRecipesByIds, hahahahah!
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally { // finally close and release resources.
+			try {
+				BaseDAO.closeAll(null, pstmt, (ResultSet) resultList);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 
 		return recipes;
 	}
@@ -182,7 +203,42 @@ public final class RecipeDAO {
 	 */
 	public static List<Recipe> getRecipesByIds(List<Integer> recipeIds) {
 		List<Recipe> recipes = new ArrayList<Recipe>();
+		PreparedStatement pstmt = null;
+		List<Integer> resultList = null;
+		Connection connection = null;
+		  
+		  final int SINGLE_BATCH = 1; //注意：为了把参数集合完整划分，这个值为1的批量数是必须的
+	      final int SMALL_BATCH = 4;
+	      final int MEDIUM_BATCH = 11;
+	      final int LARGE_BATCH = 51;
+	      int totalNumberOfValuesLeftToBatch = recipeIds.size();
+	      List<Integer> getBatchSize(totalNumberOfValuesLeftToBatch){
+	          List<Integer> batches= new ArrayList<Integer>();
+	          while ( totalNumberOfValuesLeftToBatch > 0 ) {
+	               int batchSize = SINGLE_BATCH;
+	               if ( totalNumberOfValuesLeftToBatch >= LARGE_BATCH ) {
+	                batchSize = LARGE_BATCH;
+	              } else if ( totalNumberOfValuesLeftToBatch >= MEDIUM_BATCH ) {
+	                batchSize = MEDIUM_BATCH;
+	              } else if ( totalNumberOfValuesLeftToBatch >= SMALL_BATCH ) {
+	                batchSize = SMALL_BATCH;
+	              }
+	              batches.add(batchSize);
+	              totalNumberOfValuesLeftToBatch -= batchSize;
+	              
+	              for(int i=0;i < batchSize; i++) {
+	      			  String preparedSql = "SELECT * FROM recipe WHERE id IN " + recipeIds;
+	      			  pstmt = connection.prepareStatement(preparedSql);
+	      			  resultList = BaseDAO.executeQuery(pstmt, null); //or whatever values you are trying to query by
 
+		    		 }
+	          }
+	          return batches;
+	          
+
+	     }
+	     
+	      
 		return recipes;
 	}
 
