@@ -48,10 +48,7 @@ public final class UserDAO {
 					user.setPassword(resultSet.getString("password"));
 					user.setStatus(Integer.valueOf(resultSet.getString("status")));
 				}
-				// also we have to fill its favorite recipes and ownRecipes Lists to make a full
-				// user.
-				// user.setOwnRecipes(RecipeDAO.getRecipesByUser(user));
-				// user.setFavoriteRecipes(RecipeDAO.getFavoritedRecipes(user));
+				// also we have to fill its favorite recipes and ownRecipes Lists to make a full user.
 			} else {
 			}
 

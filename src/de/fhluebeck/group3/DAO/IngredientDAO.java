@@ -64,7 +64,8 @@ public final class IngredientDAO {
 		
 		try {
 			connection = BaseDAO.getConnection();
-			String preparedSql = "SELECT recipeID FROM ingredient WHERE ingredientName like ? AND status = 1";
+			String preparedSql = "SELECT DISTINCT(recipeID) FROM ingredient WHERE ingredientName like ? AND status = 1";
+			ingredientName = "%" + ingredientName + "%";
 			Object[] parameters = { ingredientName };
 			pstmt = connection.prepareStatement(preparedSql);
 			resultSet = BaseDAO.executeQuery(pstmt, parameters);

@@ -344,6 +344,15 @@ public final class MainFrameController implements Initializable {
 			this.isShowFavorite = false;
 			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_on.png", this.homeButton);
 			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", this.FavButton);
+			
+			this.currentRecipe = RecipeDAO.getAllRecipes();
+			
+			try {
+				this.showRecipeList(this.currentRecipe);
+				clearRecipeInformationList();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		});
 
 		// when click the home button, return to the home page.
@@ -357,6 +366,7 @@ public final class MainFrameController implements Initializable {
 			
 			try {
 				this.showRecipeList(this.currentRecipe);
+				clearRecipeInformationList();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

@@ -1,18 +1,11 @@
 package de.fhluebeck.group3.DAO;
 
-import java.io.Writer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.sound.sampled.LineListener;
-
-import org.omg.PortableServer.POAPackage.WrongAdapter;
-
-import com.sun.org.apache.bcel.internal.generic.ISTORE;
 
 import de.fhluebeck.group3.model.Recipe;
 import de.fhluebeck.group3.model.User;
@@ -187,7 +180,7 @@ public final class RecipeDAO {
 
 	/**
 	 * Search for the recipes with the recipe IDs, which is a list. This method
-	 * involves with patch search, which I get the reference
+	 * involves with batch search, which I get the reference
 	 * from:https://blog.csdn.net/suifeng3051/article/details/24033237
 	 * 
 	 * @param recipeIds:
@@ -203,44 +196,43 @@ public final class RecipeDAO {
 		Connection connection = null;
 
 		try {
-			connection = BaseDAO.getConnection();
-			StringBuilder writer = new StringBuilder("SELECT * FROM recipe WHERE status = 1 AND id IN (");
 			if (recipeIds != null && recipeIds.size() > 0) {
+				connection = BaseDAO.getConnection();
+				StringBuilder writer = new StringBuilder("SELECT * FROM recipe WHERE status = 1 AND id IN (");
 				for (int i = 0; i < recipeIds.size(); i++) {
 					if (i == recipeIds.size() - 1) {
 						writer.append(recipeIds.get(i));
-					}else {
+					} else {
 						writer.append(recipeIds.get(i)).append(",");
 					}
 				}
 
-			}
-			writer.append(")");
-			//System.out.println(writer.toString());
-			pstmt = connection.prepareStatement(writer.toString());
-			resultSet = BaseDAO.executeQuery(pstmt, null); // or whatever values you are
+				writer.append(")");
+				pstmt = connection.prepareStatement(writer.toString());
+				resultSet = BaseDAO.executeQuery(pstmt, null); // or whatever values you are
 
-			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
-				while (resultSet.next()) {
-					Recipe recipe = new Recipe();
-					recipe.setRecipeID(Integer.valueOf(resultSet.getString("id")));
-					recipe.setRecipeName(resultSet.getString("recipeName"));
-					recipe.setImagePath(resultSet.getString("imagePath"));
-					recipe.setPreparationTime(Integer.valueOf(resultSet.getString("preparationTime")));
-					recipe.setCookingTime(Integer.valueOf(resultSet.getString("cookingTime")));
-					recipe.setAvailablePeople(Integer.valueOf(resultSet.getString("peopleAvailable")));
-					recipe.setStatus(Integer.valueOf(resultSet.getString("status")));
-					recipe.setDescription(resultSet.getString("description"));
-					recipe.setOwnerId(Integer.valueOf(resultSet.getString("ownerUserid")));
+				if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
+					while (resultSet.next()) {
+						Recipe recipe = new Recipe();
+						recipe.setRecipeID(Integer.valueOf(resultSet.getString("id")));
+						recipe.setRecipeName(resultSet.getString("recipeName"));
+						recipe.setImagePath(resultSet.getString("imagePath"));
+						recipe.setPreparationTime(Integer.valueOf(resultSet.getString("preparationTime")));
+						recipe.setCookingTime(Integer.valueOf(resultSet.getString("cookingTime")));
+						recipe.setAvailablePeople(Integer.valueOf(resultSet.getString("peopleAvailable")));
+						recipe.setStatus(Integer.valueOf(resultSet.getString("status")));
+						recipe.setDescription(resultSet.getString("description"));
+						recipe.setOwnerId(Integer.valueOf(resultSet.getString("ownerUserid")));
 
-					// Fill the ingredients and steps..
-					recipe.setSteps(StepDAO.searchStepByRecipeId(recipe.getRecipeID()));
-					recipe.setIngredients(IngredientDAO.searchIngredientByRecipeId(recipe.getRecipeID()));
+						// Fill the ingredients and steps..
+						recipe.setSteps(StepDAO.searchStepByRecipeId(recipe.getRecipeID()));
+						recipe.setIngredients(IngredientDAO.searchIngredientByRecipeId(recipe.getRecipeID()));
 
-					recipes.add(recipe);
+						recipes.add(recipe);
+					}
 				}
-			}
 
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally { // finally close and release resources.
@@ -388,13 +380,13 @@ public final class RecipeDAO {
 		// deleteRecipe(1);
 
 		// List<Recipe> recipeFavs = getFavoritedRecipes(1);
-		
-//		List<Integer> list = new ArrayList<>();
-//		list.add(1);
-//		list.add(2);
-//		List<Recipe> recipes = getRecipesByIds(list);
-		
-		List<Recipe> recipes = getRecipesByIngredient("peanuts");
+
+		// List<Integer> list = new ArrayList<>();
+		// list.add(1);
+		// list.add(2);
+		// List<Recipe> recipes = getRecipesByIds(list);
+
+		List<Recipe> recipes = getRecipesByIngredient("shao");
 		/**
 		 * print basic information of step, you can set, in the database, some step's
 		 * status as 0, to test if they will be printed out.
