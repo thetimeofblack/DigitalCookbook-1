@@ -243,8 +243,6 @@ public final class RecipeDAO {
 			}
 		}
 
-		// trying to query by
-
 		return recipes;
 	}
 
@@ -268,6 +266,7 @@ public final class RecipeDAO {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		//do not need to close resources here.
 		return flag;
 	}
 
