@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
@@ -17,7 +18,10 @@
 	<children>
 		<VBox prefHeight="200.0" prefWidth="100.0">
 			<children>
-				<Label prefHeight="41.0" prefWidth="151.0" text="Name of recipe" />
+				<Label prefHeight="41.0" prefWidth="151.0" text="Name of recipe">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font></Label>
             <HBox>
                <children>
       				<TextArea id="nameOfRecipe" prefHeight="45.0" prefWidth="745.0" promptText="Please enter recipe name...">
@@ -27,7 +31,10 @@
                   </TextArea>
                </children>
             </HBox>
-				<Label prefHeight="35.0" prefWidth="178.0" text="Desciption" />
+				<Label prefHeight="35.0" prefWidth="178.0" text="Desciption">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font></Label>
             <HBox>
                <children>
       				<TextField id="description" prefHeight="47.0" prefWidth="746.0" promptText="Please enter recipe description...">
@@ -41,20 +48,26 @@
 					<children>
 						<VBox prefHeight="86.0" prefWidth="250.0">
 							<children>
-								<Label prefHeight="39.0" prefWidth="209.0" text="serving people amount" />
+								<Label prefHeight="39.0" prefWidth="225.0" text="serving people amount">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font></Label>
                         <HBox>
                            <children>
-      								<TextArea id="servingPeopleAmount" prefHeight="47.0" prefWidth="192.0" />
+      								<TextArea id="servingPeopleAmount" prefHeight="47.0" prefWidth="192.0" promptText="1, 2, 3..." />
                            </children>
                         </HBox>
 							</children>
 						</VBox>
 						<VBox prefHeight="86.0" prefWidth="196.0">
 							<children>
-								<Label prefHeight="44.0" prefWidth="250.0" text="preparing time" />
+								<Label prefHeight="44.0" prefWidth="250.0" text="preparing time">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font></Label>
                         <HBox>
                            <children>
-      								<TextArea id="preparingTime" prefHeight="57.0" prefWidth="193.0" />
+      								<TextArea id="preparingTime" prefHeight="57.0" prefWidth="193.0" promptText="eg. 20 minutes" />
                            </children>
                         </HBox>
 							</children>
@@ -64,7 +77,7 @@
 								<Label prefHeight="39.0" prefWidth="266.0" text="cooking time" />
                         <HBox>
                            <children>
-      								<TextArea id="cookingTime" prefHeight="50.0" prefWidth="210.0" />
+      								<TextArea id="cookingTime" prefHeight="50.0" prefWidth="210.0" promptText="eg. 1hour" />
                            </children>
                         </HBox>
 							</children>
@@ -72,9 +85,18 @@
 					</children>
 				</TilePane>
 				<Label prefHeight="60.0" prefWidth="195.0" text="Now upload a picture!" />
-				<ImageView id="picture" fitHeight="369.0" fitWidth="695.0" pickOnBounds="true" preserveRatio="true" />
-				<Label prefHeight="44.0" prefWidth="46.0" />
-				<Button id="choosePicture" mnemonicParsing="false" prefHeight="43.0" prefWidth="238.0" text="Choose Picture" />
+            <HBox prefHeight="393.0" prefWidth="766.0">
+               <children>
+                  <StackPane prefHeight="329.0" prefWidth="646.0">
+                     <children>
+                        <ImageView fitHeight="392.0" fitWidth="646.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label id="noImage" prefHeight="44.0" prefWidth="153.0" text="No image!" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+            <Label prefHeight="32.0" prefWidth="116.0" />
+				<Button id="choosePicture" mnemonicParsing="false" prefHeight="43.0" prefWidth="164.0" text="Choose Picture" />
 			</children>
 		</VBox>
 		<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
