@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.itextpdf.text.DocumentException;
@@ -32,6 +33,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
@@ -59,6 +61,8 @@ public final class MainFrameController implements Initializable {
 	public static final String SYSTEM_IMAGE_DEFAULT_PATH = "src/de/fhluebeck/group3/resources/system/";
 
 	public static final String RECIPE_IMAGE_DEFAULT_PATH = "src/de/fhluebeck/group3/resources/recipe/";
+
+	protected boolean isShowFavorite;
 
 	protected List<Recipe> currentRecipe;
 
@@ -233,10 +237,29 @@ public final class MainFrameController implements Initializable {
 	/**
 	 * 
 	 * */
+	private void clearRecipeInformationList() {
+		// clear picture of recipe
+		recipePic.setImage(null);
+		// print basic information of recipe.
+		DescriptionLabel.setText(null);
+		recipeName.setText(null);
+		ServingPeopleLabel.setText(null);
+		preparationTimeLabel.setText(null);
+		cookingTimeLabel.setText(null);
+		// Add steps into the step table.
+		stepsTable.setItems(null);
+		// Add ingredients into the ingredient table.
+		ingredientTable.setItems(null);
+	}
+
+	/**
+	 * 
+	 * */
 	private void refreshView() {
 		// load information of recipes on ListView panel.
 		try {
 			this.showRecipeList(this.currentRecipe);
+			this.clearRecipeInformationList();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -246,6 +269,8 @@ public final class MainFrameController implements Initializable {
 	 * 
 	 * */
 	private void initialSetAllElementProperities() {
+
+		this.isShowFavorite = false;
 
 		this.currentRecipe = RecipeDAO.getAllRecipes();
 
@@ -267,7 +292,7 @@ public final class MainFrameController implements Initializable {
 		ingredientQuantityColumn.setStyle("-fx-alignment: CENTER;");
 		ingredientUnitColumn.setStyle("-fx-alignment: CENTER;");
 
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/home_out.png", this.homeButton);
+		this.setIconImage("src/de/fhluebeck/group3/resources/system/home_on.png", this.homeButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/like_out.png", this.FavButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/logout_out.png", this.LogoutButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/search_out.png", this.searchButton);
@@ -281,22 +306,61 @@ public final class MainFrameController implements Initializable {
 		this.searchByName.setSelected(true);
 
 		// Set button on actions.
-		setButtonIconAction(this.homeButton, "home_on.png", "home_out.png");
-		setButtonIconAction(this.FavButton, "like_on.png", "like_out.png");
+		// setButtonIconAction(this.homeButton, "home_on.png", "home_out.png");
+		// setButtonIconAction(this.FavButton, "like_on.png", "like_out.png");
 		setButtonIconAction(this.LogoutButton, "logout_on.png", "logout_out.png");
 		setButtonIconAction(this.searchButton, "search_on.png", "search_out.png");
 		setButtonIconAction(this.exportPDFButton, "pdf_on.png", "pdf_out.png");
 		setButtonIconAction(this.editRecipeButton, "edit_on.png", "edit_out.png");
 		setButtonIconAction(this.deleteRecipeButton, "delete_on.png", "delete_out.png");
 
+		this.homeButton.setOnMouseEntered((event) -> {
+			if (this.isShowFavorite) {
+				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_on.png", this.homeButton);
+			}
+
+		});
+		this.homeButton.setOnMouseExited((event) -> {
+			if (this.isShowFavorite) {
+				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_out.png", this.homeButton);
+			}
+		});
+
+		this.FavButton.setOnMouseEntered((event) -> {
+			if (!this.isShowFavorite) {
+				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_on.png", this.FavButton);
+			}
+
+		});
+		this.FavButton.setOnMouseExited((event) -> {
+			if (!this.isShowFavorite) {
+				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", this.FavButton);
+			}
+		});
+
 		// when click the home button, return to the home page.
 		this.homeButton.setOnAction((event) -> {
 			// TODO show all the recipes.
+			this.isShowFavorite = false;
+			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_on.png", this.homeButton);
+			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", this.FavButton);
 		});
 
 		// when click the home button, return to the home page.
 		this.FavButton.setOnAction((event) -> {
 			// TODO show favorite recipes of current user.
+			this.isShowFavorite = true;
+			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_on.png", this.FavButton);
+			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_out.png", this.homeButton);
+			
+			this.currentRecipe = RecipeDAO.getFavoritedRecipes(Template.getCurrentUser().getUserId());
+			
+			try {
+				this.showRecipeList(this.currentRecipe);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 		});
 
 		// when click the home button, return to the home page.
@@ -324,17 +388,50 @@ public final class MainFrameController implements Initializable {
 
 		});
 
+		// Set on action when you click the delete Recipe button.
+		this.deleteRecipeButton.setOnAction((event) -> {
+			if(this.selectedRecipe.getOwnerId().equals(Template.getCurrentUser().getUserId())) {
+				Alert alert = new Alert(AlertType.WARNING,
+						"Do you really want to delete " + this.selectedRecipe.getRecipeName() + "?", ButtonType.YES,
+						ButtonType.NO);
+	
+				Optional<ButtonType> result = alert.showAndWait();
+				
+				if (result.get() == ButtonType.YES) { // User confirms the deletion.
+	
+					if (RecipeDAO.deleteRecipe(this.selectedRecipe.getRecipeID())) {
+	
+						new Alert(AlertType.CONFIRMATION, "Recipe has been deleted !", ButtonType.OK).showAndWait();
+	
+						// TODO distinguish between favorite recipes and all recipes.
+						this.currentRecipe = RecipeDAO.getAllRecipes();
+	
+						this.refreshView();
+	
+					}
+	
+				} else { // User cancels the deletion.
+	
+					/** do nothing */
+	
+				}
+			}else {
+				Alert alert = new Alert(AlertType.ERROR,"Error: No Permission to delete!!", ButtonType.OK);
+				alert.showAndWait();
+			}
+		});
+
 		searchInput.textProperty().addListener(new ChangeListener<String>() {
 
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
-				if(searchByName.isSelected()) {
+				if (searchByName.isSelected()) {
 					currentRecipe = RecipeDAO.getRecipesByName(newValue);
-				}else if(searchByIngredient.isSelected()) {
+				} else if (searchByIngredient.isSelected()) {
 					currentRecipe = RecipeDAO.getRecipesByIngredient(newValue);
 				}
-				
+
 				refreshView();
 
 			}

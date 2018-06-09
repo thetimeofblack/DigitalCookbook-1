@@ -217,6 +217,11 @@ CREATE TABLE `user-recipe-table` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='to store users favorite recipes';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+INSERT INTO `cookbook_group3`.`user-recipe-table` (`userID`, `recipeID`, `status`) VALUES ('1', '1', '1');
+INSERT INTO `cookbook_group3`.`user-recipe-table` (`userID`, `recipeID`, `status`) VALUES ('1', '2', '1');
+INSERT INTO `cookbook_group3`.`user-recipe-table` (`userID`, `recipeID`, `status`) VALUES ('1', '3', '1');
+INSERT INTO `cookbook_group3`.`user-recipe-table` (`userID`, `recipeID`, `status`) VALUES ('2', '1', '1');
+
 --
 -- Dumping data for table `user-recipe-table`
 --
