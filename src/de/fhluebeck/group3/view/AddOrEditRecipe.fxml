@@ -48,7 +48,7 @@
 				</Label>
 				<HBox>
 					<children>
-						<TextField fx:id="Description" prefHeight="47.0"
+						<TextField fx:id="description" prefHeight="47.0"
 							prefWidth="746.0" promptText="Please enter recipe description...">
 							<font>
 								<Font size="20.0" />

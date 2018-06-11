@@ -61,7 +61,7 @@ public final class IngredientDAO {
 		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
 		Connection connection = null;
-		
+
 		try {
 			connection = BaseDAO.getConnection();
 			String preparedSql = "SELECT DISTINCT(recipeID) FROM ingredient WHERE ingredientName like ? AND status = 1";
@@ -86,7 +86,8 @@ public final class IngredientDAO {
 			}
 		}
 		return recipeIds;
-		// SQL likes: select recipeId from ingredients where status = 1 and ingredientName like "*ingredientName*"
+		// SQL likes: select recipeId from ingredients where status = 1 and
+		// ingredientName like "*ingredientName*"
 	}
 
 	/**
@@ -164,14 +165,16 @@ public final class IngredientDAO {
 	 */
 	public static void main(String[] args) {
 
-		/*List<Ingredient> ingredients = searchIngredientByRecipeId(1);
+		/*
+		 * List<Ingredient> ingredients = searchIngredientByRecipeId(1);
+		 * 
+		 * for (Ingredient ingredient : ingredients) { System.out.println(ingredient);
+		 */
 
-		for (Ingredient ingredient : ingredients) {
-			System.out.println(ingredient);*/
-		
-		//test the function of searchRecipeIdByIngredientsName(String ingredientName)
+		// test the function of searchRecipeIdByIngredientsName(String ingredientName)
 		List<Integer> ids = searchRecipeIdByIngredientsName("Shaoxin rice wine");
-		for(int id : ids) 
-		{System.out.println(id);}
+		for (int id : ids) {
+			System.out.println(id);
 		}
+	}
 }

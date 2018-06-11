@@ -31,6 +31,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -45,6 +48,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -403,6 +407,29 @@ public final class MainFrameController implements Initializable {
 				alert.setContentText("We have exported the PDF file of " + selectedRecipe.getRecipeName());
 
 				alert.showAndWait();
+			}
+
+		});
+
+		// Set on action when you click the edit recipe button.
+		editRecipeButton.setOnAction((event) -> {
+			// shift the stage to the main Scene.
+			try {
+				// Parent parent =
+				// FXMLLoader.load(Template.class.getResource("../view/AddOrEditRecipe.fxml"),
+				// null, new JavaFXBuilderFactory());
+				FXMLLoader loader = new FXMLLoader(Template.class.getResource("../view/AddOrEditRecipe.fxml"), null,
+						new JavaFXBuilderFactory());
+				Parent parent = loader.load();
+				AddOrEditRecipeController controller = loader.getController();
+				controller.setEditedRecipe(selectedRecipe);
+				Scene scene = new Scene(parent);
+				Stage stage = new Stage();
+				stage.setScene(scene);
+				stage.sizeToScene();
+				stage.show();
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
 
 		});

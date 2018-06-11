@@ -266,7 +266,7 @@ public final class RecipeDAO {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		//do not need to close resources here.
+		// do not need to close resources here.
 		return flag;
 	}
 

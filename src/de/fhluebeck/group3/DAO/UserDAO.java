@@ -48,7 +48,8 @@ public final class UserDAO {
 					user.setPassword(resultSet.getString("password"));
 					user.setStatus(Integer.valueOf(resultSet.getString("status")));
 				}
-				// also we have to fill its favorite recipes and ownRecipes Lists to make a full user.
+				// also we have to fill its favorite recipes and ownRecipes Lists to make a full
+				// user.
 				user.setFavoriteRecipes(RecipeDAO.getFavoritedRecipes(user.getUserId()));
 			} else {
 			}
@@ -81,13 +82,13 @@ public final class UserDAO {
 			String preparedSql = "UPDATE `user` SET `status` = 0 WHERE `user_id` = ?";
 			Object[] parameters = { userId };
 			flag = BaseDAO.executeSql(preparedSql, parameters);
-			
+
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * 
 	 * */
@@ -96,7 +97,7 @@ public final class UserDAO {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
-		
+
 		try {
 			connection = BaseDAO.getConnection();
 			String preparedSql = "SELECT DISTINCT * FROM `user` WHERE `user_id` = ?";
@@ -111,10 +112,11 @@ public final class UserDAO {
 					user.setPassword(resultSet.getString("password"));
 					user.setStatus(Integer.valueOf(resultSet.getString("status")));
 				}
-				// also we have to fill its favorite recipes and ownRecipes Lists to make a full user.
+				// also we have to fill its favorite recipes and ownRecipes Lists to make a full
+				// user.
 			} else {
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -165,10 +167,10 @@ public final class UserDAO {
 		// deleteUser(2); //success
 
 		// addUser(user);
-//		addUser(new User("test5", "456"));
-		
-//		System.out.println(getUserById(3).getUsername());
-		
+		// addUser(new User("test5", "456"));
+
+		// System.out.println(getUserById(3).getUsername());
+
 	}
 
 }

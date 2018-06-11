@@ -71,7 +71,9 @@ public class Template extends Application {
 	 * 
 	 * @author huayichen
 	 */
-	public static Parent replaceSceneContent(String fxml) throws Exception {
+	public static void replaceSceneContent(String fxml) throws Exception {
+		// FXMLLoader loader = new FXMLLoader(Template.class.getResource(fxml));
+		// Parent page = loader.load();
 		Parent page = (Parent) FXMLLoader.load(Template.class.getResource(fxml), null, new JavaFXBuilderFactory());
 		Scene scene = primaryStage.getScene();
 		if (scene == null) { // at the first time, create a new scene.
@@ -82,7 +84,7 @@ public class Template extends Application {
 			primaryStage.getScene().setRoot(page);
 		}
 		primaryStage.sizeToScene();
-		return page;
+		// return loader;
 	}
 
 }
