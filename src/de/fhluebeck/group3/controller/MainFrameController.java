@@ -104,6 +104,9 @@ public final class MainFrameController implements Initializable {
 	private Button deleteRecipeButton;
 
 	@FXML
+	private Button addRecipeButton;
+
+	@FXML
 	private Label currentUserName;
 
 	@FXML
@@ -303,6 +306,7 @@ public final class MainFrameController implements Initializable {
 
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/home_on.png", this.homeButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/like_out.png", this.addFavoriteButton);
+		this.setIconImage("src/de/fhluebeck/group3/resources/system/add_out.png", this.addRecipeButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/like_out.png", this.FavButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/logout_out.png", this.LogoutButton);
 		this.setIconImage("src/de/fhluebeck/group3/resources/system/search_out.png", this.searchButton);
@@ -318,11 +322,18 @@ public final class MainFrameController implements Initializable {
 		// Set button on actions.
 		// setButtonIconAction(this.homeButton, "home_on.png", "home_out.png");
 		// setButtonIconAction(this.FavButton, "like_on.png", "like_out.png");
+		setButtonIconAction(this.addRecipeButton, "add_on.png", "add_out.png");
 		setButtonIconAction(this.LogoutButton, "logout_on.png", "logout_out.png");
 		setButtonIconAction(this.searchButton, "search_on.png", "search_out.png");
 		setButtonIconAction(this.exportPDFButton, "pdf_on.png", "pdf_out.png");
 		setButtonIconAction(this.editRecipeButton, "edit_on.png", "edit_out.png");
 		setButtonIconAction(this.deleteRecipeButton, "delete_on.png", "delete_out.png");
+
+		this.addFavoriteButton.setOnMouseEntered((event) -> {
+			if (!this.isShowFavorite) {
+				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_redheart.png", this.addFavoriteButton);
+			}
+		});
 
 		this.homeButton.setOnMouseEntered((event) -> {
 			if (this.isShowFavorite) {
@@ -381,12 +392,12 @@ public final class MainFrameController implements Initializable {
 
 		});
 
-		// when click the addFavorite Button
+		// When click the addFavorite Button
 		this.addFavoriteButton.setOnAction((event) -> {
 
 		});
 
-		// when click the home button, return to the home page.
+		// When click the home button, return to the home page.
 		this.LogoutButton.setOnAction((event) -> {
 			// shift the stage to the main Scene.
 			try {
@@ -413,25 +424,24 @@ public final class MainFrameController implements Initializable {
 
 		// Set on action when you click the edit recipe button.
 		editRecipeButton.setOnAction((event) -> {
-			// shift the stage to the main Scene.
-			try {
-				// Parent parent =
-				// FXMLLoader.load(Template.class.getResource("../view/AddOrEditRecipe.fxml"),
-				// null, new JavaFXBuilderFactory());
-				FXMLLoader loader = new FXMLLoader(Template.class.getResource("../view/AddOrEditRecipe.fxml"), null,
-						new JavaFXBuilderFactory());
-				Parent parent = loader.load();
-				AddOrEditRecipeController controller = loader.getController();
-				controller.setEditedRecipe(selectedRecipe);
-				Scene scene = new Scene(parent);
-				Stage stage = new Stage();
-				stage.setScene(scene);
-				stage.sizeToScene();
-				stage.show();
-			} catch (IOException e1) {
-				e1.printStackTrace();
+			if (this.selectedRecipe.getOwnerId().equals(Template.getCurrentUser().getUserId())) {
+				
+				// Shift the stage to the main Scene.
+				this.showAddOrEditRecipeView(selectedRecipe);
+				
+				//TODO refresh the whole scene.
+				
+			} else {
+				Alert alert = new Alert(AlertType.ERROR,
+						"Error: You are not the owner of the recipe, No Permission to edit!!", ButtonType.OK);
+				alert.showAndWait();
 			}
 
+		});
+
+		// Set on action when you click the add recipe button.
+		this.addRecipeButton.setOnAction((event) -> {
+			this.showAddOrEditRecipeView(null);
 		});
 
 		// Set on action when you click the delete Recipe button.
@@ -556,6 +566,35 @@ public final class MainFrameController implements Initializable {
 			}
 		});
 
+	}
+	
+	/**
+	 * 
+	 * */
+	private void showAddOrEditRecipeView(Recipe recipe) {
+		
+		// shift the stage to the main Scene.
+		try {
+			// Parent parent =
+			// FXMLLoader.load(Template.class.getResource("../view/AddOrEditRecipe.fxml"),
+			// null, new JavaFXBuilderFactory());
+			FXMLLoader loader = new FXMLLoader(Template.class.getResource("../view/AddOrEditRecipe.fxml"), null,
+					new JavaFXBuilderFactory());
+			Parent parent = loader.load();
+			if(recipe != null) {
+				AddOrEditRecipeController controller = loader.getController();
+				controller.setEditedRecipe(recipe);
+			}
+
+			Scene scene = new Scene(parent);
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.sizeToScene();
+			stage.show();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
 	}
 
 }
