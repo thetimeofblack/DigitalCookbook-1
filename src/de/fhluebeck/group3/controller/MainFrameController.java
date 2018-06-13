@@ -78,6 +78,8 @@ public final class MainFrameController implements Initializable {
 	protected ObservableList<Ingredient> ingredientData;
 
 	protected ExportPDF exportPDF = null;
+	
+	protected boolean likeButtonTriggered = false;
 
 	@FXML
 	private Button homeButton;
@@ -283,6 +285,8 @@ public final class MainFrameController implements Initializable {
 	private void initialSetAllElementProperities() {
 
 		this.isShowFavorite = false;
+		
+		likeButtonTriggered = false;
 
 		this.currentRecipe = RecipeDAO.getAllRecipes();
 
@@ -525,14 +529,17 @@ public final class MainFrameController implements Initializable {
 
 					// Set the picture of the red-heart button.
 					if (isShowFavorite) {
+						likeButtonTriggered = true;
 						setIconImage("src/de/fhluebeck/group3/resources/system/like_redheart.png", addFavoriteButton);
 					} else {
 						List<Recipe> favRecipes = Template.getCurrentUser().getFavoriteRecipes();
 						setIconImage("src/de/fhluebeck/group3/resources/system/like_out.png", addFavoriteButton);
+						likeButtonTriggered = false;
 						for (Recipe recipe : favRecipes) {
 							if (recipe.getRecipeID().equals(selectedRecipe.getRecipeID())) {
 								setIconImage("src/de/fhluebeck/group3/resources/system/like_redheart.png",
 										addFavoriteButton);
+								likeButtonTriggered = true;
 								break;
 							}
 						}
