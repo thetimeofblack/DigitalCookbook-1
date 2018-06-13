@@ -120,12 +120,20 @@ public final class ExportPDF {
 
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("Digital Cookbook Recipe \n").append(recipe.getRecipeName() + "\n")
-				.append("By Group3 on SWEII, L��beck University of Applied Sciences, Germany");
+		builder.append("Digital Cookbook Recipe \n").append(recipe.getRecipeName() + "\n");
+		// .append("By Group3 on SWEII, Luebeck University of Applied Sciences,
+		// Germany");
 
 		Paragraph title = new Paragraph(builder.toString(), titleFont);
 
 		PdfPCell cell = new PdfPCell();
+
+		// add title to a cell
+		cell.addElement(title);
+
+		title.setAlignment(Element.ALIGN_CENTER);
+
+		title = new Paragraph("\n By Group3 on SWEII, Luebeck University of Applied Sciences, Germany", subTitleFont);
 
 		// add title to a cell
 		cell.addElement(title);
@@ -225,6 +233,9 @@ public final class ExportPDF {
 		details.add(new Paragraph(String.valueOf("Cooking time: " + recipe.getCookingTime() + "min")));
 
 		details.add(new Paragraph(String.valueOf("Cooking time: " + recipe.getAvailablePeople())));
+
+		details.add(new Paragraph(
+				String.valueOf("Recipe Owner : " + UserDAO.getUserById(recipe.getOwnerId()).getUsername())));
 
 		details.add(new Chunk(new LineSeparator()));
 

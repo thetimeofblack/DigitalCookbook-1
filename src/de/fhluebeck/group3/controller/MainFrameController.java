@@ -48,6 +48,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -78,7 +79,7 @@ public final class MainFrameController implements Initializable {
 	protected ObservableList<Ingredient> ingredientData;
 
 	protected ExportPDF exportPDF = null;
-	
+
 	protected boolean likeButtonTriggered = false;
 
 	@FXML
@@ -285,7 +286,7 @@ public final class MainFrameController implements Initializable {
 	private void initialSetAllElementProperities() {
 
 		this.isShowFavorite = false;
-		
+
 		likeButtonTriggered = false;
 
 		this.currentRecipe = RecipeDAO.getAllRecipes();
@@ -429,12 +430,12 @@ public final class MainFrameController implements Initializable {
 		// Set on action when you click the edit recipe button.
 		editRecipeButton.setOnAction((event) -> {
 			if (this.selectedRecipe.getOwnerId().equals(Template.getCurrentUser().getUserId())) {
-				
+
 				// Shift the stage to the main Scene.
 				this.showAddOrEditRecipeView(selectedRecipe);
-				
-				//TODO refresh the whole scene.
-				
+
+				// TODO refresh the whole scene.
+
 			} else {
 				Alert alert = new Alert(AlertType.ERROR,
 						"Error: You are not the owner of the recipe, No Permission to edit!!", ButtonType.OK);
@@ -574,12 +575,12 @@ public final class MainFrameController implements Initializable {
 		});
 
 	}
-	
+
 	/**
 	 * 
 	 * */
 	private void showAddOrEditRecipeView(Recipe recipe) {
-		
+
 		// shift the stage to the main Scene.
 		try {
 			// Parent parent =
@@ -588,20 +589,22 @@ public final class MainFrameController implements Initializable {
 			FXMLLoader loader = new FXMLLoader(Template.class.getResource("../view/AddOrEditRecipe.fxml"), null,
 					new JavaFXBuilderFactory());
 			Parent parent = loader.load();
-			if(recipe != null) {
-				AddOrEditRecipeController controller = loader.getController();
-				controller.setEditedRecipe(recipe);
-			}
-
 			Scene scene = new Scene(parent);
 			Stage stage = new Stage();
+			if (recipe != null) {
+				AddOrEditRecipeController controller = loader.getController();
+				controller.setEditedRecipe(recipe);
+				controller.setEditStage(stage);
+			}
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(Template.getPrimaryStage());
 			stage.setScene(scene);
 			stage.sizeToScene();
 			stage.show();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		
+
 	}
 
 }
