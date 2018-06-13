@@ -7,16 +7,19 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="878.0" prefWidth="1531.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.fhluebeck.group3.controller.AddOrEditRecipeController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1480.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.fhluebeck.group3.controller.AddOrEditRecipeController">
 	<columnConstraints>
-		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="27.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="988.0" minWidth="10.0" prefWidth="691.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="592.0" minWidth="0.0" prefWidth="34.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="900.0" minWidth="10.0" prefWidth="708.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="787.0" minWidth="10.0" prefWidth="29.0" />
 	</columnConstraints>
 	<rowConstraints>
 		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 	</rowConstraints>
 	<children>
-		<VBox prefHeight="200.0" prefWidth="100.0">
+		<VBox prefHeight="800.0" prefWidth="778.0" GridPane.columnIndex="1">
 			<children>
 				<Label prefHeight="41.0" prefWidth="151.0" text="Name of recipe">
 					<font>
@@ -25,7 +28,7 @@
 				</Label>
 				<HBox>
 					<children>
-						<TextArea fx:id="nameofRecipe" prefHeight="45.0" prefWidth="745.0" promptText="Please enter recipe name...">
+						<TextArea fx:id="nameofRecipe" prefHeight="47.0" prefWidth="746.0" promptText="Please enter recipe name...">
 							<font>
 								<Font size="20.0" />
 							</font>
@@ -46,9 +49,9 @@
 						</TextField>
 					</children>
 				</HBox>
-				<TilePane prefHeight="63.0" prefWidth="766.0">
+				<TilePane prefHeight="85.0" prefWidth="689.0">
 					<children>
-						<VBox prefHeight="86.0" prefWidth="250.0">
+						<VBox prefHeight="86.0" prefWidth="227.0">
 							<children>
 								<Label prefHeight="39.0" prefWidth="225.0" text="serving people amount">
 									<font>
@@ -57,7 +60,7 @@
 								</Label>
 								<HBox>
 									<children>
-										<TextArea fx:id="amountOfPeople" prefHeight="47.0" prefWidth="192.0" promptText="1, 2, 3..." />
+										<TextArea fx:id="amountOfPeople" prefHeight="47.0" prefWidth="153.0" promptText="1, 2, 3..." />
 									</children>
 								</HBox>
 							</children>
@@ -71,7 +74,7 @@
 								</Label>
 								<HBox>
 									<children>
-										<TextArea fx:id="preparingTime" prefHeight="57.0" prefWidth="193.0" promptText="e.g. 20 minutes" />
+										<TextArea fx:id="preparingTime" prefHeight="48.0" prefWidth="170.0" promptText="e.g. 20 minutes" />
 									</children>
 								</HBox>
 							</children>
@@ -85,7 +88,7 @@
 								</Label>
 								<HBox>
 									<children>
-										<TextArea fx:id="cookingTime" prefHeight="50.0" prefWidth="210.0" promptText="e.g. 1hour" />
+										<TextArea fx:id="cookingTime" prefHeight="48.0" prefWidth="176.0" promptText="e.g. 1hour" />
 									</children>
 								</HBox>
 							</children>
@@ -111,7 +114,6 @@
 						</StackPane>
 					</children>
 				</HBox>
-				<Label prefHeight="32.0" prefWidth="116.0" />
 				<Button fx:id="choosePicture" mnemonicParsing="false" prefHeight="43.0" prefWidth="164.0" text="Choose Picture">
 					<font>
 						<Font name="System Bold Italic" size="18.0" />
@@ -119,7 +121,7 @@
 				</Button>
 			</children>
 		</VBox>
-		<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+		<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
 			<children>
 				<Label prefHeight="43.0" prefWidth="160.0" text="Ingridients">
 					<font>
@@ -157,8 +159,8 @@
 				</Label>
 				<TableView fx:id="steps" prefHeight="307.0" prefWidth="765.0">
 					<columns>
-						<TableColumn id="Order" fx:id="stepOrderColumn" prefWidth="75.0" text="Order" />
-						<TableColumn id="contents" fx:id="stepContentColumn" prefWidth="689.0" text="Contents" />
+						<TableColumn id="Order" fx:id="stepOrderColumn" prefWidth="65.0" text="Order" />
+						<TableColumn id="contents" fx:id="stepContentColumn" prefWidth="699.0" text="Contents" />
 					</columns>
 				</TableView>
 				<HBox prefHeight="52.0" prefWidth="765.0">
@@ -179,13 +181,13 @@
 				<HBox prefHeight="100.0" prefWidth="200.0">
 					<children>
 						<Label prefHeight="49.0" prefWidth="333.0" />
-						<Button fx:id="saveRecipe" mnemonicParsing="false" prefHeight="47.0" prefWidth="181.0" text="save the recipe">
+						<Button fx:id="saveRecipe" mnemonicParsing="false" prefHeight="44.0" prefWidth="171.0" text="save the recipe">
 							<font>
 								<Font name="System Bold Italic" size="18.0" />
 							</font>
 						</Button>
 						<Label prefHeight="24.0" prefWidth="77.0" />
-						<Button fx:id="cancel" mnemonicParsing="false" prefHeight="46.0" prefWidth="165.0" text="Cancel">
+						<Button fx:id="cancel" mnemonicParsing="false" prefHeight="37.0" prefWidth="155.0" text="Cancel">
 							<font>
 								<Font name="System Bold Italic" size="18.0" />
 							</font>
