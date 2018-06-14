@@ -125,7 +125,6 @@ public final class AddOrEditRecipeController implements Initializable {
 			Optional<ButtonType> result = alert.showAndWait();
 
 			if (result.get() == ButtonType.YES) { // User confirms the deletion.
-				System.out.println("start quit");
 				this.editStage.close();
 			}
 

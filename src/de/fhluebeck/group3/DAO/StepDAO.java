@@ -67,7 +67,7 @@ public final class StepDAO {
 
 		try {
 			connection = BaseDAO.getConnection();
-			String preparedSql = "SELECT * FROM step WHERE recipeID = ? AND status = 1";
+			String preparedSql = "SELECT * FROM step WHERE recipeID = ? AND status = 1 ORDER BY stepOrder ASC";
 			pstmt = connection.prepareStatement(preparedSql);
 			Object[] parameters = { recipeId };
 			if (parameters != null && parameters.length > 0) {

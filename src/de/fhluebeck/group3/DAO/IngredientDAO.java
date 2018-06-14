@@ -39,7 +39,7 @@ public final class IngredientDAO {
 	 * 
 	 * @return flag: whether the function is succeeded or not.
 	 */
-	public static boolean addPatchIngredients(List<Ingredient> ingredients) {
+	public static boolean addBatchIngredients(List<Ingredient> ingredients) {
 		boolean flag = false;
 
 		return flag;

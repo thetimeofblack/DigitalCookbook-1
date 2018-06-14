@@ -18,6 +18,7 @@ import de.fhluebeck.group3.DAO.UserDAO;
 import de.fhluebeck.group3.model.Ingredient;
 import de.fhluebeck.group3.model.Recipe;
 import de.fhluebeck.group3.model.Step;
+import de.fhluebeck.group3.model.User;
 import de.fhluebeck.group3.util.StringUtil;
 import de.fhluebeck.group3.view.Template;
 import javafx.animation.Animation;
@@ -309,15 +310,15 @@ public final class MainFrameController implements Initializable {
 		ingredientQuantityColumn.setStyle("-fx-alignment: CENTER;");
 		ingredientUnitColumn.setStyle("-fx-alignment: CENTER;");
 
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/home_on.png", this.homeButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/like_out.png", this.addFavoriteButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/add_out.png", this.addRecipeButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/like_out.png", this.FavButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/logout_out.png", this.LogoutButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/search_out.png", this.searchButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/pdf_out.png", this.exportPDFButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/edit_out.png", this.editRecipeButton);
-		this.setIconImage("src/de/fhluebeck/group3/resources/system/delete_out.png", this.deleteRecipeButton);
+		this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_on.png", this.homeButton);
+		this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", this.addFavoriteButton);
+		this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "add_out.png", this.addRecipeButton);
+		this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", this.FavButton);
+		this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "logout_out.png", this.LogoutButton);
+		this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "search_out.png", this.searchButton);
+		this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "pdf_out.png", this.exportPDFButton);
+		this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "edit_out.png", this.editRecipeButton);
+		this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "delete_out.png", this.deleteRecipeButton);
 
 		// set radio button as a group
 		this.searchByIngredient.setToggleGroup(radioGroup);
@@ -335,8 +336,14 @@ public final class MainFrameController implements Initializable {
 		setButtonIconAction(this.deleteRecipeButton, "delete_on.png", "delete_out.png");
 
 		this.addFavoriteButton.setOnMouseEntered((event) -> {
-			if (!this.isShowFavorite) {
+			if (!this.isShowFavorite && !likeButtonTriggered) {
 				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_redheart.png", this.addFavoriteButton);
+			}
+		});
+
+		this.addFavoriteButton.setOnMouseExited((event) -> {
+			if (!this.isShowFavorite && !likeButtonTriggered) {
+				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", this.addFavoriteButton);
 			}
 		});
 
@@ -399,6 +406,87 @@ public final class MainFrameController implements Initializable {
 
 		// When click the addFavorite Button
 		this.addFavoriteButton.setOnAction((event) -> {
+
+			if (isShowFavorite) { // if showing favorite
+
+				Alert alert = new Alert(AlertType.WARNING, "Do you really want to remove recipe "
+						+ this.selectedRecipe.getRecipeName() + "from you favorite list?", ButtonType.OK,
+						ButtonType.NO);
+				alert.setTitle("Remove from your favorite List");
+
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+
+					if (RecipeDAO.removeRecipeFromFavoriteList(this.selectedRecipe.getRecipeID(),
+							Template.getCurrentUser().getUserId())) {
+
+						this.reloadFavRecipeListOfCurrentUser();
+
+						new Alert(AlertType.INFORMATION,
+								"Recipe " + this.selectedRecipe.getRecipeName() + "has removed to your favorite list",
+								ButtonType.OK).showAndWait();
+
+						this.currentRecipe = RecipeDAO.getFavoritedRecipes(Template.getCurrentUser().getUserId());
+
+						this.refreshView();
+					} else {
+						System.out.println("Problem encountered");
+					}
+
+				}
+
+			} else { // if not showing favorite
+
+				if (likeButtonTriggered) { // current user likes this recipe
+
+					Alert alert = new Alert(
+							AlertType.WARNING, "Do you really want to remove recipe "
+									+ this.selectedRecipe.getRecipeName() + "from you favorite list?",
+							ButtonType.OK, ButtonType.NO);
+					alert.setTitle("Remove from your favorite List");
+
+					Optional<ButtonType> result = alert.showAndWait();
+
+					if (result.get() == ButtonType.OK) {
+
+						if (RecipeDAO.removeRecipeFromFavoriteList(this.selectedRecipe.getRecipeID(),
+								Template.getCurrentUser().getUserId())) {
+
+							this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", this.addFavoriteButton);
+
+							this.likeButtonTriggered = false;
+
+							this.reloadFavRecipeListOfCurrentUser();
+
+							new Alert(AlertType.INFORMATION, "Recipe " + this.selectedRecipe.getRecipeName()
+									+ "has removed to your favorite list", ButtonType.OK).showAndWait();
+						} else {
+							System.out.println("Problem encountered");
+						}
+
+					}
+
+				} else { // current user does not like this recipe
+
+					if (RecipeDAO.addRecipeToFavoriteList(this.selectedRecipe.getRecipeID(),
+							Template.getCurrentUser().getUserId())) {
+
+						this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_redheart.png", this.addFavoriteButton);
+
+						this.likeButtonTriggered = true;
+
+						this.reloadFavRecipeListOfCurrentUser();
+
+						new Alert(AlertType.INFORMATION,
+								"Recipe " + this.selectedRecipe.getRecipeName() + "has added to your favorite list",
+								ButtonType.OK).showAndWait();
+
+					} else {
+						System.out.println("Problem encountered");
+					}
+
+				}
+			}
 
 		});
 
@@ -494,14 +582,17 @@ public final class MainFrameController implements Initializable {
 					} else if (searchByIngredient.isSelected()) {
 						currentRecipe = RecipeDAO.getRecipesByIngredient(newValue);
 					}
-				} else {
+				} else { // if search for favorite recipes.
 					if (searchByName.isSelected()) {
-						// TODO search recipe by name and ingredient within favorite recipes.
-						// currentRecipe = RecipeDAO.getRecipesByName(newValue);
+						// Search recipe by name within favorite recipes.
+						currentRecipe = RecipeDAO.getFavRecipeByName(newValue, Template.getCurrentUser().getUserId());
 					} else if (searchByIngredient.isSelected()) {
-						// currentRecipe = RecipeDAO.getRecipesByIngredient(newValue);
+						// Search recipe by ingredient within favorite recipes.
+						currentRecipe = RecipeDAO.getFavRecipeByIngredients(newValue,
+								Template.getCurrentUser().getUserId());
 					}
 				}
+
 				refreshView();
 
 			}
@@ -605,6 +696,16 @@ public final class MainFrameController implements Initializable {
 			e1.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * 
+	 * */
+	private void reloadFavRecipeListOfCurrentUser() {
+		User user = null;
+		if ((user = Template.getCurrentUser()) != null) {
+			user.setFavoriteRecipes(RecipeDAO.getFavoritedRecipes(user.getUserId()));
+		}
 	}
 
 }

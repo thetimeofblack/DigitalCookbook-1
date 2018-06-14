@@ -33,6 +33,42 @@ public final class RecipeDAO {
 	}
 
 	/**
+	 * 
+	 * */
+	public static boolean removeRecipeFromFavoriteList(Integer recipeId, Integer userId) {
+		boolean flag = false;
+
+		try {
+			String preparedSql = "DELETE from `user-recipe-table` where userID = ? AND recipeID = ?";
+			Object[] parameters = { userId, recipeId };
+			flag = BaseDAO.executeSql(preparedSql, parameters);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		// do not need to close resources here.
+
+		return flag;
+	}
+
+	/**
+	 * 
+	 * */
+	public static boolean addRecipeToFavoriteList(Integer recipeId, Integer userId) {
+		boolean flag = false;
+
+		try {
+			String preparedSql = "INSERT INTO `user-recipe-table`(userID, recipeID, status) VALUES(?,?,1);";
+			Object[] parameters = { userId, recipeId };
+			flag = BaseDAO.executeSql(preparedSql, parameters);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		// do not need to close resources here.
+
+		return flag;
+	}
+
+	/**
 	 * Search for all recipes.
 	 * 
 	 * @return recipes: a list of recipes.
@@ -69,8 +105,6 @@ public final class RecipeDAO {
 					recipes.add(recipe);
 				}
 
-			} else {
-				System.out.println("sorry, recipe not found");
 			}
 
 		} catch (Exception e) {
@@ -130,8 +164,6 @@ public final class RecipeDAO {
 					recipes.add(recipe);
 				}
 
-			} else {
-				System.out.println("sorry, recipe not found");
 			}
 
 		} catch (Exception e) {
@@ -301,6 +333,10 @@ public final class RecipeDAO {
 	public static boolean addRecipe(Recipe recipe) {
 		boolean flag = false;
 
+		// Also calls the functions from IngredientDAO and StepDAO. 测试时候不用管,等别人都写好了再添加
+		// IngredientDAO.addBatchIngredients(recipe.getIngredients());
+		// StepDAO.addBatchSteps(recipe.getSteps());
+
 		return flag;
 	}
 
@@ -348,8 +384,112 @@ public final class RecipeDAO {
 
 				}
 
-			} else {
-				System.out.println("sorry, recipe not found");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally { // finally close and release resources.
+			try {
+				BaseDAO.closeAll(null, pstmt, resultSet);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return recipes;
+	}
+
+	/**
+	 * 
+	 * */
+	public static List<Recipe> getFavRecipeByIngredients(String ingredientName, Integer userId) {
+		List<Recipe> recipes = new ArrayList<Recipe>();
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		Connection connection = null;
+
+		try {
+			connection = BaseDAO.getConnection();
+			// SHOW RECIPE
+			String preparedSql = "SELECT * FROM `recipe` WHERE `status` = 1 AND id IN(SELECT DISTINCT(recipeID) FROM `user-recipe-table` WHERE userID = ? AND status = 1) "
+					+ "AND id IN("
+					+ "SELECT DISTINCT(recipeID) FROM ingredient WHERE ingredientName LIKE ? AND status = 1)";
+			String wildCardIngredientName = "%" + ingredientName + "%";
+			pstmt = connection.prepareStatement(preparedSql);
+			Object[] parameters = { userId, wildCardIngredientName };
+			resultSet = BaseDAO.executeQuery(pstmt, parameters);
+			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
+				while (resultSet.next()) {
+					Recipe recipe = new Recipe();
+					recipe.setRecipeID(Integer.valueOf(resultSet.getString("id")));
+					recipe.setRecipeName(resultSet.getString("recipeName"));
+					recipe.setImagePath(resultSet.getString("imagePath"));
+					recipe.setPreparationTime(Integer.valueOf(resultSet.getString("preparationTime")));
+					recipe.setCookingTime(Integer.valueOf(resultSet.getString("cookingTime")));
+					recipe.setAvailablePeople(Integer.valueOf(resultSet.getString("peopleAvailable")));
+					recipe.setStatus(Integer.valueOf(resultSet.getString("status")));
+					recipe.setDescription(resultSet.getString("description"));
+					recipe.setOwnerId(Integer.valueOf(resultSet.getString("ownerUserid")));
+
+					// Fill the ingredients and steps..
+					recipe.setSteps(StepDAO.searchStepByRecipeId(recipe.getRecipeID()));
+					recipe.setIngredients(IngredientDAO.searchIngredientByRecipeId(recipe.getRecipeID()));
+
+					recipes.add(recipe);
+
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally { // finally close and release resources.
+			try {
+				BaseDAO.closeAll(null, pstmt, resultSet);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return recipes;
+	}
+
+	/**
+	 * 
+	 * */
+	public static List<Recipe> getFavRecipeByName(String recipeName, Integer userId) {
+		List<Recipe> recipes = new ArrayList<Recipe>();
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		Connection connection = null;
+
+		try {
+			connection = BaseDAO.getConnection();
+			// SHOW RECIPE
+			String preparedSql = "SELECT * FROM `recipe` WHERE `status` = 1 AND recipeName LIKE ? AND id IN("
+					+ "SELECT DISTINCT(recipeID) FROM `user-recipe-table` WHERE userID = ? AND status = 1)";
+			String wildCardRecipeName = "%" + recipeName + "%";
+			pstmt = connection.prepareStatement(preparedSql);
+			Object[] parameters = { wildCardRecipeName, userId };
+			resultSet = BaseDAO.executeQuery(pstmt, parameters);
+			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
+				while (resultSet.next()) {
+					Recipe recipe = new Recipe();
+					recipe.setRecipeID(Integer.valueOf(resultSet.getString("id")));
+					recipe.setRecipeName(resultSet.getString("recipeName"));
+					recipe.setImagePath(resultSet.getString("imagePath"));
+					recipe.setPreparationTime(Integer.valueOf(resultSet.getString("preparationTime")));
+					recipe.setCookingTime(Integer.valueOf(resultSet.getString("cookingTime")));
+					recipe.setAvailablePeople(Integer.valueOf(resultSet.getString("peopleAvailable")));
+					recipe.setStatus(Integer.valueOf(resultSet.getString("status")));
+					recipe.setDescription(resultSet.getString("description"));
+					recipe.setOwnerId(Integer.valueOf(resultSet.getString("ownerUserid")));
+
+					// Fill the ingredients and steps..
+					recipe.setSteps(StepDAO.searchStepByRecipeId(recipe.getRecipeID()));
+					recipe.setIngredients(IngredientDAO.searchIngredientByRecipeId(recipe.getRecipeID()));
+
+					recipes.add(recipe);
+
+				}
+
 			}
 
 		} catch (Exception e) {
@@ -385,7 +525,10 @@ public final class RecipeDAO {
 		// list.add(2);
 		// List<Recipe> recipes = getRecipesByIds(list);
 
-		List<Recipe> recipes = getRecipesByIngredient("shao");
+		// List<Recipe> recipes = getRecipesByIngredient("shao");
+
+		List<Recipe> recipes = getFavRecipeByName("hong", 1);
+
 		/**
 		 * print basic information of step, you can set, in the database, some step's
 		 * status as 0, to test if they will be printed out.
