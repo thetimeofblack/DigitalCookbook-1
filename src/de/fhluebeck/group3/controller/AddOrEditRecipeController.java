@@ -21,9 +21,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 /**
  * 
@@ -117,7 +119,7 @@ public final class AddOrEditRecipeController implements Initializable {
 	 * */
 	private void initialSetAllElementProperities() {
 
-		// actions when the cancel button is clicked.
+		// Actions when the cancel button is clicked.
 		this.cancel.setOnAction((event) -> {
 			Alert alert = new Alert(AlertType.WARNING, "Do you want to quit editting?", ButtonType.YES,
 					ButtonType.CANCEL);
@@ -129,6 +131,61 @@ public final class AddOrEditRecipeController implements Initializable {
 			}
 
 		});
+
+		ingredients.setEditable(true);
+
+		//Set actions when editing ingredientNameColumn.
+		ingredientNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		ingredientNameColumn.setOnEditCommit((event)->{
+			event.getTableView().getItems().get(event.getTablePosition().getRow()
+					).setIngredientName(event.getNewValue());	
+		});
+		
+		//Set actions when editing ingredientQuantityColumn.
+		ingredientQuantityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Double>() {
+
+			@Override
+			public Double fromString(String string) {
+				return Double.valueOf(string);
+			}
+
+			@Override
+			public String toString(Double object) {
+				return String.valueOf(object);
+			}
+		}));
+		ingredientQuantityColumn.setOnEditCommit((event)->{
+			event.getTableView().getItems().get(event.getTablePosition().getRow()
+					).setQuantity(event.getNewValue());
+		});
+		
+		//Set actions when editing ingredientUnitColumn.
+		ingredientUnitColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+			ingredientUnitColumn.setOnEditCommit((event)->{
+			event.getTableView().getItems().get(event.getTablePosition().getRow()
+					).setUnit(event.getNewValue());	
+		});
+		
+		//Set actions when editing ingredientCommentColumn.
+		ingredientCommentColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+			ingredientCommentColumn.setOnEditCommit((event)->{
+			event.getTableView().getItems().get(event.getTablePosition().getRow()
+					).setComment(event.getNewValue());	
+		});
+		
+		
+//		// Actions when the add row button is clicked.
+//		this.addIngredient.setOnAction((event) -> {
+//	        TablePosition pos = ingredients.getFocusModel().getFocusedCell();
+//			Ingredient ingredient;
+//			ingredient = new Ingredient("", 0.0, 0, "0", "");
+//			int row = ingredients.getItems().size() - 1;
+//			this.ingredients.getItems().add(ingredient);
+//			ingredients.getSelectionModel().select(row + 1, pos.getTableColumn());
+//			ingredients.scrollTo(ingredient);
+//		});
+		
+		
 	}
 
 	/**
@@ -167,25 +224,31 @@ public final class AddOrEditRecipeController implements Initializable {
 			amountOfPeople.setText(new Integer(editedRecipe.getAvailablePeople()).toString());
 			preparingTime.setText(new Integer(editedRecipe.getPreparationTime()).toString());
 			cookingTime.setText(new Integer(editedRecipe.getCookingTime()).toString());
-			// Add steps into the step table.
-			stepData = FXCollections.observableArrayList();
-			for (Step step : editedRecipe.getSteps()) {
-				stepData.add(step);
+			if (editedRecipe.getSteps() != null && editedRecipe.getSteps().size() > 0) {
+				// Add steps into the step table.
+				stepData = FXCollections.observableArrayList();
+				for (Step step : editedRecipe.getSteps()) {
+					stepData.add(step);
+				}
+				steps.setItems(stepData);
+				stepOrderColumn.setCellValueFactory(cellData -> cellData.getValue().getIntegerProperityStepOrder());
+				stepContentColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityStepContent());
 			}
-			steps.setItems(stepData);
-			stepOrderColumn.setCellValueFactory(cellData -> cellData.getValue().getIntegerProperityStepOrder());
-			stepContentColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityStepContent());
-			// Add ingredients into the ingredient table.
-			ingredientData = FXCollections.observableArrayList();
-			for (Ingredient ingredient : editedRecipe.getIngredients()) {
-				ingredientData.add(ingredient);
+			if (editedRecipe.getIngredients() != null && editedRecipe.getIngredients().size() > 0) {
+				// Add ingredients into the ingredient table.
+				ingredientData = FXCollections.observableArrayList();
+				for (Ingredient ingredient : editedRecipe.getIngredients()) {
+					ingredientData.add(ingredient);
+				}
+				ingredients.setItems(ingredientData);
+				ingredientNameColumn
+						.setCellValueFactory(cellData -> cellData.getValue().getStringProperityIngredientName());
+				ingredientQuantityColumn
+						.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
+				ingredientUnitColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
+				ingredientCommentColumn
+						.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
 			}
-			ingredients.setItems(ingredientData);
-			ingredientNameColumn
-					.setCellValueFactory(cellData -> cellData.getValue().getStringProperityIngredientName());
-			ingredientQuantityColumn.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
-			ingredientUnitColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
-			ingredientCommentColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
 		}
 	}
 
