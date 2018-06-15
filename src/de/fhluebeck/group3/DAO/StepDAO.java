@@ -27,7 +27,7 @@ public final class StepDAO {
 	 */
 	public static boolean updateBatchSteps(List<Step> steps) {
 		boolean flag = false;
-		
+
 		return flag;
 	}
 
@@ -162,8 +162,10 @@ public final class StepDAO {
 		List<Step> steptest2 = new ArrayList<Step>();
 		Step step1 = new Step("Add a small pinch of salt and sesame oil to minced beef. Mix well and set aside.",1,7);
 		Step step2 = new Step("Mix 1 tablespoon of cornstarch with 2 and ½ tablespoons of water in a small bowl to make water starch.",2,7);
+		Step step3 = new Step("Cut tofu into square cubes (around 2cms). Bring a large amount of water to a boil and then add a pinch of salt. Slide the tofu in and cook for 1 minute. Move out and drain.",3,7);
 		steptest2.add(step1);
 		steptest2.add(step2);
+		steptest2.add(step3);
 		addBatchSteps(steptest2);
 		
 		
