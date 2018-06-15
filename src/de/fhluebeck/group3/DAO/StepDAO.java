@@ -27,7 +27,7 @@ public final class StepDAO {
 	 */
 	public static boolean updateBatchSteps(List<Step> steps) {
 		boolean flag = false;
-
+		
 		return flag;
 	}
 
@@ -41,6 +41,19 @@ public final class StepDAO {
 	 */
 	public static boolean addBatchSteps(List<Step> steps) {
 		boolean flag = false;
+		int i=0;
+		if (steps.get(i).getStepID() != null) {
+			return false;
+		}
+		try {
+			while(i<steps.size()) {
+			String preparedSql = "INSERT INTO `step` (`stepOrder`, `content`,`recipeID`,`status`) VALUES (?, ?, ?, ?)";
+			Object[] parameters = { steps.get(i).getStepOrder(), steps.get(i).getContent(), steps.get(i).getRecipeID(),steps.get(i).getStatus() };
+			i++;
+			flag = BaseDAO.executeSql(preparedSql, parameters);}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 
 		return flag;
 	}
@@ -115,7 +128,13 @@ public final class StepDAO {
 	 */
 	public static boolean deleteStepById(Integer stepId) {
 		boolean flag = false;
-
+		try {
+			String preparedSql = "UPDATE `step` SET `status` = 0 WHERE `id` = ?";
+			Object[] parameters = { stepId };
+			flag = BaseDAO.executeSql(preparedSql, parameters);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		return flag;
 	}
 
@@ -138,9 +157,18 @@ public final class StepDAO {
 		 */
 
 		for (Step step : steptest1) {
-			System.out.println(step);
+			System.out.println(step);}
+		
+		List<Step> steptest2 = new ArrayList<Step>();
+		Step step1 = new Step("Add a small pinch of salt and sesame oil to minced beef. Mix well and set aside.",1,7);
+		Step step2 = new Step("Mix 1 tablespoon of cornstarch with 2 and ½ tablespoons of water in a small bowl to make water starch.",2,7);
+		steptest2.add(step1);
+		steptest2.add(step2);
+		addBatchSteps(steptest2);
+		
+		
 
-		}
+		
 	}
 
 }
