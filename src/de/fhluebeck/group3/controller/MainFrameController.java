@@ -639,27 +639,32 @@ public final class MainFrameController implements Initializable {
 					}
 
 					// Add steps into the step table.
-					stepData = FXCollections.observableArrayList();
-					for (Step step : selectedRecipe.getSteps()) {
-						stepData.add(step);
+					if(selectedRecipe.getSteps() != null && selectedRecipe.getSteps().size() > 0) {
+						stepData = FXCollections.observableArrayList();
+						for (Step step : selectedRecipe.getSteps()) {
+							stepData.add(step);
+						}
+						stepsTable.setItems(stepData);
+						stepOrderColumn.setCellValueFactory(cellData -> cellData.getValue().getIntegerProperityStepOrder());
+						stepContentColumn
+								.setCellValueFactory(cellData -> cellData.getValue().getStringProperityStepContent());
 					}
-					stepsTable.setItems(stepData);
-					stepOrderColumn.setCellValueFactory(cellData -> cellData.getValue().getIntegerProperityStepOrder());
-					stepContentColumn
-							.setCellValueFactory(cellData -> cellData.getValue().getStringProperityStepContent());
-					// Add ingredients into the ingredient table.
-					ingredientData = FXCollections.observableArrayList();
-					for (Ingredient ingredient : selectedRecipe.getIngredients()) {
-						ingredientData.add(ingredient);
+					if (selectedRecipe.getIngredients() != null && selectedRecipe.getIngredients().size() > 0) {
+						// Add ingredients into the ingredient table.
+						ingredientData = FXCollections.observableArrayList();
+						for (Ingredient ingredient : selectedRecipe.getIngredients()) {
+							ingredientData.add(ingredient);
+						}
+						ingredientTable.setItems(ingredientData);
+						ingredientNameColumn.setCellValueFactory(
+								cellData -> cellData.getValue().getStringProperityIngredientName());
+						ingredientQuantityColumn
+								.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
+						ingredientUnitColumn
+								.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
+						ingredientCommentColumn
+								.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
 					}
-					ingredientTable.setItems(ingredientData);
-					ingredientNameColumn
-							.setCellValueFactory(cellData -> cellData.getValue().getStringProperityIngredientName());
-					ingredientQuantityColumn
-							.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
-					ingredientUnitColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
-					ingredientCommentColumn
-							.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
 				}
 
 			}

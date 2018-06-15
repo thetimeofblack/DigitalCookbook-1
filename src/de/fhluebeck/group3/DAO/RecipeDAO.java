@@ -57,7 +57,7 @@ public final class RecipeDAO {
 		boolean flag = false;
 
 		try {
-			String preparedSql = "INSERT INTO `user-recipe-table`(userID, recipeID, status) VALUES(?,?,1);";
+			String preparedSql = "INSERT INTO `user-recipe-table`(userID, recipeID, status) VALUES(?,?,1)";
 			Object[] parameters = { userId, recipeId };
 			flag = BaseDAO.executeSql(preparedSql, parameters);
 		} catch (ClassNotFoundException e) {
@@ -333,7 +333,7 @@ public final class RecipeDAO {
 	public static boolean addRecipe(Recipe recipe) {
 		boolean flag = false;
 
-		// Also calls the functions from IngredientDAO and StepDAO. ����ʱ���ù�,�ȱ��˶�д���������
+		// Also calls the functions from IngredientDAO and StepDAO. 
 		// IngredientDAO.addBatchIngredients(recipe.getIngredients());
 		// StepDAO.addBatchSteps(recipe.getSteps());
 		// If user has already existed.
@@ -341,7 +341,8 @@ public final class RecipeDAO {
 			return false;
 		}
 		try {
-			String preparedSql = "INSERT INTO `recipe` (`ownerUserid`, `recipeName`, `description`, `preparationTime`,`cookingTime`,`peopleAvailable`,`imagePath`,`status`) VALUES (?, ?, ?, ?, ?, ?,?,1)";
+			String preparedSql = "INSERT INTO `recipe` (`ownerUserid`, `recipeName`, `description`, `preparationTime`,"
+					+ "`cookingTime`,`peopleAvailable`,`imagePath`,`status`) VALUES (?, ?, ?, ?, ?, ?,?,1)";
 			Object[] parameters = {recipe.getOwnerId(), recipe.getRecipeName(),
 					recipe.getDescription(), recipe.getPreparationTime(), recipe.getCookingTime(),
 					recipe.getAvailablePeople(),recipe.getImagePath() };
@@ -549,7 +550,7 @@ public final class RecipeDAO {
 		recipe.setDescription("a simple way to cook an egg");
 		recipe.setPreparationTime(10);
 		recipe.setCookingTime(5);
-		recipe.setImagePath("/steamedEgg.png");
+		recipe.setImagePath("/steamedEgg.jpeg");
 		recipe.setAvailablePeople(1);
 		
 		System.out.println(RecipeDAO.addRecipe(recipe));
