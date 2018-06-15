@@ -66,6 +66,8 @@ public final class MainFrameController implements Initializable {
 	final ToggleGroup radioGroup = new ToggleGroup();
 
 	public static final String SYSTEM_IMAGE_DEFAULT_PATH = "src/de/fhluebeck/group3/resources/system/";
+	
+	public static final String PC_IMAGE_DEFAULT_PATH = "src\\de\\fhluebeck\\group3\\resources\\recipe\\";
 
 	public static final String RECIPE_IMAGE_DEFAULT_PATH = "src/de/fhluebeck/group3/resources/recipe/";
 
@@ -638,28 +640,39 @@ public final class MainFrameController implements Initializable {
 
 					}
 
-					// Add steps into the step table.
-					stepData = FXCollections.observableArrayList();
-					for (Step step : selectedRecipe.getSteps()) {
-						stepData.add(step);
+					if (selectedRecipe.getSteps() != null && selectedRecipe.getSteps().size() > 0) {
+						// Add steps into the step table.
+						stepData = FXCollections.observableArrayList();
+						for (Step step : selectedRecipe.getSteps()) {
+							stepData.add(step);
+						}
+						stepsTable.setItems(stepData);
+						stepOrderColumn
+								.setCellValueFactory(cellData -> cellData.getValue().getIntegerProperityStepOrder());
+						stepContentColumn.setCellValueFactory(
+								cellData -> cellData.getValue().getStringProperityStepContent());
+					}else {
+						stepsTable.setItems(null);
 					}
-					stepsTable.setItems(stepData);
-					stepOrderColumn.setCellValueFactory(cellData -> cellData.getValue().getIntegerProperityStepOrder());
-					stepContentColumn
-							.setCellValueFactory(cellData -> cellData.getValue().getStringProperityStepContent());
-					// Add ingredients into the ingredient table.
-					ingredientData = FXCollections.observableArrayList();
-					for (Ingredient ingredient : selectedRecipe.getIngredients()) {
-						ingredientData.add(ingredient);
+					
+					if (selectedRecipe.getIngredients() != null && selectedRecipe.getIngredients().size() > 0) {
+						// Add ingredients into the ingredient table.
+						ingredientData = FXCollections.observableArrayList();
+						for (Ingredient ingredient : selectedRecipe.getIngredients()) {
+							ingredientData.add(ingredient);
+						}
+						ingredientTable.setItems(ingredientData);
+						ingredientNameColumn.setCellValueFactory(
+								cellData -> cellData.getValue().getStringProperityIngredientName());
+						ingredientQuantityColumn
+								.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
+						ingredientUnitColumn
+								.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
+						ingredientCommentColumn
+								.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
+					}else {
+						ingredientTable.setItems(null);
 					}
-					ingredientTable.setItems(ingredientData);
-					ingredientNameColumn
-							.setCellValueFactory(cellData -> cellData.getValue().getStringProperityIngredientName());
-					ingredientQuantityColumn
-							.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
-					ingredientUnitColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
-					ingredientCommentColumn
-							.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
 				}
 
 			}
@@ -682,10 +695,11 @@ public final class MainFrameController implements Initializable {
 			Parent parent = loader.load();
 			Scene scene = new Scene(parent);
 			Stage stage = new Stage();
+			AddOrEditRecipeController controller = loader.getController();
+			controller.setEditStage(stage);
 			if (recipe != null) {
-				AddOrEditRecipeController controller = loader.getController();
 				controller.setEditedRecipe(recipe);
-				controller.setEditStage(stage);
+				controller.setParentStage(stage);
 			}
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.initOwner(Template.getPrimaryStage());

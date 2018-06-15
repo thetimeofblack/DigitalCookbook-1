@@ -27,11 +27,9 @@ public final class IngredientDAO {
 	 */
 	public static boolean updateBatchIngredients(List<Ingredient> ingredients) {
 		boolean flag = false;
-		Connection connection;
 		String preparedSql = "UPDATE `ingredient` SET  " + "ingredientName=?, " + "recipeID=?, " + "quantity=?, "
 				+ "unit=?, " + "comments=?, " + "status=? " + "WHERE `id` = ?";
 		try {
-			connection = BaseDAO.getConnection();
 			for (int n = 0; n < ingredients.size(); n++) {
 				Object[] parameters = { ingredients.get(n).getIngredientName(), 
 										ingredients.get(n).getRecipeID(),
