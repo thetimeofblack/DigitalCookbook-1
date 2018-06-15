@@ -336,7 +336,19 @@ public final class RecipeDAO {
 		// Also calls the functions from IngredientDAO and StepDAO. 测试时候不用管,等别人都写好了再添加
 		// IngredientDAO.addBatchIngredients(recipe.getIngredients());
 		// StepDAO.addBatchSteps(recipe.getSteps());
-
+		// If user has already existed.
+		if (recipe.getRecipeID() != null) {
+			return false;
+		}
+		try {
+			String preparedSql = "INSERT INTO `recipe` (`ownerUserid`, `recipeName`, `description`, `preparationTime`,`cookingTime`,`peopleAvailable`) VALUES (?, ?, ?, ?, ?, ?)";
+			Object[] parameters = {recipe.getOwnerId(), recipe.getRecipeName(),
+					recipe.getDescription(), recipe.getPreparationTime(), recipe.getCookingTime(),
+					recipe.getAvailablePeople() };
+			flag = BaseDAO.executeSql(preparedSql, parameters);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		return flag;
 	}
 
@@ -527,15 +539,28 @@ public final class RecipeDAO {
 
 		// List<Recipe> recipes = getRecipesByIngredient("shao");
 
-		List<Recipe> recipes = getFavRecipeByName("hong", 1);
+		// List<Recipe> recipes = getFavRecipeByName("hong", 1);
+
+		// addUser(user);
+		// addUser(new User("test5", "456"));
+		Recipe recipe = new Recipe();
+		recipe.setOwnerId(1);
+		recipe.setRecipeName("steamed egg");
+		recipe.setDescription("a simple way to cook an egg");
+		recipe.setPreparationTime(10);
+		recipe.setCookingTime(5);
+		recipe.setAvailablePeople(1);
+		
+		System.out.println(RecipeDAO.addRecipe(recipe));
+		
 
 		/**
 		 * print basic information of step, you can set, in the database, some step's
 		 * status as 0, to test if they will be printed out.
 		 */
-		for (Recipe recipe : recipes) {
-			System.out.println(recipe);
-		}
+		// for (Recipe recipe : recipes) {
+		// System.out.println(recipe);
+		// }
 
 		// System.out.println(recipeIDsIntegers);
 
