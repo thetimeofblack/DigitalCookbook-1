@@ -27,7 +27,7 @@ public final class IngredientDAO {
 	 */
 	public static boolean updateBatchIngredients(List<Ingredient> ingredients) {
 		boolean flag = false;
-		Connection connection = null;
+		Connection connection;
 		String preparedSql = "UPDATE `ingredient` SET  " + "ingredientName=?, " + "recipeID=?, " + "quantity=?, "
 				+ "unit=?, " + "comments=?, " + "status=? " + "WHERE `id` = ?";
 		try {
