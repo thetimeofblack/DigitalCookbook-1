@@ -27,7 +27,36 @@ public final class IngredientDAO {
 	 */
 	public static boolean updateBatchIngredients(List<Ingredient> ingredients) {
 		boolean flag = false;
-
+		Connection connection = null;
+		String preparedSql = "UPDATE `ingredient` SET  "
+				+ "ingredientName=?, "
+				+ "recipeID=?, "
+				+ "quantity=?, "
+				+ "unit=?, "
+				+ "comments=?, "
+				+ "status=? "
+				+ "WHERE `id` = ?";
+		try {
+			connection =BaseDAO.getConnection();
+			for(int n=0; n<ingredients.size(); n++)
+			{
+			Object[] parameters = { 
+									ingredients.get(n).getIngredientName(),
+									ingredients.get(n).getRecipeID(),
+									ingredients.get(n).getQuantity(),
+									ingredients.get(n).getUnit(),
+									ingredients.get(n).getComment(),
+									ingredients.get(n).getStatus(),
+									ingredients.get(n).getIngredientID()};
+			flag = BaseDAO.executeSql(preparedSql, parameters);
+			}
+		} 
+		catch (Exception e) 
+		{  e.printStackTrace();  } 
+		finally 
+		{
+			
+		}
 		return flag;
 	}
 
@@ -41,7 +70,29 @@ public final class IngredientDAO {
 	 */
 	public static boolean addBatchIngredients(List<Ingredient> ingredients) {
 		boolean flag = false;
-
+		Connection connection = null;
+		String preparedSql = "INSERT INTO `ingredient` VALUES(?,?,?,?,?,?,?)";
+		try 
+		{
+			connection = BaseDAO.getConnection();
+			for(int n=0; n<ingredients.size(); n++)
+			{
+			Object[] parameters = { ingredients.get(n).getIngredientID(),
+									ingredients.get(n).getIngredientName(),
+									ingredients.get(n).getRecipeID(),
+									ingredients.get(n).getQuantity(),
+									ingredients.get(n).getUnit(),
+									ingredients.get(n).getComment(),
+									ingredients.get(n).getStatus()  };
+			flag = BaseDAO.executeSql(preparedSql, parameters);
+			}
+		} 
+		catch (Exception e) 
+		{  e.printStackTrace();  } 
+		finally 
+		{
+			
+		}
 		return flag;
 	}
 
@@ -163,6 +214,7 @@ public final class IngredientDAO {
 	 * @param args:
 	 *            string from console input.
 	 */
+
 	public static void main(String[] args) {
 
 		/*
@@ -172,9 +224,15 @@ public final class IngredientDAO {
 		 */
 
 		// test the function of searchRecipeIdByIngredientsName(String ingredientName)
-		List<Integer> ids = searchRecipeIdByIngredientsName("Shaoxin rice wine");
-		for (int id : ids) {
+		//List<Integer> ids = searchRecipeIdByIngredientsName("Shaoxin rice wine");
+		List<Ingredient> exampleIds = new ArrayList<Ingredient>();
+		Ingredient ChickenEssence = new Ingredient(36, "Chicken essence", (double)1, 4, "teaspoon", null);
+		Ingredient DriedShrimp = new Ingredient(37, "Dried Shrimp",(double)1, 4, "teaspoon", null);
+		exampleIds.add(0, ChickenEssence);
+		exampleIds.add(1,DriedShrimp);
+		updateBatchIngredients(exampleIds);
+		/*for (int id : ids) {
 			System.out.println(id);
-		}
+		}*/
 	}
 }
