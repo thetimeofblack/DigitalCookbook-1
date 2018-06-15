@@ -71,7 +71,7 @@ public final class IngredientDAO {
 	public static boolean addBatchIngredients(List<Ingredient> ingredients) {
 		boolean flag = false;
 		Connection connection = null;
-		String preparedSql = "INSERT INTO `ingredient` VALUES(?,?,?,?,?,?,?)";
+		String preparedSql = "INSERT INTO `ingredient` (id, ingredientName, recipeID, quantity, unit, comments, status) VALUES(?,?,?,?,?,?,?)";
 		try 
 		{
 			connection = BaseDAO.getConnection();
@@ -226,8 +226,8 @@ public final class IngredientDAO {
 		// test the function of searchRecipeIdByIngredientsName(String ingredientName)
 		//List<Integer> ids = searchRecipeIdByIngredientsName("Shaoxin rice wine");
 		List<Ingredient> exampleIds = new ArrayList<Ingredient>();
-		Ingredient ChickenEssence = new Ingredient(36, "Chicken essence", (double)1, 4, "teaspoon", null);
-		Ingredient DriedShrimp = new Ingredient(37, "Dried Shrimp",(double)1, 4, "teaspoon", null);
+		Ingredient ChickenEssence = new Ingredient(36, "Chicken essence", (double)1, 4, "teaspoon", "Chinese material");
+		Ingredient DriedShrimp = new Ingredient(37, "Dried Shrimp",(double)1, 4, "teaspoon", "seafood");
 		exampleIds.add(0, ChickenEssence);
 		exampleIds.add(1,DriedShrimp);
 		updateBatchIngredients(exampleIds);
