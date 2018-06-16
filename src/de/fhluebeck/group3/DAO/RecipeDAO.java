@@ -31,6 +31,48 @@ public final class RecipeDAO {
 
 		return recipes;
 	}
+	
+	/**
+	 * This method is called after a new recipe is inserted into the DB to retrive the 
+	 * ID of the recipe;
+	 * */
+	public static Integer getRecipeID(Recipe recipe) {
+		Integer recipeID = 0;
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		Connection connection = null;
+		
+		try {
+			connection = BaseDAO.getConnection();
+			// SHOW RECIPE
+			String preparedSql = "SELECT id FROM `recipe` WHERE `status` = 1 AND `ownerUserid` = ? "
+					+ "AND `recipeName` = ? AND `description` = ? AND `preparationTime` = ? AND `cookingTime` = ? "
+					+ "AND `peopleAvailable` = ? AND `imagePath` = ?";
+			pstmt = connection.prepareStatement(preparedSql);
+			Object[] parameters = { recipe.getOwnerId(), recipe.getRecipeName(), recipe.getDescription(),
+					recipe.getPreparationTime(), recipe.getCookingTime(),recipe.getAvailablePeople(), recipe.getImagePath()};
+			resultSet = BaseDAO.executeQuery(pstmt, parameters);
+			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
+				while (resultSet.next()) {
+					
+					recipeID = Integer.valueOf(resultSet.getString("id"));
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally { // finally close and release resources.
+			try {
+				BaseDAO.closeAll(null, pstmt, resultSet);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return recipeID;
+	}
 
 	/**
 	 * 
@@ -547,14 +589,16 @@ public final class RecipeDAO {
 		// addUser(new User("test5", "456"));
 		Recipe recipe = new Recipe();
 		recipe.setOwnerId(1);
-		recipe.setRecipeName("steamed egg");
-		recipe.setDescription("a simple way to cook an egg");
-		recipe.setPreparationTime(10);
-		recipe.setCookingTime(5);
-		recipe.setImagePath("/steamedEgg.png");
-		recipe.setAvailablePeople(1);
+		recipe.setRecipeName("asdasda");
+		recipe.setDescription("asdasda");
+		recipe.setPreparationTime(23);
+		recipe.setCookingTime(34);
+		recipe.setImagePath("steamedEgg.jpg");
+		recipe.setAvailablePeople(12);
 
-		System.out.println(RecipeDAO.addRecipe(recipe));
+		System.out.println(RecipeDAO.getRecipeID(recipe));
+		
+//		System.out.println(RecipeDAO.addRecipe(recipe));
 
 		/**
 		 * print basic information of step, you can set, in the database, some step's

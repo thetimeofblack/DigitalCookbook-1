@@ -187,7 +187,7 @@ public final class Recipe {
 	public Integer getPreparationTime() {
 		return preparationTime;
 	}
-
+	
 	/**
 	 * @param preparationTime
 	 *            the preparationTime to set

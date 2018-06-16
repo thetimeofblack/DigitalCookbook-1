@@ -3,9 +3,14 @@ package de.fhluebeck.group3.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import de.fhluebeck.group3.DAO.IngredientDAO;
+import de.fhluebeck.group3.DAO.RecipeDAO;
+import de.fhluebeck.group3.DAO.StepDAO;
 import de.fhluebeck.group3.model.Ingredient;
 import de.fhluebeck.group3.model.Recipe;
 import de.fhluebeck.group3.model.Step;
@@ -110,14 +115,16 @@ public final class AddOrEditRecipeController implements Initializable {
 	private ImageView newRecipeImage;
 
 	private Recipe editedRecipe;
-	
-	private boolean isAddingRecipe = false;
+
+	private boolean isAddingRecipe = true;
 
 	private Stage parentStage;
 
 	private FileChooser fileChooser;
 
-	private File selectedFile;
+	// private File selectedFile;
+
+	private String imagePath;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -320,6 +327,7 @@ public final class AddOrEditRecipeController implements Initializable {
 
 		// Actions when the choosePicture button is clicked.
 		choosePicture.setOnAction((event) -> {
+			File selectedFile;
 			this.fileChooser = new FileChooser();
 			fileChooser.setTitle("Pick the image for the recipe");
 			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.*"),
@@ -329,11 +337,51 @@ public final class AddOrEditRecipeController implements Initializable {
 				String systemPath = System.getProperty("user.dir") + "\\" + MainFrameController.PC_IMAGE_DEFAULT_PATH
 						+ selectedFile.getName();
 				try {
+					this.imagePath = selectedFile.getName();
 					FileUtil.copyFile(selectedFile, systemPath);
 					this.newRecipeImage.setImage(new Image(selectedFile.toURI().toString(), 100, 100, false, false));
+					this.defaultImageView.setText("");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+			}
+
+		});
+
+		// Actions when the saveRecipe button is clicked.
+		saveRecipe.setOnAction((event) -> {
+
+
+			if (this.isAddingRecipe) { // add new recipe TODO add form validation.
+				
+				boolean flag = false;
+
+				Alert alert = new Alert(AlertType.CONFIRMATION,"Do you want to save this Recipe?", ButtonType.APPLY,
+						ButtonType.CANCEL);
+				
+				Optional<ButtonType> result = alert.showAndWait();
+				
+				if(result.get() == ButtonType.APPLY) {
+					flag = this.insertRecipeIntoDB();
+				}
+				
+				if(flag) {
+					
+					new Alert(AlertType.INFORMATION,"Recipe Successfully Inserted !", ButtonType.OK).showAndWait();
+					
+					Object controllerObject = Template.getiFxmlLoader().getController();
+					
+					if(controllerObject instanceof MainFrameController) {
+						MainFrameController controller = (MainFrameController) controllerObject;
+						
+						controller.refreshWholeInterface();
+					}
+					
+					this.editStage.close();
+				}
+
+			} else { // edit recipe
+
 			}
 
 		});
@@ -373,9 +421,11 @@ public final class AddOrEditRecipeController implements Initializable {
 	 * */
 	private void fillInBlanksOfRecipe() {
 
-		if (this.editedRecipe != null) {	//edit recipe
+		if (this.editedRecipe != null) { // edit recipe
 			this.isAddingRecipe = false;
 			defaultImageView.setText("");
+			// Save the image path.
+			imagePath = editedRecipe.getImagePath();
 			newRecipeImage.setImage(
 					new Image(new File(MainFrameController.RECIPE_IMAGE_DEFAULT_PATH + editedRecipe.getImagePath())
 							.toURI().toString(), 100, 100, false, false));
@@ -401,9 +451,75 @@ public final class AddOrEditRecipeController implements Initializable {
 				}
 				ingredients.setItems(ingredientData);
 			}
-		}else {
+		} else { // Add new recipe
 			this.isAddingRecipe = true;
 		}
+	}
+
+	/**
+	 * 
+	 * */
+	private boolean insertRecipeIntoDB() {
+		boolean flag = false;
+
+		// load the recipe as new Recipe
+		Recipe newRecipe = new Recipe();
+		newRecipe.setRecipeName(this.nameofRecipe.getText().trim());
+		newRecipe.setDescription(this.description.getText().trim());
+		newRecipe.setAvailablePeople(Integer.valueOf(this.amountOfPeople.getText()));
+		newRecipe.setPreparationTime(Integer.valueOf(this.preparingTime.getText()));
+		newRecipe.setCookingTime(Integer.valueOf(this.cookingTime.getText()));
+		newRecipe.setImagePath(this.imagePath.trim());
+		newRecipe.setStatus(1);
+		newRecipe.setOwnerId(Template.getCurrentUser().getUserId());
+		
+		RecipeDAO.addRecipe(newRecipe);
+		
+		newRecipe.setRecipeID(RecipeDAO.getRecipeID(newRecipe));
+
+		List<Ingredient> newIngredients = new ArrayList<Ingredient>();
+		Ingredient newIngredient;
+		// Get all the ingredients
+		for (int i = 0; i < this.ingredients.getItems().size(); i += 1) {
+			newIngredient = this.ingredients.getItems().get(i);
+			
+			newIngredient.setRecipeID(newRecipe.getRecipeID());
+			
+			//set the OwnerID
+			newIngredients.add(newIngredient);
+		}
+		
+		List<Step> newSteps = new ArrayList<Step>();
+		Step newStep;
+		// Get all the steps
+		for (int i = 0; i < this.steps.getItems().size(); i += 1) {
+			newStep = this.steps.getItems().get(i);
+
+			//set the OwnerID
+			newStep.setRecipeID(newRecipe.getRecipeID());
+			
+			newSteps.add(newStep);
+		}
+		
+		IngredientDAO.addBatchIngredients(newIngredients);
+		
+		flag = StepDAO.addBatchSteps(newSteps);
+		
+//		System.out.println(newRecipe);
+//		System.out.println(newIngredients);
+//		System.out.println(newSteps);
+
+		return flag;
+	}
+	
+	/**
+	 * To check the validity of the form.
+	 * */
+	private boolean formValidationCheck() {
+		boolean flag = false;
+		
+		//TODO when check ImageView, use imagePath.
+		return flag;
 	}
 
 }
