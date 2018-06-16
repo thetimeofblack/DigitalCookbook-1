@@ -10,6 +10,7 @@ import de.fhluebeck.group3.model.Ingredient;
 import de.fhluebeck.group3.model.Recipe;
 import de.fhluebeck.group3.model.Step;
 import de.fhluebeck.group3.util.FileUtil;
+import de.fhluebeck.group3.view.Template;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -113,6 +114,8 @@ public final class AddOrEditRecipeController implements Initializable {
 	private Stage parentStage;
 
 	private FileChooser fileChooser;
+
+	private File selectedFile;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -319,13 +322,13 @@ public final class AddOrEditRecipeController implements Initializable {
 			fileChooser.setTitle("Pick the image for the recipe");
 			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.*"),
 					new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"));
-			File file = fileChooser.showOpenDialog(this.parentStage);
-			if (file != null) {
+			selectedFile = fileChooser.showOpenDialog(this.parentStage);
+			if (selectedFile != null) {
 				String systemPath = System.getProperty("user.dir") + "\\" + MainFrameController.PC_IMAGE_DEFAULT_PATH
-						+ file.getName();
-				System.out.println(systemPath);
+						+ selectedFile.getName();
 				try {
-					FileUtil.copyFile(file, systemPath);
+					FileUtil.copyFile(selectedFile, systemPath);
+					this.newRecipeImage.setImage(new Image(selectedFile.toURI().toString(), 100, 100, false, false));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

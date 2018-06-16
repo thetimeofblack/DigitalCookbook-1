@@ -31,13 +31,9 @@ public final class IngredientDAO {
 				+ "unit=?, " + "comments=?, " + "status=? " + "WHERE `id` = ?";
 		try {
 			for (int n = 0; n < ingredients.size(); n++) {
-				Object[] parameters = { ingredients.get(n).getIngredientName(), 
-										ingredients.get(n).getRecipeID(),
-										ingredients.get(n).getQuantity(), 
-										ingredients.get(n).getUnit(), 
-										ingredients.get(n).getComment(),
-										ingredients.get(n).getStatus(), 
-										ingredients.get(n).getIngredientID() };
+				Object[] parameters = { ingredients.get(n).getIngredientName(), ingredients.get(n).getRecipeID(),
+						ingredients.get(n).getQuantity(), ingredients.get(n).getUnit(), ingredients.get(n).getComment(),
+						ingredients.get(n).getStatus(), ingredients.get(n).getIngredientID() };
 				flag = BaseDAO.executeSql(preparedSql, parameters);
 			}
 		} catch (Exception e) {
@@ -63,13 +59,9 @@ public final class IngredientDAO {
 		try {
 			connection = BaseDAO.getConnection();
 			for (int n = 0; n < ingredients.size(); n++) {
-				Object[] parameters = { ingredients.get(n).getIngredientID(), 
-										ingredients.get(n).getIngredientName(),
-										ingredients.get(n).getRecipeID(), 
-										ingredients.get(n).getQuantity(),
-										ingredients.get(n).getUnit(), 
-										ingredients.get(n).getComment(), 
-										ingredients.get(n).getStatus() };
+				Object[] parameters = { ingredients.get(n).getIngredientID(), ingredients.get(n).getIngredientName(),
+						ingredients.get(n).getRecipeID(), ingredients.get(n).getQuantity(),
+						ingredients.get(n).getUnit(), ingredients.get(n).getComment(), ingredients.get(n).getStatus() };
 				flag = BaseDAO.executeSql(preparedSql, parameters);
 			}
 		} catch (Exception e) {
@@ -210,12 +202,13 @@ public final class IngredientDAO {
 		// test the function of searchRecipeIdByIngredientsName(String ingredientName)
 		// List<Integer> ids = searchRecipeIdByIngredientsName("Shaoxin rice wine");
 		List<Ingredient> exampleIds = new ArrayList<Ingredient>();
-		Ingredient ChickenEssence = new Ingredient(36, "Chicken essence", (double)1, 4, "teaspoon", "Chinese material!");
-		Ingredient DriedShrimp = new Ingredient(37, "Dried Shrimp",(double)1, 4, "teaspoon", "seafoodd");
+		Ingredient ChickenEssence = new Ingredient(36, "Chicken essence", (double) 1, 4, "teaspoon",
+				"Chinese material!");
+		Ingredient DriedShrimp = new Ingredient(37, "Dried Shrimp", (double) 1, 4, "teaspoon", "seafoodd");
 		exampleIds.add(0, ChickenEssence);
 		exampleIds.add(1, DriedShrimp);
 		System.out.println(updateBatchIngredients(exampleIds));
-//		updateBatchIngredients(exampleIds);
+		// updateBatchIngredients(exampleIds);
 		/*
 		 * for (int id : ids) { System.out.println(id); }
 		 */

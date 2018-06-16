@@ -1,5 +1,6 @@
 package de.fhluebeck.group3.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -61,7 +62,11 @@ public final class TemplateController implements Initializable {
 		//
 		Template.getPrimaryStage().setTitle("Digital Cookbook");
 
-		Template.getPrimaryStage().getIcons().add(new Image("/de/fhluebeck/group3/resources/system/cookbook.jpg"));
+		// Template.getPrimaryStage().getIcons().add(new
+		// Image("/de/fhluebeck/group3/resources/system/cookbook.jpg"));
+
+		Template.getPrimaryStage().getIcons()
+				.add(new Image(new File(MainFrameController.SYSTEM_IMAGE_DEFAULT_PATH + "cookbook.jpg").toURI().toString()));
 
 		this.password_field.setOnKeyPressed(new EventHandler<KeyEvent>() {
 

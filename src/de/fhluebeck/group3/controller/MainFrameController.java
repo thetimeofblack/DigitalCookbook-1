@@ -66,7 +66,7 @@ public final class MainFrameController implements Initializable {
 	final ToggleGroup radioGroup = new ToggleGroup();
 
 	public static final String SYSTEM_IMAGE_DEFAULT_PATH = "src/de/fhluebeck/group3/resources/system/";
-	
+
 	public static final String PC_IMAGE_DEFAULT_PATH = "src\\de\\fhluebeck\\group3\\resources\\recipe\\";
 
 	public static final String RECIPE_IMAGE_DEFAULT_PATH = "src/de/fhluebeck/group3/resources/recipe/";
@@ -649,12 +649,12 @@ public final class MainFrameController implements Initializable {
 						stepsTable.setItems(stepData);
 						stepOrderColumn
 								.setCellValueFactory(cellData -> cellData.getValue().getIntegerProperityStepOrder());
-						stepContentColumn.setCellValueFactory(
-								cellData -> cellData.getValue().getStringProperityStepContent());
-					}else {
+						stepContentColumn
+								.setCellValueFactory(cellData -> cellData.getValue().getStringProperityStepContent());
+					} else {
 						stepsTable.setItems(null);
 					}
-					
+
 					if (selectedRecipe.getIngredients() != null && selectedRecipe.getIngredients().size() > 0) {
 						// Add ingredients into the ingredient table.
 						ingredientData = FXCollections.observableArrayList();
@@ -670,7 +670,7 @@ public final class MainFrameController implements Initializable {
 								.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
 						ingredientCommentColumn
 								.setCellValueFactory(cellData -> cellData.getValue().getStringProperityComment());
-					}else {
+					} else {
 						ingredientTable.setItems(null);
 					}
 				}
@@ -685,11 +685,8 @@ public final class MainFrameController implements Initializable {
 	 * */
 	private void showAddOrEditRecipeView(Recipe recipe) {
 
-		// shift the stage to the main Scene.
+		// Shift the stage to the main Scene.
 		try {
-			// Parent parent =
-			// FXMLLoader.load(Template.class.getResource("../view/AddOrEditRecipe.fxml"),
-			// null, new JavaFXBuilderFactory());
 			FXMLLoader loader = new FXMLLoader(Template.class.getResource("../view/AddOrEditRecipe.fxml"), null,
 					new JavaFXBuilderFactory());
 			Parent parent = loader.load();
@@ -697,6 +694,10 @@ public final class MainFrameController implements Initializable {
 			Stage stage = new Stage();
 			AddOrEditRecipeController controller = loader.getController();
 			controller.setEditStage(stage);
+			stage.setTitle("Now Edit or Add new recipes");
+
+			stage.getIcons().add(new Image(
+					new File(MainFrameController.SYSTEM_IMAGE_DEFAULT_PATH + "cookbook.jpg").toURI().toString()));
 			if (recipe != null) {
 				controller.setEditedRecipe(recipe);
 				controller.setParentStage(stage);
