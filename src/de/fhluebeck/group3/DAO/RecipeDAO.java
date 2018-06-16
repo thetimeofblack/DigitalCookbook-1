@@ -334,7 +334,6 @@ public final class RecipeDAO {
 		boolean flag = false;
 
 		// Also calls the functions from IngredientDAO and StepDAO.
-		// ����ʱ���ù�,�ȱ��˶�д���������
 		// IngredientDAO.addBatchIngredients(recipe.getIngredients());
 		// StepDAO.addBatchSteps(recipe.getSteps());
 		// If user has already existed.
@@ -342,11 +341,13 @@ public final class RecipeDAO {
 			return false;
 		}
 		try {
-			String preparedSql = "INSERT INTO `recipe` (`ownerUserid`, `recipeName`, `description`, `preparationTime`,`cookingTime`,`peopleAvailable`,`imagePath`,`status`) VALUES (?, ?, ?, ?, ?, ?,?,1)";
+			String preparedSql = "INSERT INTO `recipe` (`ownerUserid`, `recipeName`, `description`, `preparationTime`,"
+					+ "`cookingTime`,`peopleAvailable`,`imagePath`,`status`) VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
 			Object[] parameters = { recipe.getOwnerId(), recipe.getRecipeName(), recipe.getDescription(),
 					recipe.getPreparationTime(), recipe.getCookingTime(), recipe.getAvailablePeople(),
 					recipe.getImagePath() };
 			flag = BaseDAO.executeSql(preparedSql, parameters);
+			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

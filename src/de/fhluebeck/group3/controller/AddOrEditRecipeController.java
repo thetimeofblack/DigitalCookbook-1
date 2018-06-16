@@ -110,6 +110,8 @@ public final class AddOrEditRecipeController implements Initializable {
 	private ImageView newRecipeImage;
 
 	private Recipe editedRecipe;
+	
+	private boolean isAddingRecipe = false;
 
 	private Stage parentStage;
 
@@ -371,7 +373,8 @@ public final class AddOrEditRecipeController implements Initializable {
 	 * */
 	private void fillInBlanksOfRecipe() {
 
-		if (this.editedRecipe != null) {
+		if (this.editedRecipe != null) {	//edit recipe
+			this.isAddingRecipe = false;
 			defaultImageView.setText("");
 			newRecipeImage.setImage(
 					new Image(new File(MainFrameController.RECIPE_IMAGE_DEFAULT_PATH + editedRecipe.getImagePath())
@@ -398,6 +401,8 @@ public final class AddOrEditRecipeController implements Initializable {
 				}
 				ingredients.setItems(ingredientData);
 			}
+		}else {
+			this.isAddingRecipe = true;
 		}
 	}
 
