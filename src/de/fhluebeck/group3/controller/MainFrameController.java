@@ -363,7 +363,7 @@ public final class MainFrameController implements Initializable {
 
 		this.FavButton.setOnMouseEntered((event) -> {
 			if (!this.isShowFavorite) {
-				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_on.png", this.FavButton);
+				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_redheart.png", this.FavButton);
 			}
 
 		});
@@ -392,7 +392,7 @@ public final class MainFrameController implements Initializable {
 		// when click the home button, return to the home page.
 		this.FavButton.setOnAction((event) -> {
 			this.isShowFavorite = true;
-			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_on.png", this.FavButton);
+			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_redheart.png", this.FavButton);
 			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_out.png", this.homeButton);
 
 			this.currentRecipe = RecipeDAO.getFavoritedRecipes(Template.getCurrentUser().getUserId());
@@ -524,7 +524,7 @@ public final class MainFrameController implements Initializable {
 				// Shift the stage to the main Scene.
 				this.showAddOrEditRecipeView(selectedRecipe);
 
-				// TODO refresh the whole scene.
+				// TODO refresh the whole scene in main frame.
 
 			} else {
 				Alert alert = new Alert(AlertType.ERROR,
@@ -731,6 +731,7 @@ public final class MainFrameController implements Initializable {
 	 * 
 	 * */
 	public void refreshWholeInterface() {
+
 		this.currentRecipe = RecipeDAO.getAllRecipes();
 
 		try {

@@ -16,6 +16,8 @@ import de.fhluebeck.group3.model.Recipe;
 import de.fhluebeck.group3.model.Step;
 import de.fhluebeck.group3.util.FileUtil;
 import de.fhluebeck.group3.view.Template;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -46,6 +48,9 @@ public final class AddOrEditRecipeController implements Initializable {
 
 	@FXML
 	private TextArea nameofRecipe;
+
+	@FXML
+	private Label recipeNameWarning;
 
 	@FXML
 	private TextField description;
@@ -138,6 +143,22 @@ public final class AddOrEditRecipeController implements Initializable {
 	 * */
 	private void initialSetAllElementProperities() {
 
+		this.nameofRecipe.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+				if (newValue.trim().isEmpty()) {
+
+					setPromptWarning();
+
+				} else {
+					restorePromptWarning();
+				}
+
+			}
+		});
+
 		ingredientNameColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityIngredientName());
 		ingredientQuantityColumn.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
 		ingredientUnitColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
@@ -221,7 +242,7 @@ public final class AddOrEditRecipeController implements Initializable {
 		// Actions when the remove row button is clicked.
 		this.removeIngredient.setOnAction((event) -> {
 
-			// TODO Alert warning.
+			// TODO Alert warning. if ingredient's id is null means new Ingredient.
 
 			// this.removeRow(ingredients);
 
@@ -300,7 +321,7 @@ public final class AddOrEditRecipeController implements Initializable {
 		// Actions when the removeStep button is clicked.
 		this.removeStep.setOnAction((event) -> {
 
-			// TODO alert and delete directly from the database.
+			// TODO alert and delete directly from the database. When step has id;
 
 			int row = steps.getSelectionModel().getSelectedIndex();
 			if (row < 0) {
@@ -351,35 +372,42 @@ public final class AddOrEditRecipeController implements Initializable {
 		// Actions when the saveRecipe button is clicked.
 		saveRecipe.setOnAction((event) -> {
 
-			if (this.isAddingRecipe) { // add new recipe TODO add form validation.
+			if (this.formValidationCheck()) {
 
-				boolean flag = false;
+				if (this.isAddingRecipe) { // add new recipe TODO add form validation.
 
-				Alert alert = new Alert(AlertType.CONFIRMATION, "Do you want to save this Recipe?", ButtonType.APPLY,
-						ButtonType.CANCEL);
+					boolean flag = false;
 
-				Optional<ButtonType> result = alert.showAndWait();
+					Alert alert = new Alert(AlertType.CONFIRMATION, "Do you want to save this Recipe?",
+							ButtonType.APPLY, ButtonType.CANCEL);
 
-				if (result.get() == ButtonType.APPLY) {
-					flag = this.insertRecipeIntoDB();
-				}
+					Optional<ButtonType> result = alert.showAndWait();
 
-				if (flag) {
+					if (result.get() == ButtonType.APPLY) {
 
-					new Alert(AlertType.INFORMATION, "Recipe Successfully Inserted !", ButtonType.OK).showAndWait();
+						flag = this.insertRecipeIntoDB();
 
-					Object controllerObject = Template.getiFxmlLoader().getController();
-
-					if (controllerObject instanceof MainFrameController) {
-						MainFrameController controller = (MainFrameController) controllerObject;
-
-						controller.refreshWholeInterface();
 					}
 
-					this.editStage.close();
-				}
+					if (flag) {
 
-			} else { // edit recipe
+						new Alert(AlertType.INFORMATION, "Recipe Successfully Inserted !", ButtonType.OK).showAndWait();
+
+						Object controllerObject = Template.getiFxmlLoader().getController();
+
+						if (controllerObject instanceof MainFrameController) {
+							MainFrameController controller = (MainFrameController) controllerObject;
+
+							controller.refreshWholeInterface();
+						}
+
+						this.editStage.close();
+
+					}
+
+				} else { // Edit recipe
+
+				}
 
 			}
 
@@ -515,10 +543,38 @@ public final class AddOrEditRecipeController implements Initializable {
 	 * To check the validity of the form.
 	 */
 	private boolean formValidationCheck() {
-		boolean flag = false;
+		boolean flag = true;
 
-		// TODO when check ImageView, use imagePath.
+		// when check ImageView, use imagePath.
+		if (this.imagePath == null || this.imagePath.isEmpty()) {
+			new Alert(AlertType.WARNING, "Choose Image for recipe!", ButtonType.OK).showAndWait();
+			return false;
+		}
+
+		// check name of recipe is filled in.
+		if (this.nameofRecipe.getText().trim().isEmpty()) {
+			this.recipeNameWarning.setText("Enter Recipe Name!");
+			new Alert(AlertType.WARNING, "Enter Recipe Name!", ButtonType.OK).showAndWait();
+			return false;
+		}
+
 		return flag;
+	}
+
+	/**
+	 * 
+	 * */
+	protected void setPromptWarning() {
+		this.recipeNameWarning.setText("Enter Recipe Name!");
+		this.saveRecipe.setDisable(true);
+	}
+
+	/**
+	 * 
+	 * */
+	protected void restorePromptWarning() {
+		this.recipeNameWarning.setText("");
+		this.saveRecipe.setDisable(false);
 	}
 
 }

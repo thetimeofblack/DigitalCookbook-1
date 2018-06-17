@@ -54,10 +54,8 @@ public final class IngredientDAO {
 	 */
 	public static boolean addBatchIngredients(List<Ingredient> ingredients) {
 		boolean flag = false;
-		Connection connection = null;
 		String preparedSql = "INSERT INTO `ingredient` (id, ingredientName, recipeID, quantity, unit, comments, status) VALUES(?,?,?,?,?,?,?)";
 		try {
-			connection = BaseDAO.getConnection();
 			for (int n = 0; n < ingredients.size(); n++) {
 				Object[] parameters = { ingredients.get(n).getIngredientID(), ingredients.get(n).getIngredientName(),
 						ingredients.get(n).getRecipeID(), ingredients.get(n).getQuantity(),

@@ -41,11 +41,18 @@
 				<HBox>
 					<children>
 						<TextArea fx:id="nameofRecipe" prefHeight="45.0"
-							prefWidth="689.0" promptText="Please enter recipe name...">
+							prefWidth="454.0" promptText="Please enter recipe name...">
 							<font>
 								<Font size="20.0" />
 							</font>
 						</TextArea>
+						<VBox prefHeight="46.0" prefWidth="22.0" />
+						<Label fx:id="recipeNameWarning" prefHeight="46.0"
+							prefWidth="210.0" textFill="#f50c0c">
+							<font>
+								<Font name="System Bold Italic" size="18.0" />
+							</font>
+						</Label>
 					</children>
 				</HBox>
 				<Label prefHeight="35.0" prefWidth="178.0" text="Desciption">
@@ -56,7 +63,7 @@
 				<HBox>
 					<children>
 						<TextField fx:id="description" prefHeight="47.0"
-							prefWidth="746.0" promptText="Please enter recipe description...">
+							prefWidth="690.0" promptText="Please enter recipe description...">
 							<font>
 								<Font size="20.0" />
 							</font>
