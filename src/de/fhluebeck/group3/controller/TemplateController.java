@@ -65,8 +65,8 @@ public final class TemplateController implements Initializable {
 		// Template.getPrimaryStage().getIcons().add(new
 		// Image("/de/fhluebeck/group3/resources/system/cookbook.jpg"));
 
-		Template.getPrimaryStage().getIcons()
-				.add(new Image(new File(MainFrameController.SYSTEM_IMAGE_DEFAULT_PATH + "cookbook.jpg").toURI().toString()));
+		Template.getPrimaryStage().getIcons().add(
+				new Image(new File(MainFrameController.SYSTEM_IMAGE_DEFAULT_PATH + "cookbook.jpg").toURI().toString()));
 
 		this.password_field.setOnKeyPressed(new EventHandler<KeyEvent>() {
 

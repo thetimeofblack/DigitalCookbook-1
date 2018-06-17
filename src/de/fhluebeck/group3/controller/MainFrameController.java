@@ -525,7 +525,7 @@ public final class MainFrameController implements Initializable {
 				this.showAddOrEditRecipeView(selectedRecipe);
 
 				// TODO refresh the whole scene.
-				
+
 			} else {
 				Alert alert = new Alert(AlertType.ERROR,
 						"Error: You are not the owner of the recipe, No Permission to edit!!", ButtonType.OK);
@@ -536,9 +536,9 @@ public final class MainFrameController implements Initializable {
 
 		// Set on action when you click the add recipe button.
 		this.addRecipeButton.setOnAction((event) -> {
-			
+
 			this.showAddOrEditRecipeView(null);
-			
+
 			// refresh the whole scene.
 			this.refreshWholeInterface();
 		});
@@ -726,7 +726,7 @@ public final class MainFrameController implements Initializable {
 			user.setFavoriteRecipes(RecipeDAO.getFavoritedRecipes(user.getUserId()));
 		}
 	}
-	
+
 	/**
 	 * 
 	 * */

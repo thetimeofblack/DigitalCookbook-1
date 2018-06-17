@@ -16,9 +16,8 @@ import javafx.stage.Stage;
 public class Template extends Application {
 
 	private static Stage primaryStage;
-	
+
 	private static FXMLLoader iFxmlLoader;
-	
 
 	// private static GridPane rootLayout;
 
@@ -67,7 +66,7 @@ public class Template extends Application {
 	public static void clearCurrentUser() {
 		currentUser = null;
 	}
-	
+
 	public static FXMLLoader getiFxmlLoader() {
 		return iFxmlLoader;
 	}
@@ -86,10 +85,11 @@ public class Template extends Application {
 
 		FXMLLoader loader = new FXMLLoader(Template.class.getResource(fxml), null, new JavaFXBuilderFactory());
 		Template.setiFxmlLoader(loader);
-		
-//		Parent page = (Parent) FXMLLoader.load(Template.class.getResource(fxml), null, new JavaFXBuilderFactory());
+
+		// Parent page = (Parent) FXMLLoader.load(Template.class.getResource(fxml),
+		// null, new JavaFXBuilderFactory());
 		Parent page = (Parent) loader.load();
-				
+
 		Scene scene = primaryStage.getScene();
 		if (scene == null) { // at the first time, create a new scene.
 			scene = new Scene(page);

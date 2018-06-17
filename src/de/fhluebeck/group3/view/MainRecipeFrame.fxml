@@ -128,7 +128,8 @@
 				</HBox>
 				<HBox prefHeight="141.0" prefWidth="627.0">
 					<children>
-						<ImageView fx:id="recipePic" fitHeight="144.0" fitWidth="246.0" pickOnBounds="true" preserveRatio="true" />
+						<ImageView fx:id="recipePic" fitHeight="144.0" fitWidth="223.0" pickOnBounds="true" preserveRatio="true" />
+                  <VBox prefHeight="144.0" prefWidth="68.0" />
 						<Label fx:id="DescriptionLabel" prefHeight="144.0" prefWidth="405.0" text="Description">
 							<font>
 								<Font size="16.0" />

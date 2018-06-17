@@ -31,7 +31,7 @@ CREATE TABLE `ingredient` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ingredientName` varchar(30) DEFAULT NULL,
   `recipeID` int(11) DEFAULT NULL,
-  `quantity` decimal(2,0) DEFAULT NULL,
+  `quantity` decimal(6,2) DEFAULT NULL,
   `unit` varchar(10) DEFAULT NULL,
   `comments` varchar(50) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
@@ -80,6 +80,7 @@ INSERT INTO `ingredient` VALUES (1,'cornstarch',1,1,'tablespoon',NULL,1),
 (33,'vinegar',3,1,'tablespoon',NULL,1),
 (34,'light soy sauce',3,1,'tablespoon',NULL,1),
 (35,'salt',3,1,'teaspoon',NULL,1);
+
 /*!40000 ALTER TABLE `ingredient` ENABLE KEYS */;
 UNLOCK TABLES;
 

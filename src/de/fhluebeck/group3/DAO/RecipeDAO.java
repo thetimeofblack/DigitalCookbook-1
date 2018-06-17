@@ -31,17 +31,17 @@ public final class RecipeDAO {
 
 		return recipes;
 	}
-	
+
 	/**
-	 * This method is called after a new recipe is inserted into the DB to retrive the 
-	 * ID of the recipe;
-	 * */
+	 * This method is called after a new recipe is inserted into the DB to retrive
+	 * the ID of the recipe;
+	 */
 	public static Integer getRecipeID(Recipe recipe) {
 		Integer recipeID = 0;
 		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
 		Connection connection = null;
-		
+
 		try {
 			connection = BaseDAO.getConnection();
 			// SHOW RECIPE
@@ -50,11 +50,12 @@ public final class RecipeDAO {
 					+ "AND `peopleAvailable` = ? AND `imagePath` = ?";
 			pstmt = connection.prepareStatement(preparedSql);
 			Object[] parameters = { recipe.getOwnerId(), recipe.getRecipeName(), recipe.getDescription(),
-					recipe.getPreparationTime(), recipe.getCookingTime(),recipe.getAvailablePeople(), recipe.getImagePath()};
+					recipe.getPreparationTime(), recipe.getCookingTime(), recipe.getAvailablePeople(),
+					recipe.getImagePath() };
 			resultSet = BaseDAO.executeQuery(pstmt, parameters);
 			if (resultSet != null && resultSet.isBeforeFirst()) { // ensure that there are some data in result set.
 				while (resultSet.next()) {
-					
+
 					recipeID = Integer.valueOf(resultSet.getString("id"));
 
 				}
@@ -70,7 +71,7 @@ public final class RecipeDAO {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return recipeID;
 	}
 
@@ -389,7 +390,7 @@ public final class RecipeDAO {
 					recipe.getPreparationTime(), recipe.getCookingTime(), recipe.getAvailablePeople(),
 					recipe.getImagePath() };
 			flag = BaseDAO.executeSql(preparedSql, parameters);
-			
+
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -597,8 +598,8 @@ public final class RecipeDAO {
 		recipe.setAvailablePeople(12);
 
 		System.out.println(RecipeDAO.getRecipeID(recipe));
-		
-//		System.out.println(RecipeDAO.addRecipe(recipe));
+
+		// System.out.println(RecipeDAO.addRecipe(recipe));
 
 		/**
 		 * print basic information of step, you can set, in the database, some step's

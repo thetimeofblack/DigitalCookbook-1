@@ -202,7 +202,7 @@ public final class AddOrEditRecipeController implements Initializable {
 		// Actions when the add row button is clicked.
 		this.addIngredient.setOnAction((event) -> {
 			Ingredient ingredient;
-			ingredient = new Ingredient("", 0.0d, 0, "0", "");
+			ingredient = new Ingredient("", 0.0d, 0, Ingredient.GRAM, "");
 			int row = ingredients.getSelectionModel().getSelectedIndex();
 			if (row == -1) { // if no row is selected
 				row = ingredients.getItems().size() - 1;
@@ -351,32 +351,31 @@ public final class AddOrEditRecipeController implements Initializable {
 		// Actions when the saveRecipe button is clicked.
 		saveRecipe.setOnAction((event) -> {
 
-
 			if (this.isAddingRecipe) { // add new recipe TODO add form validation.
-				
+
 				boolean flag = false;
 
-				Alert alert = new Alert(AlertType.CONFIRMATION,"Do you want to save this Recipe?", ButtonType.APPLY,
+				Alert alert = new Alert(AlertType.CONFIRMATION, "Do you want to save this Recipe?", ButtonType.APPLY,
 						ButtonType.CANCEL);
-				
+
 				Optional<ButtonType> result = alert.showAndWait();
-				
-				if(result.get() == ButtonType.APPLY) {
+
+				if (result.get() == ButtonType.APPLY) {
 					flag = this.insertRecipeIntoDB();
 				}
-				
-				if(flag) {
-					
-					new Alert(AlertType.INFORMATION,"Recipe Successfully Inserted !", ButtonType.OK).showAndWait();
-					
+
+				if (flag) {
+
+					new Alert(AlertType.INFORMATION, "Recipe Successfully Inserted !", ButtonType.OK).showAndWait();
+
 					Object controllerObject = Template.getiFxmlLoader().getController();
-					
-					if(controllerObject instanceof MainFrameController) {
+
+					if (controllerObject instanceof MainFrameController) {
 						MainFrameController controller = (MainFrameController) controllerObject;
-						
+
 						controller.refreshWholeInterface();
 					}
-					
+
 					this.editStage.close();
 				}
 
@@ -472,9 +471,9 @@ public final class AddOrEditRecipeController implements Initializable {
 		newRecipe.setImagePath(this.imagePath.trim());
 		newRecipe.setStatus(1);
 		newRecipe.setOwnerId(Template.getCurrentUser().getUserId());
-		
+
 		RecipeDAO.addRecipe(newRecipe);
-		
+
 		newRecipe.setRecipeID(RecipeDAO.getRecipeID(newRecipe));
 
 		List<Ingredient> newIngredients = new ArrayList<Ingredient>();
@@ -482,43 +481,43 @@ public final class AddOrEditRecipeController implements Initializable {
 		// Get all the ingredients
 		for (int i = 0; i < this.ingredients.getItems().size(); i += 1) {
 			newIngredient = this.ingredients.getItems().get(i);
-			
+
 			newIngredient.setRecipeID(newRecipe.getRecipeID());
-			
-			//set the OwnerID
+
+			// set the OwnerID
 			newIngredients.add(newIngredient);
 		}
-		
+
 		List<Step> newSteps = new ArrayList<Step>();
 		Step newStep;
 		// Get all the steps
 		for (int i = 0; i < this.steps.getItems().size(); i += 1) {
 			newStep = this.steps.getItems().get(i);
 
-			//set the OwnerID
+			// set the OwnerID
 			newStep.setRecipeID(newRecipe.getRecipeID());
-			
+
 			newSteps.add(newStep);
 		}
-		
+
 		IngredientDAO.addBatchIngredients(newIngredients);
-		
+
 		flag = StepDAO.addBatchSteps(newSteps);
-		
-//		System.out.println(newRecipe);
-//		System.out.println(newIngredients);
-//		System.out.println(newSteps);
+
+		// System.out.println(newRecipe);
+		// System.out.println(newIngredients);
+		// System.out.println(newSteps);
 
 		return flag;
 	}
-	
+
 	/**
 	 * To check the validity of the form.
-	 * */
+	 */
 	private boolean formValidationCheck() {
 		boolean flag = false;
-		
-		//TODO when check ImageView, use imagePath.
+
+		// TODO when check ImageView, use imagePath.
 		return flag;
 	}
 
