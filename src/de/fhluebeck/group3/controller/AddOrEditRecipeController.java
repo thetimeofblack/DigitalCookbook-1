@@ -352,16 +352,15 @@ public final class AddOrEditRecipeController implements Initializable {
 			this.fileChooser = new FileChooser();
 			fileChooser.setTitle("Pick the image for the recipe");
 			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.*"),
-					new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"));
+					new FileChooser.ExtensionFilter("JPEG", "*.jpeg"), new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+					new FileChooser.ExtensionFilter("PNG", "*.png"));
 			selectedFile = fileChooser.showOpenDialog(this.parentStage);
 			if (selectedFile != null) {
-				//TODO resolve the different notation for system path for Windows and MacOS
+				// TODO resolve the different notation for system path for Windows and MacOS
 				String systemPath = System.getProperty("user.dir") + "/" + MainFrameController.RECIPE_IMAGE_DEFAULT_PATH
 						+ selectedFile.getName();
-				System.out.println(systemPath);
 				try {
 					this.imagePath = selectedFile.getName();
-					System.out.println(imagePath);
 					FileUtil.copyFile(selectedFile, systemPath);
 					this.newRecipeImage.setImage(new Image(selectedFile.toURI().toString(), 100, 100, false, false));
 					this.defaultImageView.setText("");
@@ -438,7 +437,7 @@ public final class AddOrEditRecipeController implements Initializable {
 						this.editStage.close();
 
 					}
-					
+
 				}
 
 			}
@@ -514,13 +513,13 @@ public final class AddOrEditRecipeController implements Initializable {
 			this.isAddingRecipe = true;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * */
 	private boolean updateRecipeIntoDB() {
 		boolean flag = true;
-		
+
 		Recipe newRecipe = new Recipe();
 		newRecipe.setRecipeName(this.nameofRecipe.getText().trim());
 		newRecipe.setDescription(this.description.getText().trim());
@@ -530,12 +529,12 @@ public final class AddOrEditRecipeController implements Initializable {
 		newRecipe.setImagePath(this.imagePath.trim());
 		newRecipe.setStatus(1);
 		newRecipe.setOwnerId(Template.getCurrentUser().getUserId());
-		
-		//update just the basic information of the recipe;
+
+		// update just the basic information of the recipe;
 		flag = RecipeDAO.updateRecipe(newRecipe);
-		
+
 		if (flag) {
-			//Add or update ingredients.
+			// Add or update ingredients.
 			List<Ingredient> newIngredients = new ArrayList<Ingredient>();
 			List<Ingredient> updateIngredients = new ArrayList<Ingredient>();
 			Ingredient ingredient;
@@ -543,12 +542,12 @@ public final class AddOrEditRecipeController implements Initializable {
 			for (int i = 0; i < this.ingredients.getItems().size(); i += 1) {
 				ingredient = this.ingredients.getItems().get(i);
 
-				if (ingredient.getIngredientID() == null) { //no ingredient ID means that is new Ingredients.
+				if (ingredient.getIngredientID() == null) { // no ingredient ID means that is new Ingredients.
 
 					ingredient.setRecipeID(newRecipe.getRecipeID());
 					newIngredients.add(ingredient);
 
-				} else { //not a new Ingredient, add it to the update List.
+				} else { // not a new Ingredient, add it to the update List.
 
 					updateIngredients.add(ingredient);
 
@@ -558,7 +557,7 @@ public final class AddOrEditRecipeController implements Initializable {
 			IngredientDAO.updateBatchIngredients(updateIngredients);
 			IngredientDAO.addBatchIngredients(newIngredients);
 		}
-		
+
 		if (flag) {
 			List<Step> newSteps = new ArrayList<Step>();
 			List<Step> updateSteps = new ArrayList<Step>();
@@ -567,13 +566,13 @@ public final class AddOrEditRecipeController implements Initializable {
 			for (int i = 0; i < this.steps.getItems().size(); i += 1) {
 				step = this.steps.getItems().get(i);
 
-				if (step.getStepID() == null) { //no step ID means that is new Step.
+				if (step.getStepID() == null) { // no step ID means that is new Step.
 
 					// set the OwnerID
 					step.setRecipeID(newRecipe.getRecipeID());
 					newSteps.add(step);
 
-				} else { //not a new Step, add it to the update List.
+				} else { // not a new Step, add it to the update List.
 
 					updateSteps.add(step);
 
@@ -583,7 +582,7 @@ public final class AddOrEditRecipeController implements Initializable {
 			StepDAO.addBatchSteps(newSteps);
 			StepDAO.updateBatchSteps(updateSteps);
 		}
-		
+
 		return flag;
 	}
 
