@@ -355,10 +355,13 @@ public final class AddOrEditRecipeController implements Initializable {
 					new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"));
 			selectedFile = fileChooser.showOpenDialog(this.parentStage);
 			if (selectedFile != null) {
-				String systemPath = System.getProperty("user.dir") + "\\" + MainFrameController.PC_IMAGE_DEFAULT_PATH
+				//TODO resolve the different notation for system path for Windows and MacOS
+				String systemPath = System.getProperty("user.dir") + "/" + MainFrameController.RECIPE_IMAGE_DEFAULT_PATH
 						+ selectedFile.getName();
+				System.out.println(systemPath);
 				try {
 					this.imagePath = selectedFile.getName();
+					System.out.println(imagePath);
 					FileUtil.copyFile(selectedFile, systemPath);
 					this.newRecipeImage.setImage(new Image(selectedFile.toURI().toString(), 100, 100, false, false));
 					this.defaultImageView.setText("");
@@ -407,6 +410,35 @@ public final class AddOrEditRecipeController implements Initializable {
 
 				} else { // Edit recipe
 
+					boolean flag = false;
+
+					Alert alert = new Alert(AlertType.CONFIRMATION, "Do you want to update this Recipe?",
+							ButtonType.APPLY, ButtonType.CANCEL);
+
+					Optional<ButtonType> result = alert.showAndWait();
+
+					if (result.get() == ButtonType.APPLY) {
+
+						flag = this.updateRecipeIntoDB();
+
+					}
+
+					if (flag) {
+
+						new Alert(AlertType.INFORMATION, "Recipe Successfully Updated !", ButtonType.OK).showAndWait();
+
+						Object controllerObject = Template.getiFxmlLoader().getController();
+
+						if (controllerObject instanceof MainFrameController) {
+							MainFrameController controller = (MainFrameController) controllerObject;
+
+							controller.refreshWholeInterface();
+						}
+
+						this.editStage.close();
+
+					}
+					
 				}
 
 			}
@@ -481,6 +513,78 @@ public final class AddOrEditRecipeController implements Initializable {
 		} else { // Add new recipe
 			this.isAddingRecipe = true;
 		}
+	}
+	
+	/**
+	 * 
+	 * */
+	private boolean updateRecipeIntoDB() {
+		boolean flag = true;
+		
+		Recipe newRecipe = new Recipe();
+		newRecipe.setRecipeName(this.nameofRecipe.getText().trim());
+		newRecipe.setDescription(this.description.getText().trim());
+		newRecipe.setAvailablePeople(Integer.valueOf(this.amountOfPeople.getText()));
+		newRecipe.setPreparationTime(Integer.valueOf(this.preparingTime.getText()));
+		newRecipe.setCookingTime(Integer.valueOf(this.cookingTime.getText()));
+		newRecipe.setImagePath(this.imagePath.trim());
+		newRecipe.setStatus(1);
+		newRecipe.setOwnerId(Template.getCurrentUser().getUserId());
+		
+		//update just the basic information of the recipe;
+		flag = RecipeDAO.updateRecipe(newRecipe);
+		
+		if (flag) {
+			//Add or update ingredients.
+			List<Ingredient> newIngredients = new ArrayList<Ingredient>();
+			List<Ingredient> updateIngredients = new ArrayList<Ingredient>();
+			Ingredient ingredient;
+			// Get all the ingredients
+			for (int i = 0; i < this.ingredients.getItems().size(); i += 1) {
+				ingredient = this.ingredients.getItems().get(i);
+
+				if (ingredient.getIngredientID() == null) { //no ingredient ID means that is new Ingredients.
+
+					ingredient.setRecipeID(newRecipe.getRecipeID());
+					newIngredients.add(ingredient);
+
+				} else { //not a new Ingredient, add it to the update List.
+
+					updateIngredients.add(ingredient);
+
+				}
+
+			}
+			IngredientDAO.updateBatchIngredients(updateIngredients);
+			IngredientDAO.addBatchIngredients(newIngredients);
+		}
+		
+		if (flag) {
+			List<Step> newSteps = new ArrayList<Step>();
+			List<Step> updateSteps = new ArrayList<Step>();
+			Step step;
+			// Get all the steps
+			for (int i = 0; i < this.steps.getItems().size(); i += 1) {
+				step = this.steps.getItems().get(i);
+
+				if (step.getStepID() == null) { //no step ID means that is new Step.
+
+					// set the OwnerID
+					step.setRecipeID(newRecipe.getRecipeID());
+					newSteps.add(step);
+
+				} else { //not a new Step, add it to the update List.
+
+					updateSteps.add(step);
+
+				}
+
+			}
+			StepDAO.addBatchSteps(newSteps);
+			StepDAO.updateBatchSteps(updateSteps);
+		}
+		
+		return flag;
 	}
 
 	/**
