@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
+
 import de.fhluebeck.group3.model.Recipe;
 import de.fhluebeck.group3.model.User;
 
@@ -358,7 +360,16 @@ public final class RecipeDAO {
 	 */
 	public static boolean updateRecipe(Recipe recipe) {
 		boolean flag = false;
-
+		try {
+				String preparedSql = "UPDATE `recipe` SET" + " `ownerUserid`= ?, " + "`recipeName` = ?, " + "`description` = ?," + "`preparationTime` = ?," 
+									+ "`cookingTime` = ?, " + "`peopleAvailable` = ?, " + "`imagePath` = ? " + "WHERE `id` = ?";
+				Object[] parameters = {recipe.getOwnerId(), recipe.getRecipeName(), recipe.getDescription(),
+						recipe.getPreparationTime(), recipe.getCookingTime(), recipe.getAvailablePeople(),
+						recipe.getImagePath(),recipe.getRecipeID()};
+				flag = BaseDAO.executeSql(preparedSql, parameters);
+			} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			}
 		return flag;
 	}
 
@@ -589,17 +600,21 @@ public final class RecipeDAO {
 		// addUser(user);
 		// addUser(new User("test5", "456"));
 		Recipe recipe = new Recipe();
+		recipe.setRecipeID(5);
+		System.out.println(recipe.getRecipeID());
 		recipe.setOwnerId(1);
-		recipe.setRecipeName("asdasda");
+		recipe.setRecipeName("asdasdartyutyrt");
 		recipe.setDescription("asdasda");
-		recipe.setPreparationTime(23);
+		recipe.setPreparationTime(67);
 		recipe.setCookingTime(34);
 		recipe.setImagePath("steamedEgg.jpg");
 		recipe.setAvailablePeople(12);
 
-		System.out.println(RecipeDAO.getRecipeID(recipe));
+//		System.out.println(RecipeDAO.getRecipeID(recipe));
 
-		// System.out.println(RecipeDAO.addRecipe(recipe));
+		
+//		 System.out.println(RecipeDAO.addRecipe(recipe));
+		System.out.println(RecipeDAO.updateRecipe(recipe));
 
 		/**
 		 * print basic information of step, you can set, in the database, some step's
