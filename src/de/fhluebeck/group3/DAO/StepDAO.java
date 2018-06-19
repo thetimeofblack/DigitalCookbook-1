@@ -152,7 +152,7 @@ public final class StepDAO {
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * Delete the multiple steps according to their id.
 	 * 
@@ -160,24 +160,23 @@ public final class StepDAO {
 	 *            set of steps to be deleted.
 	 * 
 	 * @return flag: whether the function is succeeded or not.
-	 * */
+	 */
 	public static boolean batchDeleteSteps(List<Step> steps) {
 		boolean flag = true;
-		
-		if(steps != null && steps.size() > 0) {
-			
-			for(int i = 0; i<steps.size();i++) {
+
+		if (steps != null && steps.size() > 0) {
+
+			for (int i = 0; i < steps.size(); i++) {
 				flag = deleteStepById(steps.get(i).getStepID());
-				if(!flag) {
+				if (!flag) {
 					return false;
 				}
 			}
-			
+
 		}
-		
+
 		return flag;
 	}
-	
 
 	/**
 	 * Unit test for StepDAO.

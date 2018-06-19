@@ -130,17 +130,16 @@ public final class AddOrEditRecipeController implements Initializable {
 	// private File selectedFile;
 
 	private String imagePath;
-	
-	private List<Ingredient> deletedIngredients;
-	
-	private List<Step> deletedSteps;
 
+	private List<Ingredient> deletedIngredients;
+
+	private List<Step> deletedSteps;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		this.deletedIngredients = new ArrayList<Ingredient>();
-		
+
 		this.deletedSteps = new ArrayList<Step>();
 
 		this.initialSetAllElementProperities();
@@ -252,40 +251,41 @@ public final class AddOrEditRecipeController implements Initializable {
 		this.removeIngredient.setOnAction((event) -> {
 
 			int row = ingredients.getSelectionModel().getSelectedIndex();
-			
+
 			if (row < 0) {
-				
+
 				new Alert(AlertType.ERROR, "Please select one row ! ", ButtonType.CLOSE).showAndWait();
-				
+
 			} else {
-				
+
 				Ingredient ingredient = ingredients.getItems().get(row);
-				
-				if(ingredient.getIngredientID() != null) {		//means the old ingredients.
-					
+
+				if (ingredient.getIngredientID() != null) { // means the old ingredients.
+
 					this.deletedIngredients.add(ingredient);
-					
+
 				}
-//					
-//					Alert alert = new Alert(AlertType.WARNING,"Do you want to delete ingredient " +ingredient.getIngredientName() +"?",ButtonType.YES,ButtonType.NO);
-//					
-//					Optional<ButtonType> result = alert.showAndWait();
-//					
-//					if(result.get() == ButtonType.YES) {
-//						
-//						if(IngredientDAO.deleteIngredientById(ingredient.getIngredientID())) {
-//							
-//							new Alert(AlertType.CONFIRMATION,"Ingredient has been deleted",);
-//							
-//						}else {
-//							
-//						}
-//						
-//						
-//					}
-//					
-//				}
-				
+				//
+				// Alert alert = new Alert(AlertType.WARNING,"Do you want to delete ingredient "
+				// +ingredient.getIngredientName() +"?",ButtonType.YES,ButtonType.NO);
+				//
+				// Optional<ButtonType> result = alert.showAndWait();
+				//
+				// if(result.get() == ButtonType.YES) {
+				//
+				// if(IngredientDAO.deleteIngredientById(ingredient.getIngredientID())) {
+				//
+				// new Alert(AlertType.CONFIRMATION,"Ingredient has been deleted",);
+				//
+				// }else {
+				//
+				// }
+				//
+				//
+				// }
+				//
+				// }
+
 				this.ingredients.getItems().remove(row);
 				if (row < this.ingredients.getItems().size()) {
 					// If selected within the range of table, cursor stay
@@ -359,17 +359,17 @@ public final class AddOrEditRecipeController implements Initializable {
 
 			int row = steps.getSelectionModel().getSelectedIndex();
 			Step step;
-			
+
 			if (row < 0) {
 				new Alert(AlertType.ERROR, "Please select one row ! ", ButtonType.CLOSE).showAndWait();
 			} else {
-				
+
 				step = steps.getItems().get(row);
-				
-				if(step.getStepID() != null) {
-					
+
+				if (step.getStepID() != null) {
+
 					this.deletedSteps.add(step);
-					
+
 				}
 
 				// Set the step order to their proper form.
@@ -574,7 +574,7 @@ public final class AddOrEditRecipeController implements Initializable {
 		editedRecipe.setOwnerId(Template.getCurrentUser().getUserId());
 
 		// update just the basic information of the recipe;
-//		flag = RecipeDAO.updateRecipe(editedRecipe);
+		flag = RecipeDAO.updateRecipe(editedRecipe);
 
 		if (flag) {
 			// Add or update ingredients.
@@ -598,38 +598,38 @@ public final class AddOrEditRecipeController implements Initializable {
 				}
 
 			}
-			
+
 			IngredientDAO.batchDeleteIngredients(deletedIngredients);
 			IngredientDAO.updateBatchIngredients(updateIngredients);
 			IngredientDAO.addBatchIngredients(newIngredients);
 		}
 
-//		if (flag) {
-//			List<Step> newSteps = new ArrayList<Step>();
-//			List<Step> updateSteps = new ArrayList<Step>();
-//			Step step;
-//			// Get all the steps
-//			for (int i = 0; i < this.steps.getItems().size(); i += 1) {
-//				step = this.steps.getItems().get(i);
-//				// set the OwnerID
-//				step.setRecipeID(editedRecipe.getRecipeID());
-//
-//				if (step.getStepID() == null) { // no step ID means that is new Step.
-//
-//					newSteps.add(step);
-//
-//				} else { // not a new Step, add it to the update List.
-//
-//					updateSteps.add(step);
-//
-//				}
-//
-//			}
-//		
-//			StepDAO.batchDeleteSteps(this.deletedSteps);
-//			StepDAO.addBatchSteps(newSteps);
-//			StepDAO.updateBatchSteps(updateSteps);
-//		}
+		// if (flag) {
+		// List<Step> newSteps = new ArrayList<Step>();
+		// List<Step> updateSteps = new ArrayList<Step>();
+		// Step step;
+		// // Get all the steps
+		// for (int i = 0; i < this.steps.getItems().size(); i += 1) {
+		// step = this.steps.getItems().get(i);
+		// // set the OwnerID
+		// step.setRecipeID(editedRecipe.getRecipeID());
+		//
+		// if (step.getStepID() == null) { // no step ID means that is new Step.
+		//
+		// newSteps.add(step);
+		//
+		// } else { // not a new Step, add it to the update List.
+		//
+		// updateSteps.add(step);
+		//
+		// }
+		//
+		// }
+		//
+		// StepDAO.batchDeleteSteps(this.deletedSteps);
+		// StepDAO.addBatchSteps(newSteps);
+		// StepDAO.updateBatchSteps(updateSteps);
+		// }
 
 		return flag;
 	}

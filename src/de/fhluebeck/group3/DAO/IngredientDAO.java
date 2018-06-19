@@ -30,11 +30,14 @@ public final class IngredientDAO {
 		String preparedSql = "UPDATE `ingredient` SET  " + "ingredientName=?, " + "recipeID=?, " + "quantity=?, "
 				+ "unit=?, " + "comments=?, " + "status=? " + "WHERE `id` = ?";
 		try {
-			for (int n = 0; n < ingredients.size(); n++) {
-				Object[] parameters = { ingredients.get(n).getIngredientName(), ingredients.get(n).getRecipeID(),
-						ingredients.get(n).getQuantity(), ingredients.get(n).getUnit(), ingredients.get(n).getComment(),
-						ingredients.get(n).getStatus(), ingredients.get(n).getIngredientID() };
-				flag = BaseDAO.executeSql(preparedSql, parameters);
+			if (ingredients != null && ingredients.size() > 0) {
+				for (int n = 0; n < ingredients.size(); n++) {
+					Object[] parameters = { ingredients.get(n).getIngredientName(), ingredients.get(n).getRecipeID(),
+							ingredients.get(n).getQuantity(), ingredients.get(n).getUnit(),
+							ingredients.get(n).getComment(), ingredients.get(n).getStatus(),
+							ingredients.get(n).getIngredientID() };
+					flag = BaseDAO.executeSql(preparedSql, parameters);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,11 +59,14 @@ public final class IngredientDAO {
 		boolean flag = false;
 		String preparedSql = "INSERT INTO `ingredient` (id, ingredientName, recipeID, quantity, unit, comments, status) VALUES(?,?,?,?,?,?,?)";
 		try {
-			for (int n = 0; n < ingredients.size(); n++) {
-				Object[] parameters = { ingredients.get(n).getIngredientID(), ingredients.get(n).getIngredientName(),
-						ingredients.get(n).getRecipeID(), ingredients.get(n).getQuantity(),
-						ingredients.get(n).getUnit(), ingredients.get(n).getComment(), ingredients.get(n).getStatus() };
-				flag = BaseDAO.executeSql(preparedSql, parameters);
+			if (ingredients != null && ingredients.size() > 0) {
+				for (int n = 0; n < ingredients.size(); n++) {
+					Object[] parameters = { ingredients.get(n).getIngredientID(),
+							ingredients.get(n).getIngredientName(), ingredients.get(n).getRecipeID(),
+							ingredients.get(n).getQuantity(), ingredients.get(n).getUnit(),
+							ingredients.get(n).getComment(), ingredients.get(n).getStatus() };
+					flag = BaseDAO.executeSql(preparedSql, parameters);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -182,7 +188,7 @@ public final class IngredientDAO {
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * Delete the multiple ingredients according to their id.
 	 * 
@@ -190,21 +196,21 @@ public final class IngredientDAO {
 	 *            set of ingredients to be deleted.
 	 * 
 	 * @return flag: whether the function is succeeded or not.
-	 * */
+	 */
 	public static boolean batchDeleteIngredients(List<Ingredient> ingredients) {
 		boolean flag = true;
-		
-		if(ingredients != null && ingredients.size() > 0) {
-			
-			for(int i = 0; i<ingredients.size();i++) {
+
+		if (ingredients != null && ingredients.size() > 0) {
+
+			for (int i = 0; i < ingredients.size(); i++) {
 				flag = deleteIngredientById(ingredients.get(i).getIngredientID());
-				if(!flag) {
+				if (!flag) {
 					return false;
 				}
 			}
-			
+
 		}
-		
+
 		return flag;
 	}
 
