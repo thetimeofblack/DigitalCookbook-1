@@ -618,7 +618,7 @@ public final class MainFrameController implements Initializable {
 					recipePic.setImage(new Image(new File(uri).toURI().toString(), 80, 80, false, false));
 					// print basic information of recipe.
 					DescriptionLabel
-							.setText(StringUtil.textProcessingBeforeOutput(selectedRecipe.getDescription(), 50, 100));
+							.setText(StringUtil.textProcessingBeforeOutput(selectedRecipe.getDescription(), 50, 200));
 					recipeName.setText(selectedRecipe.getRecipeName());
 					ServingPeopleLabel.setText(new Integer(selectedRecipe.getAvailablePeople()).toString());
 					preparationTimeLabel.setText(new Integer(selectedRecipe.getPreparationTime()).toString());

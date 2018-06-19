@@ -361,15 +361,16 @@ public final class RecipeDAO {
 	public static boolean updateRecipe(Recipe recipe) {
 		boolean flag = false;
 		try {
-				String preparedSql = "UPDATE `recipe` SET" + " `ownerUserid`= ?, " + "`recipeName` = ?, " + "`description` = ?," + "`preparationTime` = ?," 
-									+ "`cookingTime` = ?, " + "`peopleAvailable` = ?, " + "`imagePath` = ? " + "WHERE `id` = ?";
-				Object[] parameters = {recipe.getOwnerId(), recipe.getRecipeName(), recipe.getDescription(),
-						recipe.getPreparationTime(), recipe.getCookingTime(), recipe.getAvailablePeople(),
-						recipe.getImagePath(),recipe.getRecipeID()};
-				flag = BaseDAO.executeSql(preparedSql, parameters);
-			} catch (ClassNotFoundException e) {
+			String preparedSql = "UPDATE `recipe` SET" + " `ownerUserid`= ?, " + "`recipeName` = ?, "
+					+ "`description` = ?," + "`preparationTime` = ?," + "`cookingTime` = ?, "
+					+ "`peopleAvailable` = ?, " + "`imagePath` = ? " + "WHERE `id` = ?";
+			Object[] parameters = { recipe.getOwnerId(), recipe.getRecipeName(), recipe.getDescription(),
+					recipe.getPreparationTime(), recipe.getCookingTime(), recipe.getAvailablePeople(),
+					recipe.getImagePath(), recipe.getRecipeID() };
+			flag = BaseDAO.executeSql(preparedSql, parameters);
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			}
+		}
 		return flag;
 	}
 
@@ -610,10 +611,9 @@ public final class RecipeDAO {
 		recipe.setImagePath("steamedEgg.jpg");
 		recipe.setAvailablePeople(12);
 
-//		System.out.println(RecipeDAO.getRecipeID(recipe));
+		// System.out.println(RecipeDAO.getRecipeID(recipe));
 
-		
-//		 System.out.println(RecipeDAO.addRecipe(recipe));
+		// System.out.println(RecipeDAO.addRecipe(recipe));
 		System.out.println(RecipeDAO.updateRecipe(recipe));
 
 		/**
