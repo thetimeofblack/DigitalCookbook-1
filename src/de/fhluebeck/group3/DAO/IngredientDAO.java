@@ -144,6 +144,7 @@ public final class IngredientDAO {
 					ingredient.setQuantity(rs.getDouble("quantity"));
 					ingredient.setUnit(rs.getString("unit"));
 					ingredient.setComment(rs.getString("comments"));
+					ingredient.setStatus(rs.getInt("status"));
 
 					ingredients.add(ingredient);
 				}
@@ -179,6 +180,31 @@ public final class IngredientDAO {
 		} finally {
 
 		}
+		return flag;
+	}
+	
+	/**
+	 * Delete the multiple ingredients according to their id.
+	 * 
+	 * @param ingredients:
+	 *            set of ingredients to be deleted.
+	 * 
+	 * @return flag: whether the function is succeeded or not.
+	 * */
+	public static boolean batchDeleteIngredients(List<Ingredient> ingredients) {
+		boolean flag = true;
+		
+		if(ingredients != null && ingredients.size() > 0) {
+			
+			for(int i = 0; i<ingredients.size();i++) {
+				flag = deleteIngredientById(ingredients.get(i).getIngredientID());
+				if(!flag) {
+					return false;
+				}
+			}
+			
+		}
+		
 		return flag;
 	}
 

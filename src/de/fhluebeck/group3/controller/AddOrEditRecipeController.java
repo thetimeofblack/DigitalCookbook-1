@@ -130,9 +130,18 @@ public final class AddOrEditRecipeController implements Initializable {
 	// private File selectedFile;
 
 	private String imagePath;
+	
+	private List<Ingredient> deletedIngredients;
+	
+	private List<Step> deletedSteps;
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		this.deletedIngredients = new ArrayList<Ingredient>();
+		
+		this.deletedSteps = new ArrayList<Step>();
 
 		this.initialSetAllElementProperities();
 
@@ -242,14 +251,41 @@ public final class AddOrEditRecipeController implements Initializable {
 		// Actions when the remove row button is clicked.
 		this.removeIngredient.setOnAction((event) -> {
 
-			// TODO Alert warning. if ingredient's id is null means new Ingredient.
-
-			// this.removeRow(ingredients);
-
 			int row = ingredients.getSelectionModel().getSelectedIndex();
+			
 			if (row < 0) {
+				
 				new Alert(AlertType.ERROR, "Please select one row ! ", ButtonType.CLOSE).showAndWait();
+				
 			} else {
+				
+				Ingredient ingredient = ingredients.getItems().get(row);
+				
+				if(ingredient.getIngredientID() != null) {		//means the old ingredients.
+					
+					this.deletedIngredients.add(ingredient);
+					
+				}
+//					
+//					Alert alert = new Alert(AlertType.WARNING,"Do you want to delete ingredient " +ingredient.getIngredientName() +"?",ButtonType.YES,ButtonType.NO);
+//					
+//					Optional<ButtonType> result = alert.showAndWait();
+//					
+//					if(result.get() == ButtonType.YES) {
+//						
+//						if(IngredientDAO.deleteIngredientById(ingredient.getIngredientID())) {
+//							
+//							new Alert(AlertType.CONFIRMATION,"Ingredient has been deleted",);
+//							
+//						}else {
+//							
+//						}
+//						
+//						
+//					}
+//					
+//				}
+				
 				this.ingredients.getItems().remove(row);
 				if (row < this.ingredients.getItems().size()) {
 					// If selected within the range of table, cursor stay
@@ -321,12 +357,20 @@ public final class AddOrEditRecipeController implements Initializable {
 		// Actions when the removeStep button is clicked.
 		this.removeStep.setOnAction((event) -> {
 
-			// TODO alert and delete directly from the database. When step has id;
-
 			int row = steps.getSelectionModel().getSelectedIndex();
+			Step step;
+			
 			if (row < 0) {
 				new Alert(AlertType.ERROR, "Please select one row ! ", ButtonType.CLOSE).showAndWait();
 			} else {
+				
+				step = steps.getItems().get(row);
+				
+				if(step.getStepID() != null) {
+					
+					this.deletedSteps.add(step);
+					
+				}
 
 				// Set the step order to their proper form.
 				for (int i = row + 1; i < steps.getItems().size(); i += 1) {
@@ -520,18 +564,17 @@ public final class AddOrEditRecipeController implements Initializable {
 	private boolean updateRecipeIntoDB() {
 		boolean flag = true;
 
-		Recipe newRecipe = new Recipe();
-		newRecipe.setRecipeName(this.nameofRecipe.getText().trim());
-		newRecipe.setDescription(this.description.getText().trim());
-		newRecipe.setAvailablePeople(Integer.valueOf(this.amountOfPeople.getText()));
-		newRecipe.setPreparationTime(Integer.valueOf(this.preparingTime.getText()));
-		newRecipe.setCookingTime(Integer.valueOf(this.cookingTime.getText()));
-		newRecipe.setImagePath(this.imagePath.trim());
-		newRecipe.setStatus(1);
-		newRecipe.setOwnerId(Template.getCurrentUser().getUserId());
+		editedRecipe.setRecipeName(this.nameofRecipe.getText().trim());
+		editedRecipe.setDescription(this.description.getText().trim());
+		editedRecipe.setAvailablePeople(Integer.valueOf(this.amountOfPeople.getText()));
+		editedRecipe.setPreparationTime(Integer.valueOf(this.preparingTime.getText()));
+		editedRecipe.setCookingTime(Integer.valueOf(this.cookingTime.getText()));
+		editedRecipe.setImagePath(this.imagePath.trim());
+		editedRecipe.setStatus(1);
+		editedRecipe.setOwnerId(Template.getCurrentUser().getUserId());
 
 		// update just the basic information of the recipe;
-		flag = RecipeDAO.updateRecipe(newRecipe);
+//		flag = RecipeDAO.updateRecipe(editedRecipe);
 
 		if (flag) {
 			// Add or update ingredients.
@@ -541,10 +584,11 @@ public final class AddOrEditRecipeController implements Initializable {
 			// Get all the ingredients
 			for (int i = 0; i < this.ingredients.getItems().size(); i += 1) {
 				ingredient = this.ingredients.getItems().get(i);
+				ingredient.setRecipeID(editedRecipe.getRecipeID());
 
 				if (ingredient.getIngredientID() == null) { // no ingredient ID means that is new Ingredients.
 
-					ingredient.setRecipeID(newRecipe.getRecipeID());
+					ingredient.setStatus(1);
 					newIngredients.add(ingredient);
 
 				} else { // not a new Ingredient, add it to the update List.
@@ -554,34 +598,38 @@ public final class AddOrEditRecipeController implements Initializable {
 				}
 
 			}
+			
+			IngredientDAO.batchDeleteIngredients(deletedIngredients);
 			IngredientDAO.updateBatchIngredients(updateIngredients);
 			IngredientDAO.addBatchIngredients(newIngredients);
 		}
 
-		if (flag) {
-			List<Step> newSteps = new ArrayList<Step>();
-			List<Step> updateSteps = new ArrayList<Step>();
-			Step step;
-			// Get all the steps
-			for (int i = 0; i < this.steps.getItems().size(); i += 1) {
-				step = this.steps.getItems().get(i);
-
-				if (step.getStepID() == null) { // no step ID means that is new Step.
-
-					// set the OwnerID
-					step.setRecipeID(newRecipe.getRecipeID());
-					newSteps.add(step);
-
-				} else { // not a new Step, add it to the update List.
-
-					updateSteps.add(step);
-
-				}
-
-			}
-			StepDAO.addBatchSteps(newSteps);
-			StepDAO.updateBatchSteps(updateSteps);
-		}
+//		if (flag) {
+//			List<Step> newSteps = new ArrayList<Step>();
+//			List<Step> updateSteps = new ArrayList<Step>();
+//			Step step;
+//			// Get all the steps
+//			for (int i = 0; i < this.steps.getItems().size(); i += 1) {
+//				step = this.steps.getItems().get(i);
+//				// set the OwnerID
+//				step.setRecipeID(editedRecipe.getRecipeID());
+//
+//				if (step.getStepID() == null) { // no step ID means that is new Step.
+//
+//					newSteps.add(step);
+//
+//				} else { // not a new Step, add it to the update List.
+//
+//					updateSteps.add(step);
+//
+//				}
+//
+//			}
+//		
+//			StepDAO.batchDeleteSteps(this.deletedSteps);
+//			StepDAO.addBatchSteps(newSteps);
+//			StepDAO.updateBatchSteps(updateSteps);
+//		}
 
 		return flag;
 	}
