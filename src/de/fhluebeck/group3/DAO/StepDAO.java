@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.fhluebeck.group3.model.Ingredient;
 import de.fhluebeck.group3.model.Step;
 
 /**
@@ -27,18 +26,19 @@ public final class StepDAO {
 	 * @return flag: whether the function is succeeded or not.
 	 */
 	public static boolean updateBatchSteps(List<Step> steps) {
-		boolean flag = false;
-		String preparedSql = "UPDATE `step` SET  " + "stepOrder=?, " + "content=?, " + "recipeID=?, "
-				 + "status=? " + "WHERE `id` = ?";
+		boolean flag = true;
+		String preparedSql = "UPDATE `step` SET  " + "stepOrder=?, " + "content=?, " + "recipeID=?, " + "status=? "
+				+ "WHERE `id` = ?";
 
 		try {
 			for (int i = 0; i < steps.size(); i++) {
 				Object[] parameters = { steps.get(i).getStepOrder(), steps.get(i).getContent(),
-						steps.get(i).getRecipeID(), steps.get(i).getStatus() };	
+						steps.get(i).getRecipeID(), steps.get(i).getStatus(), steps.get(i).getStepID() };
 				flag = BaseDAO.executeSql(preparedSql, parameters);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 
 		return flag;
@@ -54,17 +54,14 @@ public final class StepDAO {
 	 */
 	public static boolean addBatchSteps(List<Step> steps) {
 		boolean flag = false;
-		int i = 0;
-		if (steps.get(i).getStepID() != null) {
-			return false;
-		}
 		try {
-			while (i < steps.size()) {
-				String preparedSql = "INSERT INTO `step` (`stepOrder`, `content`, `recipeID`, `status`) VALUES ( ?, ?, ?, ?)";
-				Object[] parameters = { steps.get(i).getStepOrder(), steps.get(i).getContent(),
-						steps.get(i).getRecipeID(), steps.get(i).getStatus() };
-				i++;
-				flag = BaseDAO.executeSql(preparedSql, parameters);
+			if (steps != null && steps.size() > 0) {
+				for (int i = 0; i < steps.size(); i++) {
+					String preparedSql = "INSERT INTO `step` (`stepOrder`, `content`, `recipeID`, `status`) VALUES ( ?, ?, ?, ?)";
+					Object[] parameters = { steps.get(i).getStepOrder(), steps.get(i).getContent(),
+							steps.get(i).getRecipeID(), steps.get(i).getStatus() };
+					flag = BaseDAO.executeSql(preparedSql, parameters);
+				}
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -212,17 +209,13 @@ public final class StepDAO {
 		steptest2.add(step3);
 		addBatchSteps(steptest2);
 
-		Step step4 = new Step("Get a wok and heat up around 2 tablespoons of oil, fry the minced meat until crispy. Transfer out beef out and leave the oil in.",4,7);
+		Step step4 = new Step(
+				"Get a wok and heat up around 2 tablespoons of oil, fry the minced meat until crispy. Transfer out beef out and leave the oil in.",
+				4, 7);
 		steptest2.add(step4);
 
-	    System.out.println(updateBatchSteps(steptest2));
+		System.out.println(updateBatchSteps(steptest2));
 
-
-		
-		
-	
-		}
-
-
+	}
 
 }

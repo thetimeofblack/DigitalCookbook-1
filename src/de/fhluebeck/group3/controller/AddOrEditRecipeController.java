@@ -604,32 +604,32 @@ public final class AddOrEditRecipeController implements Initializable {
 			IngredientDAO.addBatchIngredients(newIngredients);
 		}
 
-		// if (flag) {
-		// List<Step> newSteps = new ArrayList<Step>();
-		// List<Step> updateSteps = new ArrayList<Step>();
-		// Step step;
-		// // Get all the steps
-		// for (int i = 0; i < this.steps.getItems().size(); i += 1) {
-		// step = this.steps.getItems().get(i);
-		// // set the OwnerID
-		// step.setRecipeID(editedRecipe.getRecipeID());
-		//
-		// if (step.getStepID() == null) { // no step ID means that is new Step.
-		//
-		// newSteps.add(step);
-		//
-		// } else { // not a new Step, add it to the update List.
-		//
-		// updateSteps.add(step);
-		//
-		// }
-		//
-		// }
-		//
-		// StepDAO.batchDeleteSteps(this.deletedSteps);
-		// StepDAO.addBatchSteps(newSteps);
-		// StepDAO.updateBatchSteps(updateSteps);
-		// }
+		if (flag) {
+			List<Step> newSteps = new ArrayList<Step>();
+			List<Step> updateSteps = new ArrayList<Step>();
+			Step step;
+			// Get all the steps
+			for (int i = 0; i < this.steps.getItems().size(); i += 1) {
+				step = this.steps.getItems().get(i);
+				// set the OwnerID
+				step.setRecipeID(editedRecipe.getRecipeID());
+
+				if (step.getStepID() == null) { // no step ID means that is new Step.
+
+					newSteps.add(step);
+
+				} else { // not a new Step, add it to the update List.
+
+					updateSteps.add(step);
+
+				}
+
+			}
+
+			StepDAO.batchDeleteSteps(this.deletedSteps);
+			StepDAO.addBatchSteps(newSteps);
+			StepDAO.updateBatchSteps(updateSteps);
+		}
 
 		return flag;
 	}
