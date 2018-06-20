@@ -74,16 +74,21 @@ public final class StringUtil {
 	 * @return whether the input String is letter or digit.
 	 */
 	public static boolean isLetterOrDigit(String str) {
-		boolean flag = false;
-		for (int i = 0; i < str.length(); i++) {
-			if (Character.isLetterOrDigit(str.charAt(i))) {
-				flag = true;
-			} else {
-				flag = false;
-				return flag;
-			}
+		// boolean flag = false;
+		// for (int i = 0; i < str.length(); i++) {
+		// if (Character.isLetterOrDigit(str.charAt(i))) {
+		// flag = true;
+		// } else {
+		// flag = false;
+		// return flag;
+		// }
+		// }
+		// return flag;
+		if (str != null && !"".equals(str.trim())) {
+			return str.matches("^[0-9a-zA-Z.]+$");
+		} else {
+			return false;
 		}
-		return flag;
 	}
 
 	public static void main(String[] args) {
