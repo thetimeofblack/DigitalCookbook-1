@@ -22,10 +22,13 @@ Here are some screen-shot of our system:
 
 ![LoginFrame](/design/LoginFrame.png)<br>
 <center>LoginFrame.png</center><br>
+
 ![RegisterFrame](/design/RegisterFrame.png)<br>
 <center>RegisterFrame.png</center><br>
+
 ![MainFrame](/design/MainFrame.png)<br>
 <center>MainFrame.png</center><br>
+
 ![EditFrame](/design/EditFrame.png)<br>
 <center>EditFrame.png</center><br>
 
@@ -63,7 +66,6 @@ in our Digital Cookbook.<br>
 
 ## CopyRight Declearation
 ***
-
 The MIT License (MIT)
 
 Copyright (c) Group “Are You Hungry” (Hua Yichen, Kong Yu, Wang Jungang, Shan Jiaxiang)  SWE II Java Project at FachHochSchule Lübeck, 2018
