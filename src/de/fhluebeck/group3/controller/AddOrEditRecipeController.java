@@ -15,6 +15,7 @@ import de.fhluebeck.group3.model.Ingredient;
 import de.fhluebeck.group3.model.Recipe;
 import de.fhluebeck.group3.model.Step;
 import de.fhluebeck.group3.util.FileUtil;
+import de.fhluebeck.group3.util.StringUtil;
 import de.fhluebeck.group3.view.Template;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -42,6 +43,8 @@ import javafx.util.StringConverter;
  * 
  * @author Eason.Hua on 2018/06/05.
  */
+
+// You can only enter numbers in these three blocks and cannot be empty!!!
 public final class AddOrEditRecipeController implements Initializable {
 
 	protected Stage editStage;
@@ -51,6 +54,9 @@ public final class AddOrEditRecipeController implements Initializable {
 
 	@FXML
 	private Label recipeNameWarning;
+
+	@FXML
+	private Label invalidInputPrompt;
 
 	@FXML
 	private TextField description;
@@ -83,7 +89,7 @@ public final class AddOrEditRecipeController implements Initializable {
 	private Button addStep;
 
 	@FXML
-	private Button saveRecipe;
+	protected Button saveRecipe;
 
 	@FXML
 	private Button cancel;
@@ -158,10 +164,10 @@ public final class AddOrEditRecipeController implements Initializable {
 
 				if (newValue.trim().isEmpty()) {
 
-					setPromptWarning();
+					setRecipeNamePromptWarning();
 
 				} else {
-					restorePromptWarning();
+					restoreRecipeNamePromptWarning();
 				}
 
 			}
@@ -400,7 +406,7 @@ public final class AddOrEditRecipeController implements Initializable {
 					new FileChooser.ExtensionFilter("PNG", "*.png"));
 			selectedFile = fileChooser.showOpenDialog(this.parentStage);
 			if (selectedFile != null) {
-				// TODO resolve the different notation for system path for Windows and MacOS
+				// resolve the different notation for system path for Windows and MacOS
 				String systemPath = System.getProperty("user.dir") + "/" + MainFrameController.RECIPE_IMAGE_DEFAULT_PATH
 						+ selectedFile.getName();
 				try {
@@ -411,6 +417,57 @@ public final class AddOrEditRecipeController implements Initializable {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+			}
+
+		});
+
+		// Actions when the amountOfPeople textArea is changed.
+		amountOfPeople.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+				if (StringUtil.isNumeric(newValue)) {
+					restoreNumberPromptWarning();
+
+				} else {
+					setNumberPromptWarning();
+				}
+
+			}
+
+		});
+
+		// Actions when the preparingTime textArea is changed.
+		preparingTime.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+				if (StringUtil.isNumeric(newValue)) {
+					restoreNumberPromptWarning();
+
+				} else {
+					setNumberPromptWarning();
+				}
+
+			}
+
+		});
+
+		// Actions when the preparingTime textArea is changed.
+		cookingTime.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+				if (StringUtil.isNumeric(newValue)) {
+					restoreNumberPromptWarning();
+
+				} else {
+					setNumberPromptWarning();
+				}
+
 			}
 
 		});
@@ -696,16 +753,36 @@ public final class AddOrEditRecipeController implements Initializable {
 	private boolean formValidationCheck() {
 		boolean flag = true;
 
-		// when check ImageView, use imagePath.
-		if (this.imagePath == null || this.imagePath.isEmpty()) {
-			new Alert(AlertType.WARNING, "Choose Image for recipe!", ButtonType.OK).showAndWait();
+		// check name of recipe is filled in.
+		if (this.nameofRecipe.getText().trim().isEmpty()) {
+			this.setRecipeNamePromptWarning();
+			this.nameofRecipe.requestFocus();
+			// new Alert(AlertType.WARNING, "Enter Recipe Name!",
+			// ButtonType.OK).showAndWait();
 			return false;
 		}
 
-		// check name of recipe is filled in.
-		if (this.nameofRecipe.getText().trim().isEmpty()) {
-			this.recipeNameWarning.setText("Enter Recipe Name!");
-			new Alert(AlertType.WARNING, "Enter Recipe Name!", ButtonType.OK).showAndWait();
+		if (!StringUtil.isNumeric(this.amountOfPeople.getText())) {
+			this.setNumberPromptWarning();
+			this.amountOfPeople.requestFocus();
+			return false;
+		}
+
+		if (!StringUtil.isNumeric(this.preparingTime.getText())) {
+			this.setNumberPromptWarning();
+			this.preparingTime.requestFocus();
+			return false;
+		}
+
+		if (!StringUtil.isNumeric(this.cookingTime.getText())) {
+			this.setNumberPromptWarning();
+			this.cookingTime.requestFocus();
+			return false;
+		}
+
+		// when check ImageView, use imagePath.
+		if (this.imagePath == null || this.imagePath.isEmpty()) {
+			new Alert(AlertType.WARNING, "Choose Image for recipe!", ButtonType.OK).showAndWait();
 			return false;
 		}
 
@@ -715,7 +792,7 @@ public final class AddOrEditRecipeController implements Initializable {
 	/**
 	 * 
 	 * */
-	protected void setPromptWarning() {
+	protected void setRecipeNamePromptWarning() {
 		this.recipeNameWarning.setText("Enter Recipe Name!");
 		this.saveRecipe.setDisable(true);
 	}
@@ -723,9 +800,25 @@ public final class AddOrEditRecipeController implements Initializable {
 	/**
 	 * 
 	 * */
-	protected void restorePromptWarning() {
+	protected void restoreRecipeNamePromptWarning() {
 		this.recipeNameWarning.setText("");
 		this.saveRecipe.setDisable(false);
+	}
+
+	/**
+	 * 
+	 * */
+	protected void setNumberPromptWarning() {
+		invalidInputPrompt.setText("You can only enter numbers in these three blocks and cannot be empty");
+		saveRecipe.setDisable(true);
+	}
+
+	/**
+	 * 
+	 * */
+	protected void restoreNumberPromptWarning() {
+		invalidInputPrompt.setText("");
+		saveRecipe.setDisable(false);
 	}
 
 }

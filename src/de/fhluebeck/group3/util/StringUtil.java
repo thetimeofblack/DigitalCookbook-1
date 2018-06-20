@@ -49,4 +49,50 @@ public final class StringUtil {
 
 	}
 
+	/**
+	 * Judge whether the input string is numeric(consists only in numbers 0-9).
+	 * 
+	 * @param str
+	 *            the input string.
+	 * @return whether the input String is numeric.
+	 */
+	public static boolean isNumeric(String str) {
+		if (str != null && !"".equals(str.trim())) {
+			return str.matches("^[0-9]*$");
+		} else {
+			return false;
+		}
+
+	}
+
+	/**
+	 * Judge whether the input string is letter or digit(consists only in numbers
+	 * 0-9,a-z,A-Z).
+	 * 
+	 * @param str
+	 *            the input string.
+	 * @return whether the input String is letter or digit.
+	 */
+	public static boolean isLetterOrDigit(String str) {
+		boolean flag = false;
+		for (int i = 0; i < str.length(); i++) {
+			if (Character.isLetterOrDigit(str.charAt(i))) {
+				flag = true;
+			} else {
+				flag = false;
+				return flag;
+			}
+		}
+		return flag;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(isLetterOrDigit("@123asd"));
+		System.out.println(isLetterOrDigit("1d|"));
+		System.out.println(isLetterOrDigit("as)+="));
+		System.out.println(isLetterOrDigit("as@#$%"));
+		System.out.println(isLetterOrDigit("1asd2"));
+		System.out.println(isLetterOrDigit("      "));
+	}
+
 }

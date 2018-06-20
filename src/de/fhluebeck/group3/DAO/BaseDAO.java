@@ -13,8 +13,8 @@ import java.sql.*;
 public final class BaseDAO {
 
 	private static Connection conn = null;
-	private static PreparedStatement pstmt = null;
-	private static ResultSet rs = null;
+	// private static PreparedStatement pstmt = null;
+	// private static ResultSet rs = null;
 
 	/**
 	 * Basic attributes for database.
@@ -44,10 +44,10 @@ public final class BaseDAO {
 	 */
 	public static Connection getConnection() throws SQLException {
 		if (conn != null && !conn.isClosed()) {
-			System.out.println(conn.hashCode());
 			return conn;
 		} else {
-			return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			return conn;
 		}
 	}
 
@@ -107,6 +107,7 @@ public final class BaseDAO {
 		} catch (SQLException e) {
 			e.printStackTrace(); // handle SQLException
 		}
+
 		return resultSet;
 	}
 
@@ -154,42 +155,42 @@ public final class BaseDAO {
 		return flag;
 	}
 
-	/**
-	 * @param conn
-	 *            the conn to set
-	 */
-	public static void setConn(Connection conn) {
-		BaseDAO.conn = conn;
-	}
-
-	/**
-	 * @return the pstmt
-	 */
-	public static PreparedStatement getPstmt() {
-		return pstmt;
-	}
-
-	/**
-	 * @param pstmt
-	 *            the pstmt to set
-	 */
-	public static void setPstmt(PreparedStatement pstmt) {
-		BaseDAO.pstmt = pstmt;
-	}
-
-	/**
-	 * @return the rs
-	 */
-	public static ResultSet getRs() {
-		return rs;
-	}
-
-	/**
-	 * @param rs
-	 *            the rs to set
-	 */
-	public static void setRs(ResultSet rs) {
-		BaseDAO.rs = rs;
-	}
+	// /**
+	// * @param conn
+	// * the conn to set
+	// */
+	// public static void setConn(Connection conn) {
+	// BaseDAO.conn = conn;
+	// }
+	//
+	// /**
+	// * @return the pstmt
+	// */
+	// public static PreparedStatement getPstmt() {
+	// return pstmt;
+	// }
+	//
+	// /**
+	// * @param pstmt
+	// * the pstmt to set
+	// */
+	// public static void setPstmt(PreparedStatement pstmt) {
+	// BaseDAO.pstmt = pstmt;
+	// }
+	//
+	// /**
+	// * @return the rs
+	// */
+	// public static ResultSet getRs() {
+	// return rs;
+	// }
+	//
+	// /**
+	// * @param rs
+	// * the rs to set
+	// */
+	// public static void setRs(ResultSet rs) {
+	// BaseDAO.rs = rs;
+	// }
 
 }

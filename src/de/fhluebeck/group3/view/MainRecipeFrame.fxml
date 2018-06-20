@@ -173,17 +173,17 @@
 		</VBox>
 		<HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
 			<children>
-				<Label prefHeight="28.0" prefWidth="60.0" text="Hello, ">
+				<Label prefHeight="28.0" prefWidth="86.0" text="Hello, ">
 					<font>
 						<Font size="18.0" />
 					</font>
 				</Label>
-				<Label fx:id="currentUserName" prefHeight="28.0" prefWidth="122.0">
+				<Label fx:id="currentUserName" prefHeight="28.0" prefWidth="196.0">
 					<font>
 						<Font size="18.0" />
 					</font>
 				</Label>
-				<Label prefHeight="28.0" prefWidth="132.0" text="Current Time:">
+				<Label prefHeight="28.0" prefWidth="140.0" text="Current Time:">
 					<font>
 						<Font size="18.0" />
 					</font>

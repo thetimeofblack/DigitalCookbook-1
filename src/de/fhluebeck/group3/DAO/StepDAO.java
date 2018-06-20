@@ -121,7 +121,7 @@ public final class StepDAO {
 			e.printStackTrace();
 		} finally { // finally close and release resources.
 			try {
-				BaseDAO.closeAll(connection, pstmt, resultSet);
+				BaseDAO.closeAll(null, pstmt, resultSet);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

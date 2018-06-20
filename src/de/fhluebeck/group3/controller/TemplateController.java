@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import de.fhluebeck.group3.DAO.UserDAO;
 import de.fhluebeck.group3.model.User;
+import de.fhluebeck.group3.util.StringUtil;
 import de.fhluebeck.group3.view.Template;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -180,7 +181,13 @@ public final class TemplateController implements Initializable {
 		Label error_Label = new Label("re-enter password not matched");
 		error_Label.setFont(Font.font("Arial", FontWeight.BOLD, 15));
 		error_Label.setTextFill(Color.RED);
-		error_Label.setVisible(true);
+		error_Label.setVisible(false);
+
+		Label invalid_username_label = new Label(
+				"Username can only include digits and letters and less than 20 elements");
+		invalid_username_label.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+		invalid_username_label.setTextFill(Color.RED);
+		invalid_username_label.setVisible(false);
 
 		grid.add(new Label("Username:"), 0, 0);
 		grid.add(username, 1, 0);
@@ -189,6 +196,7 @@ public final class TemplateController implements Initializable {
 		grid.add(new Label("re-Enter Password:"), 0, 2);
 		grid.add(reEnterPassword, 1, 2);
 		grid.add(error_Label, 2, 2);
+		grid.add(invalid_username_label, 2, 0);
 
 		// Enable/Disable login button depending on whether a userName was entered.
 		Node loginButton = dialog.getDialogPane().lookupButton(registerButtonType);
@@ -196,6 +204,13 @@ public final class TemplateController implements Initializable {
 
 		// Do some validation on username text field.
 		username.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (StringUtil.isLetterOrDigit(newValue) && newValue.length() <= 20) {
+				invalid_username_label.setVisible(false);
+				loginButton.setDisable(false);
+			} else {
+				invalid_username_label.setVisible(true);
+				loginButton.setDisable(true);
+			}
 			loginButton.setDisable(newValue.trim().isEmpty() || password.getText().trim().isEmpty());
 		});
 
