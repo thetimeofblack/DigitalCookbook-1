@@ -112,9 +112,9 @@ CREATE TABLE `recipe` (
 
 LOCK TABLES `recipe` WRITE;
 /*!40000 ALTER TABLE `recipe` DISABLE KEYS */;
-INSERT INTO `recipe` VALUES (1,3,'Suan La Fen','Sichuan Dish very decilious positive comments good',10,60,2,'slf.jpg',1),
+INSERT INTO `recipe` VALUES (1,4,'Hong Shao Rou','Hunan Dish',25,50,4,'hsr.jpg',1),
 (2,1,'Gong Bao Ji Ding','Sichuan Dish spicy diced chicken with peanuts and received many positive comments around the world',30,10,4,'gbjd.jpg',1),
-(3,4,'Hong Shao Rou','Hunan Dish',25,50,4,'hsr.jpg',1);
+(3,3,'Suan La Fen','Sichuan Dish very decilious positive comments good',10,60,2,'slf.jpg',1);
 /*!40000 ALTER TABLE `recipe` ENABLE KEYS */;
 UNLOCK TABLES;
 

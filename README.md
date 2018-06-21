@@ -6,7 +6,7 @@ COPYRIGHT © 2018  Group “Are You Hungry” (Hua Yichen, Kong Yu, Wang Jungang
 
 Professor & Supervisor: Prof. Mrs. Lenka Hanesová & Mr. Malte Grebe<br>
 
-If you had any questions or constructive suggestions regarding our projects, feel free to write us an e-mail : [Address](yichen.hua@stud.fh-luebeck.de)<br>
+If you had any questions or constructive suggestions regarding our projects, feel free to write us an e-mail : yichen.hua@stud.fh-luebeck.de<br>
 
 Project is also presented on [Github](https://github.com/easonHua97/DigitalCookbook)<br>
 
