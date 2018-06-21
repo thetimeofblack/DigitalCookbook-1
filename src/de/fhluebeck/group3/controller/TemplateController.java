@@ -9,6 +9,7 @@ import de.fhluebeck.group3.DAO.UserDAO;
 import de.fhluebeck.group3.model.User;
 import de.fhluebeck.group3.util.StringUtil;
 import de.fhluebeck.group3.view.Template;
+
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -35,10 +36,10 @@ import javafx.util.Pair;
 
 /**
  * The controller of the login view - Template.fxml. This controller includes
- * basic loading functions of the login & welcoming user interface and calls the
+ * basic loading functions of the login as well as welcoming user interface and calls the
  * functions from userDAO to alter the user table.
  * 
- * @author Eason.Hua on 2018.05.30.
+ * @author Hua Yichen on 2018.05.30.
  */
 public final class TemplateController implements Initializable {
 
@@ -57,6 +58,16 @@ public final class TemplateController implements Initializable {
 	@FXML
 	private Button register_button;
 
+	/**
+	 * Overrides the initialize functions in the interface Initializable. Do the
+	 * major thing when the view is loaded.
+	 * 
+	 * @param location
+	 *            the location of the new view.
+	 * @param resources
+	 *            resource for the view.
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -114,19 +125,24 @@ public final class TemplateController implements Initializable {
 	/******************************* Private Zone ******************************/
 
 	/**
-	 * 
-	 * */
+	 * Prompt the error message when user inputs the invalid information.
+	 */
 	private void setErrorInformation() {
 		this.error_message.setVisible(true);
 	}
 
+	/**
+	 * Hide the error message when user inputs the valid information.
+	 */
 	private void hideErrorInformation() {
 		this.error_message.setVisible(false);
 	}
 
 	/**
-	 * 
-	 * */
+	 * Called when the user clicks the login button or presses the "Enter" key in
+	 * the keyboard. Attempt to login, shift to MainRecipeFrame.fxml is succeed or
+	 * prompt error message when failed.
+	 */
 	protected void attemptLogin() {
 		String username = username_field.getText();
 		String password = password_field.getText();
@@ -147,8 +163,11 @@ public final class TemplateController implements Initializable {
 	}
 
 	/**
+	 * When the user clicks the Register Button, show the interface for pre-designed
+	 * registration.
 	 * 
-	 * */
+	 * @return newUser the user account the new User has created.
+	 */
 	private User showRegisterationDialog() {
 		// Create the custom dialog.
 		Dialog<Pair<String, String>> dialog = new Dialog<>();

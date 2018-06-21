@@ -12,11 +12,15 @@ import java.security.NoSuchAlgorithmException;
  */
 public class EncryptUtil {
 
+	/**
+	 * The salt of the encryption.
+	 */
 	private static final String COOKBOOK_SALT = "cookbook";
 
 	/**
 	 * Unit test for md5 encode.
 	 * 
+	 * @param args parameters from console.
 	 */
 	public static void main(String[] args) {
 		System.out.println(EncryptUtil.MD5("123"));
@@ -35,6 +39,17 @@ public class EncryptUtil {
 		return encode(newString, "MD5");
 	}
 
+	/**
+	 * Encode the password with MD5 encryption algorithm.
+	 * 
+	 * @param str
+	 *            string to be encoded.
+	 * 
+	 * @param method
+	 *            the method to encode the string.
+	 * 
+	 * @return the encoded password.
+	 */
 	private static String encode(String str, String method) {
 		MessageDigest md = null;
 		String dstr = null;

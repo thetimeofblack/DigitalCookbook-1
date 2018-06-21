@@ -17,6 +17,7 @@ import de.fhluebeck.group3.model.Step;
 import de.fhluebeck.group3.util.FileUtil;
 import de.fhluebeck.group3.util.StringUtil;
 import de.fhluebeck.group3.view.Template;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -40,11 +41,14 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 /**
+ * The controller of the add or edit recipe view - AddOrEditRecipe.fxml. This
+ * controller includes basic view loading functions and logical functions for
+ * basic operations on the view. This controller calls the functions from
+ * RecipeDAO,stepDAO and ingredientDAO. The users can both add or edit recipes
+ * on view AddOrEditRecipe.fxml.
  * 
- * @author Eason.Hua on 2018/06/05.
+ * @author Hua Yichen on 2018/06/05.
  */
-
-// You can only enter numbers in these three blocks and cannot be empty!!!
 public final class AddOrEditRecipeController implements Initializable {
 
 	protected Stage editStage;
@@ -118,12 +122,12 @@ public final class AddOrEditRecipeController implements Initializable {
 	@FXML
 	private TableColumn<Step, String> stepContentColumn;
 
+	@FXML
+	private ImageView newRecipeImage;
+
 	protected ObservableList<Step> stepData;
 
 	protected ObservableList<Ingredient> ingredientData;
-
-	@FXML
-	private ImageView newRecipeImage;
 
 	private Recipe editedRecipe;
 
@@ -133,14 +137,22 @@ public final class AddOrEditRecipeController implements Initializable {
 
 	private FileChooser fileChooser;
 
-	// private File selectedFile;
-
 	private String imagePath;
 
 	private List<Ingredient> deletedIngredients;
 
 	private List<Step> deletedSteps;
 
+	/**
+	 * Overrides the initialize functions in the interface Initializable. Do the
+	 * major thing when the view is loaded.
+	 * 
+	 * @param location
+	 *            the location of the new view.
+	 * @param resources
+	 *            resource for the view.
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -153,10 +165,13 @@ public final class AddOrEditRecipeController implements Initializable {
 	}
 
 	/**
-	 * 
-	 * */
+	 * Initialization for elements including all the element for JavaFX. Including
+	 * binding ActionListeners, fill in the TextAreas and Labels.
+	 */
 	private void initialSetAllElementProperities() {
 
+		// Set listener to nameOfRecipe TextArea, every time user changes contents in
+		// the TextArea, do validation check.
 		this.nameofRecipe.textProperty().addListener(new ChangeListener<String>() {
 
 			@Override
@@ -173,6 +188,7 @@ public final class AddOrEditRecipeController implements Initializable {
 			}
 		});
 
+		// Fill the table column with object data.
 		ingredientNameColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityIngredientName());
 		ingredientQuantityColumn.setCellValueFactory(cellData -> cellData.getValue().getDoubleProperityQuantity());
 		ingredientUnitColumn.setCellValueFactory(cellData -> cellData.getValue().getStringProperityUnit());
@@ -218,6 +234,7 @@ public final class AddOrEditRecipeController implements Initializable {
 			}
 		}));
 
+		// Set actions when editing ingredientQuantityColumn.
 		ingredientQuantityColumn.setOnEditCommit((event) -> {
 			event.getTableView().getItems().get(event.getTablePosition().getRow()).setQuantity(event.getNewValue());
 		});
@@ -477,7 +494,7 @@ public final class AddOrEditRecipeController implements Initializable {
 
 			if (this.formValidationCheck()) {
 
-				if (this.isAddingRecipe) { // add new recipe TODO add form validation.
+				if (this.isAddingRecipe) { // add new recipe add form validation.
 
 					boolean flag = false;
 
@@ -563,21 +580,34 @@ public final class AddOrEditRecipeController implements Initializable {
 		return editedRecipe;
 	}
 
+	/**
+	 * @param editStage
+	 *            the editStage to set
+	 */
 	public void setEditStage(Stage editStage) {
 		this.editStage = editStage;
 	}
 
+	/**
+	 * @return the parentStage
+	 */
 	public Stage getParentStage() {
 		return parentStage;
 	}
 
+	/**
+	 * @param parentStage
+	 *            the parentStage to set
+	 */
 	public void setParentStage(Stage parentStage) {
 		this.parentStage = parentStage;
 	}
 
 	/**
-	 * 
-	 * */
+	 * When call this function, the system will fill in all the blanks regarding the
+	 * basic information of an recipe, together with its corresponding ingredients
+	 * and steps in the user interface.
+	 */
 	private void fillInBlanksOfRecipe() {
 
 		if (this.editedRecipe != null) { // edit recipe
@@ -616,8 +646,12 @@ public final class AddOrEditRecipeController implements Initializable {
 	}
 
 	/**
-	 * 
-	 * */
+	 * Update the recipe the user has altered after the user clicks the Save button
+	 * and confirm the alternation. This function includes update the current-exists
+	 * ingredients, steps and basic information of the recipe as well as do
+	 * insertion/deletion when we detected new/old ingredients or steps has
+	 * added/removed to/from the database.
+	 */
 	private boolean updateRecipeIntoDB() {
 		boolean flag = true;
 
@@ -692,8 +726,10 @@ public final class AddOrEditRecipeController implements Initializable {
 	}
 
 	/**
-	 * 
-	 * */
+	 * Insert the recipe into the database together with its corresponding
+	 * ingredients and steps after the user has clicked the Save button and confirm
+	 * the insertion action.
+	 */
 	private boolean insertRecipeIntoDB() {
 		boolean flag = false;
 
@@ -749,6 +785,8 @@ public final class AddOrEditRecipeController implements Initializable {
 
 	/**
 	 * To check the validity of the form.
+	 * 
+	 * @return whether the form is valid.
 	 */
 	private boolean formValidationCheck() {
 		boolean flag = true;
@@ -790,32 +828,37 @@ public final class AddOrEditRecipeController implements Initializable {
 	}
 
 	/**
-	 * 
-	 * */
+	 * When the recipeNanme attribute is not valid, set the prompt text warning the
+	 * user as well as disables the Save button.
+	 */
 	protected void setRecipeNamePromptWarning() {
 		this.recipeNameWarning.setText("Enter Recipe Name!");
 		this.saveRecipe.setDisable(true);
 	}
 
 	/**
-	 * 
-	 * */
+	 * Restore the prompt text and the disability of the Save button after the user
+	 * has entered the valid text.
+	 */
 	protected void restoreRecipeNamePromptWarning() {
 		this.recipeNameWarning.setText("");
 		this.saveRecipe.setDisable(false);
 	}
 
 	/**
-	 * 
-	 * */
+	 * When all the number attributes(peopleServing, Cooking time and
+	 * PreparationTime) are not valid, set the prompt text warning the user as well
+	 * as disables the Save button.
+	 */
 	protected void setNumberPromptWarning() {
 		invalidInputPrompt.setText("You can only enter numbers in these three blocks and cannot be empty");
 		saveRecipe.setDisable(true);
 	}
 
 	/**
-	 * 
-	 * */
+	 * Restore the prompt text and the disability of the Save button after the user
+	 * has entered the valid text.
+	 */
 	protected void restoreNumberPromptWarning() {
 		invalidInputPrompt.setText("");
 		saveRecipe.setDisable(false);

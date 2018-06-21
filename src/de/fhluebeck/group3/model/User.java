@@ -5,7 +5,7 @@ import java.util.List;
 import de.fhluebeck.group3.util.EncryptUtil;
 
 /**
- * The User is mapped with User table in DB.
+ * The User is mapped with User table in DataBase.
  * 
  * @author Yichen.Hua on 2018/05/13.
  */
@@ -50,8 +50,15 @@ public final class User {
 	}
 
 	/**
-	 * constructor with necessary(create) attributes, with password automatically
+	 * Constructor with necessary(create) attributes, with password automatically
 	 * encrypted.
+	 * 
+	 * @param username
+	 *            userName of the user.
+	 * 
+	 * @param password
+	 *            password of the user.
+	 * 
 	 */
 	public User(String username, String password) {
 		super();
@@ -61,7 +68,26 @@ public final class User {
 	}
 
 	/**
-	 * constructor with all attributes, with password automatically encrypted.
+	 * Constructor with all attributes, with password automatically encrypted.
+	 * 
+	 * @param userId
+	 *            ID of the user.
+	 * 
+	 * @param username
+	 *            userName of the user.
+	 * 
+	 * @param password
+	 *            password of the user.
+	 * 
+	 * @param status
+	 *            status of the user.
+	 * 
+	 * @param ownRecipes
+	 *            ownRecipes of the user.
+	 * 
+	 * @param favoriteRecipes
+	 *            favoriteRecipes of the user.
+	 * 
 	 */
 	public User(Integer userId, String username, String password, Integer status, List<Recipe> ownRecipes,
 			List<Recipe> favoriteRecipes) {
@@ -75,50 +101,93 @@ public final class User {
 	}
 
 	/** ==============Getters and setters.============== */
+
+	/**
+	 * @return userId
+	 */
 	public Integer getUserId() {
 		return userId;
 	}
 
+	/**
+	 * @param userId
+	 *            id of the user.
+	 */
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
+	/**
+	 * @return username
+	 */
 	public String getUsername() {
 		return username;
 	}
 
+	/**
+	 * @param username
+	 *            name of the user.
+	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
+	/**
+	 * @return password
+	 */
 	public String getPassword() {
 		return password;
 	}
 
+	/**
+	 * @param password
+	 *            password of the user.
+	 */
 	public void setPassword(String password) {
 		this.password = EncryptUtil.MD5(password);
 	}
 
+	/**
+	 * @return status
+	 */
 	public Integer getStatus() {
 		return status;
 	}
 
+	/**
+	 * @param status
+	 *            status of the user.
+	 */
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
+	/**
+	 * @return ownRecipes
+	 */
 	public List<Recipe> getOwnRecipes() {
 		return ownRecipes;
 	}
 
+	/**
+	 * @param ownRecipes
+	 *            ownRecipes of the user.
+	 */
 	public void setOwnRecipes(List<Recipe> ownRecipes) {
 		this.ownRecipes = ownRecipes;
 	}
 
+	/**
+	 * @return favoriteRecipes
+	 */
 	public List<Recipe> getFavoriteRecipes() {
 		return favoriteRecipes;
 	}
 
+	/**
+	 * @param favoriteRecipes
+	 *            favoriteRecipes of the user.
+	 */
 	public void setFavoriteRecipes(List<Recipe> favoriteRecipes) {
 		this.favoriteRecipes = favoriteRecipes;
 	}

@@ -25,9 +25,12 @@ import de.fhluebeck.group3.model.Ingredient;
 import de.fhluebeck.group3.model.Recipe;
 import de.fhluebeck.group3.model.Step;
 import de.fhluebeck.group3.view.Template;
+
 import javafx.stage.FileChooser;
 
 /**
+ * ExportPDF is mainly responsible for export the recipe as PDF file to any
+ * place in the system (the user should choose specific path).
  * 
  * @author Yichen.Hua on 2018/06/05.
  */
@@ -52,6 +55,15 @@ public final class ExportPDF {
 
 	}
 
+	/**
+	 * Create a new PDF File.
+	 * 
+	 * @param recipe
+	 *            the recipe to be presented in the PDF File.
+	 * 
+	 * @return whether the whole procedure is successful.
+	 * 
+	 */
 	public boolean createFile(Recipe recipe) {
 
 		boolean flag = false;
@@ -164,8 +176,13 @@ public final class ExportPDF {
 	/**
 	 * Add recipes to each page, Note that I refer to the code from seniors.
 	 * 
-	 * @param document
+	 * @param document 
+	 * 
+	 * @param recipe
+	 *            recipe to be exported.
+	 *            
 	 * @throws DocumentException
+	 * 
 	 * @throws IOException
 	 */
 	public void addContent(Document document, Recipe recipe) throws DocumentException, IOException {

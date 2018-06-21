@@ -20,7 +20,7 @@ public final class StepDAO {
 	/**
 	 * Batch update multiple steps.
 	 * 
-	 * @param ingredients:
+	 * @param steps:
 	 *            the steps to be updated.
 	 * 
 	 * @return flag: whether the function is succeeded or not.
@@ -47,7 +47,7 @@ public final class StepDAO {
 	/**
 	 * Batch add multiple steps.
 	 * 
-	 * @param ingredients:
+	 * @param steps:
 	 *            the steps to be added.
 	 * 
 	 * @return flag: whether the function is succeeded or not.
@@ -133,7 +133,7 @@ public final class StepDAO {
 	/**
 	 * Delete the step according to its id.
 	 * 
-	 * @param ingredientId:
+	 * @param stepId:
 	 *            step id of specific steps.
 	 * 
 	 * @return flag: whether the function is succeeded or not.

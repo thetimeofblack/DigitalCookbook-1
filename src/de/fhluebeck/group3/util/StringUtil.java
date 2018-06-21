@@ -1,6 +1,9 @@
 package de.fhluebeck.group3.util;
 
 /**
+ * Functions to handle or operate strings, like textProcessingBeforeOutput.
+ * Judge whether a string contains only numbers or letters or special elements
+ * like "@"
  * 
  * @author Eason.Hua on 2018/06/02
  */
@@ -10,7 +13,19 @@ public final class StringUtil {
 	 * Handle the text before output. This function will make the text more
 	 * beautiful and readable and set the text suitable for presentation.
 	 * 
+	 * @param rawString
+	 *            the raw string to be operated.
+	 * 
+	 * @param lineWidth
+	 *            the line width of presentation string, system will add new line
+	 *            mark "-\n" at every end of line.
+	 * 
+	 * @param maxWidth
+	 *            the maximum width of presentation string, the excess part will be
+	 *            replaced by "..."
+	 * 
 	 * @return formatted string.
+	 * 
 	 */
 	public static String textProcessingBeforeOutput(String rawString, int lineWidth, int maxWidth) {
 
@@ -91,6 +106,12 @@ public final class StringUtil {
 		}
 	}
 
+	/**
+	 * Unit test for StringUtil.
+	 * 
+	 * @param args:
+	 *            string from console input.
+	 */
 	public static void main(String[] args) {
 		System.out.println(isLetterOrDigit("@123asd"));
 		System.out.println(isLetterOrDigit("1d|"));

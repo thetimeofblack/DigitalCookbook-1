@@ -1,6 +1,7 @@
 package de.fhluebeck.group3.view;
 
 import de.fhluebeck.group3.model.User;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -9,7 +10,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * 
+ * Template is regarded as the whole application and be called by the Entrance
+ * class.
  * 
  * @author Eason.Hua on 2018/05/30.
  */
@@ -29,6 +31,13 @@ public class Template extends Application {
 	 */
 	private static User currentUser;
 
+	/**
+	 * Start function to be automatically called by the system.
+	 * 
+	 * @param stage
+	 *            new instance of JavaFX Stage.
+	 * 
+	 */
 	@Override
 	public void start(Stage stage) throws Exception {
 
@@ -79,7 +88,10 @@ public class Template extends Application {
 	 * The common function for scene change in the root stage. This is quite useful
 	 * and efficient when we want to change the scene.
 	 * 
-	 * @author huayichen
+	 * @param fxml the name of the interface, like Template.fxml
+	 * 
+	 * @throws Exception
+	 * 
 	 */
 	public static void replaceSceneContent(String fxml) throws Exception {
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The Cookbook Model as an Application.
  * 
  * @author Eason.Hua on 2018-05-25.
  */
@@ -13,21 +14,48 @@ public class CookBook {
 
 	private String name;
 
+	/**
+	 * Default Constructor.
+	 */
 	public CookBook() {
 		super();
 	}
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param name
+	 *            the name of the cook book.
+	 */
 	public CookBook(String name) {
 		this.name = name;
 		this.recipes = new ArrayList<>();
 	}
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param name
+	 *            the name of the cook book.
+	 * 
+	 * @param recipes
+	 *            all the recipes that the application contains.
+	 */
 	public CookBook(List<Recipe> recipes, String name) {
 		super();
 		this.recipes = recipes;
 		this.name = name;
 	}
 
+	/**
+	 * Get recipe from the application.
+	 * 
+	 * @param name
+	 *            the name of the recipe
+	 * 
+	 * @return the recipe we want to get.
+	 * 
+	 */
 	public Recipe getRecipe(String name) {
 		Recipe recipe = null;
 
@@ -41,6 +69,12 @@ public class CookBook {
 		return recipe;
 	}
 
+	/**
+	 * Add new recipe to the application.
+	 * 
+	 * @param recipe
+	 *            a new recipe to be add to the application.
+	 */
 	public void add(Recipe recipe) {
 		this.recipes.add(recipe);
 	}

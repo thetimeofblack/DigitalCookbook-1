@@ -15,8 +15,16 @@ import java.io.OutputStream;
 public final class FileUtil {
 
 	/**
+	 * Copy specific file to specified destination.
 	 * 
-	 * */
+	 * @param file
+	 *            the file to be transferred.
+	 * 
+	 * @param destination
+	 *            the path of the destination.
+	 *            
+	 * @throws java.io.IOException           
+	 */
 	public static void copyFile(File file, String destination) throws IOException {
 		InputStream is = null;
 		OutputStream os = null;

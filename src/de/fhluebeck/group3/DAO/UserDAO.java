@@ -69,10 +69,8 @@ public final class UserDAO {
 	/**
 	 * Validate the input credentials and return user object if exists.
 	 * 
-	 * @param username
-	 *            user name
-	 * @param password
-	 *            password
+	 * @param userId
+	 *            user id.
 	 * 
 	 * @return whether the function is succeeded or not.
 	 */
@@ -90,7 +88,11 @@ public final class UserDAO {
 	}
 
 	/**
+	 * Get User by the input id.
 	 * 
+	 * @param userId id of the user.
+	 * 
+	 * @return User object or null.
 	 * */
 	public static User getUserById(Integer userId) {
 		User user = null;

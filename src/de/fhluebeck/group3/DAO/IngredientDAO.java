@@ -220,7 +220,6 @@ public final class IngredientDAO {
 	 * @param args:
 	 *            string from console input.
 	 */
-
 	public static void main(String[] args) {
 
 		/*

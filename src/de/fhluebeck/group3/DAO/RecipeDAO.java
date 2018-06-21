@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
-
 import de.fhluebeck.group3.model.Recipe;
 import de.fhluebeck.group3.model.User;
 
@@ -37,6 +35,12 @@ public final class RecipeDAO {
 	/**
 	 * This method is called after a new recipe is inserted into the DB to retrive
 	 * the ID of the recipe;
+	 * 
+	 * @param recipe
+	 *            specific recipe.
+	 * 
+	 * @return the ID of the recipe.
+	 * 
 	 */
 	public static Integer getRecipeID(Recipe recipe) {
 		Integer recipeID = 0;
@@ -78,8 +82,16 @@ public final class RecipeDAO {
 	}
 
 	/**
+	 * Remove an specific recipe from favorite of a specified user.
 	 * 
-	 * */
+	 * @param userId
+	 *            the ID of the user.
+	 * 
+	 * @param recipeId
+	 *            the ID of the recipe.
+	 * 
+	 * @return whether the procedure is successful.
+	 */
 	public static boolean removeRecipeFromFavoriteList(Integer recipeId, Integer userId) {
 		boolean flag = false;
 
@@ -96,8 +108,16 @@ public final class RecipeDAO {
 	}
 
 	/**
+	 * Add an recipe to favorite of a specified user.
 	 * 
-	 * */
+	 * @param userId
+	 *            the ID of the user.
+	 * 
+	 * @param recipeId
+	 *            the ID of the recipe.
+	 * 
+	 * @return whether the procedure is successful.
+	 */
 	public static boolean addRecipeToFavoriteList(Integer recipeId, Integer userId) {
 		boolean flag = false;
 
@@ -226,8 +246,8 @@ public final class RecipeDAO {
 	/**
 	 * Search for the recipes with the ingredient, which is regular expression.
 	 * 
-	 * @param recipeName:
-	 *            the recipe name used to search for satisfied recipes.
+	 * @param ingredientName:
+	 *            the ingredient name used to search for satisfied recipes.
 	 * 
 	 * @return recipes: a list of recipes that satisfied the regular expression
 	 *         "*recipeName*"
@@ -327,7 +347,7 @@ public final class RecipeDAO {
 	 * Delete the recipe according to its ID, here we do not have to delete
 	 * ingredients and steps owned by the recipe.
 	 * 
-	 * @param recipeIds:
+	 * @param recipeID:
 	 *            recipe ID which the user wants to delete from DB.
 	 * 
 	 * @return flag: whether the function is succeeded or not.
@@ -412,7 +432,7 @@ public final class RecipeDAO {
 	/**
 	 * Search for the recipes which the current user likes.
 	 * 
-	 * @param user:
+	 * @param userid:
 	 *            specific user.
 	 * 
 	 * @return recipes: a list of recipes that the user favorites.
@@ -468,8 +488,17 @@ public final class RecipeDAO {
 	}
 
 	/**
+	 * Get the Favorite Recipe By its ingredients.
 	 * 
-	 * */
+	 * @param ingredientName
+	 *            the name of the ingredient.
+	 * 
+	 * @param userId
+	 *            the ID of the current user.
+	 * 
+	 * @return The list of recipes that meet the requirements.
+	 * 
+	 */
 	public static List<Recipe> getFavRecipeByIngredients(String ingredientName, Integer userId) {
 		List<Recipe> recipes = new ArrayList<Recipe>();
 		PreparedStatement pstmt = null;
@@ -521,8 +550,17 @@ public final class RecipeDAO {
 	}
 
 	/**
+	 * Get the Favorite Recipe By its name.
 	 * 
-	 * */
+	 * @param recipeName
+	 *            the name of the recipe.
+	 * 
+	 * @param userId
+	 *            the ID of the current user.
+	 * 
+	 * @return The list of recipes that meet the requirements.
+	 * 
+	 */
 	public static List<Recipe> getFavRecipeByName(String recipeName, Integer userId) {
 		List<Recipe> recipes = new ArrayList<Recipe>();
 		PreparedStatement pstmt = null;

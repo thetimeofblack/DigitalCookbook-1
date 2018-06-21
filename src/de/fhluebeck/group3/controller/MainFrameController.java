@@ -175,6 +175,16 @@ public final class MainFrameController implements Initializable {
 	@FXML
 	private ImageView recipePic;
 
+	/**
+	 * Overrides the initialize functions in the interface Initializable. Do the
+	 * major thing when the view is loaded.
+	 * 
+	 * @param location
+	 *            the location of the new view.
+	 * @param resources
+	 *            resource for the view.
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -230,15 +240,34 @@ public final class MainFrameController implements Initializable {
 	/******************************* Private Zone ******************************/
 
 	/**
+	 * Set Icon image for specified button.
 	 * 
-	 * */
+	 * @param imagePath
+	 *            the relative path of the image (In our project, only the image
+	 *            name, prefix will be added later).
+	 * @param button
+	 *            the JavaFX Button that we want to add image on.
+	 */
 	protected void setIconImage(String imagePath, Button button) {
 		button.setGraphic(new ImageView(new Image(new File(imagePath).toURI().toString(), 35, 30, false, false)));
 	}
 
 	/**
+	 * Set the image for the JavaFX Button both when mouse is in or out of the
+	 * button.
 	 * 
-	 * */
+	 * @param button
+	 *            the JavaFX Button that we want to add image on.
+	 * 
+	 * @param mouseIn
+	 *            imagePath the relative path of the image when user put their mouse
+	 *            on the button.
+	 * 
+	 * @param mouseOut
+	 *            imagePath the relative path of the image when user put their mouse
+	 *            out of the button.
+	 * 
+	 */
 	private void setButtonIconAction(Button button, String mouseIn, String mouseOut) {
 
 		button.setOnMouseEntered((event) -> {
@@ -252,8 +281,8 @@ public final class MainFrameController implements Initializable {
 	}
 
 	/**
-	 * 
-	 * */
+	 * Clear the whole list of information on Recipe.
+	 */
 	private void clearRecipeInformationList() {
 		// clear picture of recipe
 		recipePic.setImage(null);
@@ -271,21 +300,26 @@ public final class MainFrameController implements Initializable {
 	}
 
 	/**
-	 * 
-	 * */
+	 * Refresh the main interface -- reload the recipes and clear the information
+	 * panel.
+	 */
 	private void refreshView() {
+
 		// load information of recipes on ListView panel.
 		try {
+
 			this.showRecipeList(this.currentRecipe);
+
 			this.clearRecipeInformationList();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * 
-	 * */
+	 * This function is responsible for set all the properities of the elements.
+	 */
 	private void initialSetAllElementProperities() {
 
 		this.isShowFavorite = false;
@@ -312,6 +346,7 @@ public final class MainFrameController implements Initializable {
 		ingredientQuantityColumn.setStyle("-fx-alignment: CENTER;");
 		ingredientUnitColumn.setStyle("-fx-alignment: CENTER;");
 
+		// Set image on buttons.
 		this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_on.png", this.homeButton);
 		this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", this.addFavoriteButton);
 		this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "add_out.png", this.addRecipeButton);
@@ -337,43 +372,51 @@ public final class MainFrameController implements Initializable {
 		setButtonIconAction(this.editRecipeButton, "edit_on.png", "edit_out.png");
 		setButtonIconAction(this.deleteRecipeButton, "delete_on.png", "delete_out.png");
 
+		// Set actions when users move their mouse on the addFavoriteButton.
 		this.addFavoriteButton.setOnMouseEntered((event) -> {
 			if (!this.isShowFavorite && !likeButtonTriggered) {
 				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_redheart.png", this.addFavoriteButton);
 			}
 		});
 
+		// Set actions when users move their mouse out of the addFavoriteButton.
 		this.addFavoriteButton.setOnMouseExited((event) -> {
 			if (!this.isShowFavorite && !likeButtonTriggered) {
 				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", this.addFavoriteButton);
 			}
 		});
 
+		// Set actions when users move their mouse on the homeButton.
 		this.homeButton.setOnMouseEntered((event) -> {
 			if (this.isShowFavorite) {
 				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_on.png", this.homeButton);
 			}
 
 		});
+
+		// Set actions when users move their mouse out of the homeButton.
 		this.homeButton.setOnMouseExited((event) -> {
 			if (this.isShowFavorite) {
 				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_out.png", this.homeButton);
 			}
 		});
 
+		// Set actions when users move their mouse on the FavButton.
 		this.FavButton.setOnMouseEntered((event) -> {
 			if (!this.isShowFavorite) {
 				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_redheart.png", this.FavButton);
 			}
 
 		});
+
+		// Set actions when users move their mouse out of the FavButton.
 		this.FavButton.setOnMouseExited((event) -> {
 			if (!this.isShowFavorite) {
 				this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", this.FavButton);
 			}
 		});
 
-		// when click the home button, return to the home page.
+		// When click the home button, return to the home page.
 		this.homeButton.setOnAction((event) -> {
 			this.isShowFavorite = false;
 			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "home_on.png", this.homeButton);
@@ -389,7 +432,7 @@ public final class MainFrameController implements Initializable {
 			}
 		});
 
-		// when click the home button, return to the home page.
+		// When click the home button, return to the home page.
 		this.FavButton.setOnAction((event) -> {
 			this.isShowFavorite = true;
 			this.setIconImage(SYSTEM_IMAGE_DEFAULT_PATH + "like_redheart.png", this.FavButton);
@@ -524,7 +567,7 @@ public final class MainFrameController implements Initializable {
 				// Shift the stage to the main Scene.
 				this.showAddOrEditRecipeView(selectedRecipe);
 
-				// TODO refresh the whole scene in main frame.
+				// refresh the whole scene in main frame.
 
 			} else {
 				Alert alert = new Alert(AlertType.ERROR,
@@ -577,6 +620,7 @@ public final class MainFrameController implements Initializable {
 			}
 		});
 
+		// Set on action when the user change the content in the TextArea searchInput.
 		searchInput.textProperty().addListener(new ChangeListener<String>() {
 
 			@Override
@@ -604,7 +648,7 @@ public final class MainFrameController implements Initializable {
 			}
 		});
 
-		// add listener to the Element in the list view.
+		// Add listener to the Element in the list view.
 		this.recipesList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AnchorPane>() {
 
 			@Override
@@ -685,8 +729,13 @@ public final class MainFrameController implements Initializable {
 	}
 
 	/**
+	 * When the user clicks the Edit (Pencil Image) or Add Recipe button, load the
+	 * AddOrEditRecipe.fxml and presents it in a new window.
 	 * 
-	 * */
+	 * @param recipe
+	 *            the recipe the user wants to edit or null when the user wants to
+	 *            create a new recipe.
+	 */
 	private void showAddOrEditRecipeView(Recipe recipe) {
 
 		// Shift the stage to the main Scene.
@@ -718,8 +767,8 @@ public final class MainFrameController implements Initializable {
 	}
 
 	/**
-	 * 
-	 * */
+	 * Reload the FavRecipeListOfCurrentUser.
+	 */
 	private void reloadFavRecipeListOfCurrentUser() {
 		User user = null;
 		if ((user = Template.getCurrentUser()) != null) {
@@ -728,8 +777,8 @@ public final class MainFrameController implements Initializable {
 	}
 
 	/**
-	 * 
-	 * */
+	 * Refresh the whole interface and reload all the recipes from the DB again.
+	 */
 	public void refreshWholeInterface() {
 
 		this.currentRecipe = RecipeDAO.getAllRecipes();
