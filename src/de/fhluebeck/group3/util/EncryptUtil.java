@@ -20,7 +20,8 @@ public class EncryptUtil {
 	/**
 	 * Unit test for md5 encode.
 	 * 
-	 * @param args parameters from console.
+	 * @param args
+	 *            parameters from console.
 	 */
 	public static void main(String[] args) {
 		System.out.println(EncryptUtil.MD5("123"));

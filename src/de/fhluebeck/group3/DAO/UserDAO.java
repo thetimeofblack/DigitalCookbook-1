@@ -36,7 +36,7 @@ public final class UserDAO {
 		try {
 			connection = BaseDAO.getConnection();
 			password = EncryptUtil.MD5(password);
-			String preparedSql = "SELECT * FROM user WHERE username = ? AND password = ? AND status = 1";
+			String preparedSql = "SELECT * FROM user WHERE `username` = ? AND `password` = ? AND `status` = 1";
 			pstmt = connection.prepareStatement(preparedSql);
 			Object[] parameters = { username, password };
 			resultSet = BaseDAO.executeQuery(pstmt, parameters);
@@ -90,10 +90,11 @@ public final class UserDAO {
 	/**
 	 * Get User by the input id.
 	 * 
-	 * @param userId id of the user.
+	 * @param userId
+	 *            id of the user.
 	 * 
 	 * @return User object or null.
-	 * */
+	 */
 	public static User getUserById(Integer userId) {
 		User user = null;
 		Connection connection = null;
@@ -102,7 +103,7 @@ public final class UserDAO {
 
 		try {
 			connection = BaseDAO.getConnection();
-			String preparedSql = "SELECT DISTINCT * FROM `user` WHERE `user_id` = ?";
+			String preparedSql = "SELECT DISTINCT * FROM `user` WHERE `user_id` = ? AND `status` = 1";
 			Object[] parameters = { userId };
 			pstmt = connection.prepareStatement(preparedSql);
 			resultSet = BaseDAO.executeQuery(pstmt, parameters);
@@ -139,13 +140,15 @@ public final class UserDAO {
 	public static boolean addUser(User user) {
 		boolean flag = false;
 
+		String passwordString = EncryptUtil.MD5(user.getPassword());
+
 		// If user has already existed.
 		if (user.getUserId() != null) {
 			return false;
 		}
 		try {
 			String preparedSql = "INSERT INTO `user` (`username`, `password`, `status`) VALUES (?, ?, ?)";
-			Object[] parameters = { user.getUsername(), user.getPassword(), user.getStatus() };
+			Object[] parameters = { user.getUsername(), passwordString, user.getStatus() };
 			flag = BaseDAO.executeSql(preparedSql, parameters);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

@@ -2,8 +2,6 @@ package de.fhluebeck.group3.model;
 
 import java.util.List;
 
-import de.fhluebeck.group3.util.EncryptUtil;
-
 /**
  * The User is mapped with User table in DataBase.
  * 
@@ -63,7 +61,7 @@ public final class User {
 	public User(String username, String password) {
 		super();
 		this.username = username;
-		this.password = EncryptUtil.MD5(password);
+		this.password = password;
 		this.status = 1;
 	}
 
@@ -144,7 +142,7 @@ public final class User {
 	 *            password of the user.
 	 */
 	public void setPassword(String password) {
-		this.password = EncryptUtil.MD5(password);
+		this.password = password;
 	}
 
 	/**

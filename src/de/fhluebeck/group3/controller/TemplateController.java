@@ -36,8 +36,8 @@ import javafx.util.Pair;
 
 /**
  * The controller of the login view - Template.fxml. This controller includes
- * basic loading functions of the login as well as welcoming user interface and calls the
- * functions from userDAO to alter the user table.
+ * basic loading functions of the login as well as welcoming user interface and
+ * calls the functions from userDAO to alter the user table.
  * 
  * @author Hua Yichen on 2018.05.30.
  */
@@ -171,8 +171,8 @@ public final class TemplateController implements Initializable {
 	private User showRegisterationDialog() {
 		// Create the custom dialog.
 		Dialog<Pair<String, String>> dialog = new Dialog<>();
-		dialog.setTitle("Registeration Dialog");
-		dialog.setHeaderText("Please fill the following form to finish the registeration procedure");
+		dialog.setTitle("Registration Dialog");
+		dialog.setHeaderText("Please fill the following form to finish the registration procedure");
 
 		// Set the icon (must be included in the project).
 		// dialog.setGraphic(

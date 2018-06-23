@@ -88,7 +88,8 @@ public class Template extends Application {
 	 * The common function for scene change in the root stage. This is quite useful
 	 * and efficient when we want to change the scene.
 	 * 
-	 * @param fxml the name of the interface, like Template.fxml
+	 * @param fxml
+	 *            the name of the interface, like Template.fxml
 	 * 
 	 * @throws Exception
 	 * 

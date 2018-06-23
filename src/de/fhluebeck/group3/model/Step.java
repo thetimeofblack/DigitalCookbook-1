@@ -7,9 +7,9 @@ import javafx.beans.value.ObservableValue;
 /**
  * The Step is mapped with Step table in DB.
  * 
- * This class implements Comparable to give specific rules for making
- * comparison between two steps. Later in the project we just use List.sort() to
- * sort the list.
+ * This class implements Comparable to give specific rules for making comparison
+ * between two steps. Later in the project we just use List.sort() to sort the
+ * list.
  * 
  * @author Yichen.Hua on 2018/05/13.
  */

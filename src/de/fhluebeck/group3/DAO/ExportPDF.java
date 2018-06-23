@@ -176,11 +176,11 @@ public final class ExportPDF {
 	/**
 	 * Add recipes to each page, Note that I refer to the code from seniors.
 	 * 
-	 * @param document 
+	 * @param document
 	 * 
 	 * @param recipe
 	 *            recipe to be exported.
-	 *            
+	 * 
 	 * @throws DocumentException
 	 * 
 	 * @throws IOException

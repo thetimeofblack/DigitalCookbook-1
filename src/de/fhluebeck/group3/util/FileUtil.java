@@ -22,8 +22,8 @@ public final class FileUtil {
 	 * 
 	 * @param destination
 	 *            the path of the destination.
-	 *            
-	 * @throws java.io.IOException           
+	 * 
+	 * @throws java.io.IOException
 	 */
 	public static void copyFile(File file, String destination) throws IOException {
 		InputStream is = null;

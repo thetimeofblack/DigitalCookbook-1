@@ -52,7 +52,8 @@ public final class BriefRecipeInformationController implements Initializable {
 	/**
 	 * Set the basic information of the recipe.
 	 * 
-	 * @param selectedRecipe selected Recipe
+	 * @param selectedRecipe
+	 *            selected Recipe
 	 */
 	public void setSelectedRecipe(Recipe selectedRecipe) throws NullPointerException {
 
