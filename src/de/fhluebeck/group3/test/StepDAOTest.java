@@ -39,7 +39,7 @@ public class StepDAOTest {
 	@Test
 	public void testUpdateBatchSteps() throws Exception {
 		assertNotNull(stepListTest);
-		assertTrue(StepDAO.addBatchSteps(stepListTest));
+		assertTrue(StepDAO.updateBatchSteps(stepListTest));
 
 	}
 
