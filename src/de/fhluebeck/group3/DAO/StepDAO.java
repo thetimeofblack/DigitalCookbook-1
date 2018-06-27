@@ -113,7 +113,6 @@ public final class StepDAO {
 					steps.add(step);
 				}
 			} else {
-				System.out.println("sorry, step not found");
 				return null;
 			}
 

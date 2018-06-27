@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhluebeck.group3.model.Recipe;
-import de.fhluebeck.group3.model.User;
 
 /**
  * RecipeDAO is major responsible for Data Access in Recipe table, functions
@@ -18,19 +17,19 @@ import de.fhluebeck.group3.model.User;
  */
 public final class RecipeDAO {
 
-	/**
-	 * Search for the recipes that owned by specific user.
-	 * 
-	 * @param user:
-	 *            the current user that owns the recipes
-	 * 
-	 * @return recipes: a list of recipes owned by the user.
-	 */
-	public static List<Recipe> getRecipesByUser(User user) {
-		List<Recipe> recipes = new ArrayList<Recipe>();
-
-		return recipes;
-	}
+	// /**
+	// * Search for the recipes that owned by specific user.
+	// *
+	// * @param user:
+	// * the current user that owns the recipes
+	// *
+	// * @return recipes: a list of recipes owned by the user.
+	// */
+	// public static List<Recipe> getRecipesByUser(User user) {
+	// List<Recipe> recipes = new ArrayList<Recipe>();
+	//
+	// return recipes;
+	// }
 
 	/**
 	 * This method is called after a new recipe is inserted into the DB to retrive
@@ -611,57 +610,57 @@ public final class RecipeDAO {
 		return recipes;
 	}
 
-	/**
-	 * Unit test for RecipeDAO.
-	 * 
-	 * @param args:
-	 *            string from console input.
-	 */
-	public static void main(String[] args) {
-
-		// List<Recipe> recipes = getAllRecipes();
-
-		// List<Recipe> recipes = getRecipesByName("su");
-
-		// deleteRecipe(1);
-
-		// List<Recipe> recipeFavs = getFavoritedRecipes(1);
-
-		// List<Integer> list = new ArrayList<>();
-		// list.add(1);
-		// list.add(2);
-		// List<Recipe> recipes = getRecipesByIds(list);
-
-		// List<Recipe> recipes = getRecipesByIngredient("shao");
-
-		// List<Recipe> recipes = getFavRecipeByName("hong", 1);
-
-		Recipe recipe = new Recipe();
-		recipe.setRecipeID(5);
-		System.out.println(recipe.getRecipeID());
-		recipe.setOwnerId(1);
-		recipe.setRecipeName("asdasdartyutyrt");
-		recipe.setDescription("asdasda");
-		recipe.setPreparationTime(67);
-		recipe.setCookingTime(34);
-		recipe.setImagePath("steamedEgg.jpg");
-		recipe.setAvailablePeople(12);
-
-		// System.out.println(RecipeDAO.getRecipeID(recipe));
-
-		// System.out.println(RecipeDAO.addRecipe(recipe));
-		System.out.println(RecipeDAO.updateRecipe(recipe));
-
-		/**
-		 * print basic information of step, you can set, in the database, some step's
-		 * status as 0, to test if they will be printed out.
-		 */
-		// for (Recipe recipe : recipes) {
-		// System.out.println(recipe);
-		// }
-
-		// System.out.println(recipeIDsIntegers);
-
-	}
+	// /**
+	// * Unit test for RecipeDAO.
+	// *
+	// * @param args:
+	// * string from console input.
+	// */
+	// public static void main(String[] args) {
+	//
+	// // List<Recipe> recipes = getAllRecipes();
+	//
+	// // List<Recipe> recipes = getRecipesByName("su");
+	//
+	// // deleteRecipe(1);
+	//
+	// // List<Recipe> recipeFavs = getFavoritedRecipes(1);
+	//
+	// // List<Integer> list = new ArrayList<>();
+	// // list.add(1);
+	// // list.add(2);
+	// // List<Recipe> recipes = getRecipesByIds(list);
+	//
+	// // List<Recipe> recipes = getRecipesByIngredient("shao");
+	//
+	// // List<Recipe> recipes = getFavRecipeByName("hong", 1);
+	//
+	// Recipe recipe = new Recipe();
+	// recipe.setRecipeID(5);
+	// System.out.println(recipe.getRecipeID());
+	// recipe.setOwnerId(1);
+	// recipe.setRecipeName("asdasdartyutyrt");
+	// recipe.setDescription("asdasda");
+	// recipe.setPreparationTime(67);
+	// recipe.setCookingTime(34);
+	// recipe.setImagePath("steamedEgg.jpg");
+	// recipe.setAvailablePeople(12);
+	//
+	// // System.out.println(RecipeDAO.getRecipeID(recipe));
+	//
+	// // System.out.println(RecipeDAO.addRecipe(recipe));
+	// System.out.println(RecipeDAO.updateRecipe(recipe));
+	//
+	// /**
+	// * print basic information of step, you can set, in the database, some step's
+	// * status as 0, to test if they will be printed out.
+	// */
+	// // for (Recipe recipe : recipes) {
+	// // System.out.println(recipe);
+	// // }
+	//
+	// // System.out.println(recipeIDsIntegers);
+	//
+	// }
 
 }
