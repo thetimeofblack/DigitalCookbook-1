@@ -1,17 +1,14 @@
 package de.fhluebeck.group3.test;
 
-import java.security.Policy.Parameters;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import de.fhluebeck.group3.DAO.BaseDAO;
 import de.fhluebeck.group3.DAO.IngredientDAO;
 import de.fhluebeck.group3.model.Ingredient;
 
@@ -23,8 +20,7 @@ import de.fhluebeck.group3.model.Ingredient;
 public class IngredientDAOTest 
 {
 	@BeforeClass
-	// Add 3 ingredients to database for test.
-	public static void setUptest()
+	public void setUptest()
 	{
 	List<Ingredient> testIngredientList = new ArrayList<Ingredient>();
 	Ingredient testIngredient1 = new Ingredient(809, "testIngredient1", (double) 1, 314, "teaspoon", "testStyle");
@@ -37,28 +33,24 @@ public class IngredientDAOTest
 	}
 	
 	@Test
-	//Test the function of searchIngredientByRecipeId()
 	public void testsearchIngredientByRecipeId() throws Exception
 	{
 		assertEquals((int)IngredientDAO.searchIngredientByRecipeId(1).get(0).getIngredientID(), 1);
 	}
 	
 	@Test
-	//Test the function of addBatchIngredients()
 	public void testaddBatchIngredients() throws Exception
 	{
 		assertNotNull(IngredientDAO.searchIngredientByRecipeId(314));
 	}
 	
 	@Test
-	//Test the function of SearchRecipeIdbyIngredientName()
 	public void testSearchRecipeIdbyIngredientName() throws Exception
 	{
 		assertEquals((int)IngredientDAO.searchRecipeIdByIngredientsName("testIngredient1").get(0), (int)314);
 	}
 	
 	@Test
-	//Test the function of updateBatchIngredients()
 	public void testupdateBatchIngredients()
 	{
 		List<Ingredient> updatetestIngredientList = new ArrayList<Ingredient>();
@@ -74,7 +66,6 @@ public class IngredientDAOTest
 	}
 	
 	@Test
-	//Test the function of DeleteIngredientById()
 	public void testDeleteIngredientById()
 	{
 		assertTrue(IngredientDAO.deleteIngredientById(997));
@@ -82,7 +73,6 @@ public class IngredientDAOTest
 	}
 	
 	@Test
-	//Test the function of DeleteBatchIngredients()
 	public void testDeleteBatchIngredients()
 	{
 		List<Ingredient> testDeleteIngredientList = new ArrayList<Ingredient>();
