@@ -820,7 +820,7 @@ public final class AddOrEditRecipeController implements Initializable {
 
 		// when check ImageView, use imagePath.
 		if (this.imagePath == null || this.imagePath.isEmpty()) {
-			new Alert(AlertType.WARNING, "Choose Image for recipe!", ButtonType.OK).showAndWait();
+			new Alert(AlertType.ERROR, "Choose Image for recipe!", ButtonType.OK).showAndWait();
 			return false;
 		}
 
