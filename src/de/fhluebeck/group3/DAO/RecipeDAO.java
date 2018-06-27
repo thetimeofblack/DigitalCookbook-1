@@ -636,8 +636,6 @@ public final class RecipeDAO {
 
 		// List<Recipe> recipes = getFavRecipeByName("hong", 1);
 
-		// addUser(user);
-		// addUser(new User("test5", "456"));
 		Recipe recipe = new Recipe();
 		recipe.setRecipeID(5);
 		System.out.println(recipe.getRecipeID());
