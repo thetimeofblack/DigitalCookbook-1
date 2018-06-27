@@ -29,7 +29,7 @@ public final class UserDAO {
 		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
 
-		if (username.equals("") || password.equals("")) {
+		if (username.trim().equals("") || password.trim().equals("")) {
 			return user;
 		}
 
