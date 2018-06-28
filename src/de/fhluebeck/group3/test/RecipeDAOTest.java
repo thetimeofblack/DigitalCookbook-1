@@ -27,9 +27,9 @@ public class RecipeDAOTest {
 	 * Before testing recipe, we create two recipe objects
 	 */
 	@Before
-	public void setUp() throws Exception{
-		
-		//create new Recipe for insertion
+	public void setUp() throws Exception {
+
+		// create new Recipe for insertion
 		newRecipe1 = new Recipe();
 		newRecipe1.setOwnerId(1);
 		newRecipe1.setRecipeName("testrecipe1");
@@ -39,7 +39,7 @@ public class RecipeDAOTest {
 		newRecipe1.setImagePath("noimage.jpg");
 		newRecipe1.setAvailablePeople(4);
 		newRecipe1.setStatus(1);
-		
+
 		newRecipe2 = new Recipe();
 		newRecipe2.setOwnerId(1);
 		newRecipe2.setRecipeName("testrecipe2");
@@ -49,8 +49,8 @@ public class RecipeDAOTest {
 		newRecipe2.setImagePath("noimage.jpg");
 		newRecipe2.setAvailablePeople(6);
 		newRecipe2.setStatus(1);
-		
-		//Add recipe to Database
+
+		// Add recipe to Database
 		RecipeDAO.addRecipe(newRecipe1);
 		RecipeDAO.addRecipe(newRecipe2);
 	}
@@ -119,7 +119,7 @@ public class RecipeDAOTest {
 	 * Test whether getRecipeID function is valid
 	 */
 	@Test
-	public void testGetRecipeIDFunction() throws Exception{
+	public void testGetRecipeIDFunction() throws Exception {
 		Recipe testRecipe1 = new Recipe();
 		Recipe testRecipe2 = new Recipe();
 		testRecipe1.setRecipeID(7);
@@ -193,9 +193,9 @@ public class RecipeDAOTest {
 	@Test
 	public void testGetRecipesByIdsFunction() throws Exception {
 		List<Integer> recipeIds = new ArrayList<>();
-		int testId1 = 2;
-		int testId2 = 3;
-		int testId3 = 6;
+		// int testId1 = 2;
+		// int testId2 = 3;
+		// int testId3 = 6;
 		assertNotNull(RecipeDAO.getRecipesByIds(recipeIds));
 	}
 

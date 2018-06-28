@@ -635,21 +635,21 @@ public final class RecipeDAO {
 
 		// List<Recipe> recipes = getFavRecipeByName("hong", 1);
 
-//		 Recipe recipe = new Recipe();
-//		 recipe.setRecipeID(5);
-//		 System.out.println(recipe.getRecipeID());
-//		 recipe.setOwnerId(1);
-//		 recipe.setRecipeName("asdasdartyutyrt");
-//		 recipe.setDescription("asdasda");
-//		 recipe.setPreparationTime(67);
-//		 recipe.setCookingTime(34);
-//		 recipe.setImagePath("steamedEgg.jpg");
-//		 recipe.setAvailablePeople(12);
+		// Recipe recipe = new Recipe();
+		// recipe.setRecipeID(5);
+		// System.out.println(recipe.getRecipeID());
+		// recipe.setOwnerId(1);
+		// recipe.setRecipeName("asdasdartyutyrt");
+		// recipe.setDescription("asdasda");
+		// recipe.setPreparationTime(67);
+		// recipe.setCookingTime(34);
+		// recipe.setImagePath("steamedEgg.jpg");
+		// recipe.setAvailablePeople(12);
 
 		// System.out.println(RecipeDAO.getRecipeID(recipe));
 
 		// System.out.println(RecipeDAO.addRecipe(recipe));
-//		 System.out.println(RecipeDAO.updateRecipe(recipe));
+		// System.out.println(RecipeDAO.updateRecipe(recipe));
 
 		/**
 		 * print basic information of step, you can set, in the database, some step's
