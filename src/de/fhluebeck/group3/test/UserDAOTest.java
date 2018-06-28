@@ -49,20 +49,20 @@ public class UserDAOTest {
 		assertTrue(addedUser.getStatus() == 1);
 
 	}
-	
+
 	/**
 	 * Test whether validatePassword function is valid.
 	 */
 	@Test
 	public void testvalidatePasswordFunction() throws Exception {
 
-		//First we input null.
-		assertNull(UserDAO.validatePassword("",""));
-		
-		//We here test admin, whose id is 1.
+		// First we input null.
+		assertNull(UserDAO.validatePassword("", ""));
+
+		// We here test admin, whose id is 1.
 		assertEquals(UserDAO.validatePassword("admin", "123").getUserId(), new Integer(1));
-		
-		//Test getUserById function.
+
+		// Test getUserById function.
 		assertEquals(UserDAO.getUserById(1).getUsername(), "admin");
 
 	}

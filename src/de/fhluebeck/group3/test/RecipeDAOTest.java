@@ -2,24 +2,16 @@ package de.fhluebeck.group3.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.validator.PublicClassValidator;
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.Receiver;
 
 import de.fhluebeck.group3.DAO.RecipeDAO;
 import de.fhluebeck.group3.model.Recipe;
-import junit.framework.Assert;
 
 /**
  * Test Class for RecipeDAO.
@@ -30,7 +22,7 @@ public class RecipeDAOTest {
 
 	private Recipe newRecipe1 = null;
 	private Recipe newRecipe2 = null;
-		
+
 	/**
 	 * Before testing recipe, we create two recipe objects
 	 */
@@ -62,67 +54,67 @@ public class RecipeDAOTest {
 		RecipeDAO.addRecipe(newRecipe1);
 		RecipeDAO.addRecipe(newRecipe2);
 	}
-	
+
 	/**
 	 * Test whether addRecipe function is valid
 	 */
 	@Test
-	public void testAddRecipeFuction() throws Exception{
-		
+	public void testAddRecipeFuction() throws Exception {
+
 		assertNotNull(RecipeDAO.getRecipesByName("testrecipe"));
 		// If it works, this cannot be null
 	}
-	
+
 	/**
-	 * Test whether deleteRecipe function is valid 
+	 * Test whether deleteRecipe function is valid
 	 */
 	@Test
-	public void testDeleteRecipeFunction() throws Exception{
-		
+	public void testDeleteRecipeFunction() throws Exception {
+
 		int testRecipeId = 4;
-		//test whether the function worked
+		// test whether the function worked
 		assertTrue(RecipeDAO.deleteRecipe(testRecipeId));
-		//test the result
+		// test the result
 		List<Integer> testList = new ArrayList<>();
 		testList.add(testRecipeId);
-		//assertNull(RecipeDAO.getRecipesByIds(testList));
+		// assertNull(RecipeDAO.getRecipesByIds(testList));
 		assertEquals(RecipeDAO.getRecipesByIds(testList).size(), 0);
 	}
-	
+
 	/**
 	 * Test whether updateRecipe function is valid
 	 */
 	@Test
-	public void testUpdateRecipeFunction() throws Exception{
-	
+	public void testUpdateRecipeFunction() throws Exception {
+
 		int recipeId = 6;
 		List<Integer> recipeIds = new ArrayList<>();
 		recipeIds.add(recipeId);
 		List<Recipe> testRecipe = RecipeDAO.getRecipesByIds(recipeIds);
-		if(testRecipe != null && testRecipe.size() > 0) {
+		if (testRecipe != null && testRecipe.size() > 0) {
 			newRecipe2 = testRecipe.get(0);
 		}
 		newRecipe2.setCookingTime(800);
 		newRecipe2.setDescription("description changed");
 		assertTrue(RecipeDAO.updateRecipe(newRecipe2));
-		//retrive again.
+		// retrive again.
 		testRecipe = RecipeDAO.getRecipesByIds(recipeIds);
-		if(testRecipe != null && testRecipe.size() > 0) {
+		if (testRecipe != null && testRecipe.size() > 0) {
 			Recipe recipe = testRecipe.get(0);
 			assertEquals(newRecipe2.getCookingTime(), recipe.getCookingTime());
 			assertEquals(newRecipe2.getDescription(), recipe.getDescription());
 		}
-		
+
 	}
-	
+
 	/**
 	 * Test whether getAllRecipes function is valid
 	 */
 	@Test
-	public void testGetAllRecipeFunction() throws Exception{
+	public void testGetAllRecipeFunction() throws Exception {
 		assertNotNull(RecipeDAO.getAllRecipes());
 	}
-	
+
 	/**
 	 * Test whether getRecipeID function is valid
 	 */
@@ -134,81 +126,79 @@ public class RecipeDAOTest {
 		testRecipe2.setRecipeID(8);
 		assertNotNull(RecipeDAO.getRecipeID(testRecipe1));
 		assertNotNull(RecipeDAO.getRecipeID(testRecipe2));
-		
-		
 	}
-	
+
 	/**
 	 * Test addRecipetoFavouriteList function is valid
 	 */
 	@Test
-	public void testAddRecipeToFavouriteListFunction() throws Exception{
+	public void testAddRecipeToFavouriteListFunction() throws Exception {
 		int testId = 7;
 		int testUserId = 1;
 		assertTrue(RecipeDAO.addRecipeToFavoriteList(testId, testUserId));
-		
+
 	}
-	
+
 	/**
 	 * Test removeRecipeFromFavouriteList function is valid
 	 */
 	@Test
-	public void testRemoveRecipeFromFavouriteFunction() throws Exception{
+	public void testRemoveRecipeFromFavouriteFunction() throws Exception {
 		int testId = 9;
 		int testUserId = 1;
 		assertTrue(RecipeDAO.removeRecipeFromFavoriteList(testId, testUserId));
 	}
-	
+
 	/**
 	 * Test getRecipesByName function is valid
 	 */
 	@Test
-	public void testGetRecipesByNameFunction() throws Exception{
+	public void testGetRecipesByNameFunction() throws Exception {
 		String testName = "test";
 		assertNotNull(RecipeDAO.getRecipesByName(testName));
 	}
-	
+
 	/**
 	 * Test getFavRecipesByName function is valid
 	 */
 	@Test
-	public void testGetFavRecipeByNameFunction() throws Exception{
+	public void testGetFavRecipeByNameFunction() throws Exception {
 		String testName = "test";
 		int userId = 1;
 		assertNotNull(RecipeDAO.getFavRecipeByName(testName, userId));
 	}
-	
+
 	/**
 	 * Test getRecipesByIngredient function is valid
 	 */
 	@Test
-	public void testGetRecipesByIngredient() throws Exception{
+	public void testGetRecipesByIngredient() throws Exception {
 		String testIngredient = "pork";
 		assertNotNull(RecipeDAO.getRecipesByIngredient(testIngredient));
 	}
-	
+
 	/**
 	 * Test getFavRecipeByIngredients function is valid
 	 */
 	@Test
-	public void testGetFavRecipeByIngredientsFunction() throws Exception{
-		String testIngredient = "peanut oil";
+	public void testGetFavRecipeByIngredientsFunction() throws Exception {
+		String testIngredient = "sugar";
 		int userId = 1;
 		assertNotNull(RecipeDAO.getFavRecipeByIngredients(testIngredient, userId));
 	}
-	
+
 	/**
 	 * Test getRecipesByIds function is valid
 	 */
 	@Test
-	public void testGetRecipesByIdsFunction() throws Exception{
+	public void testGetRecipesByIdsFunction() throws Exception {
 		List<Integer> recipeIds = new ArrayList<>();
 		int testId1 = 2;
 		int testId2 = 3;
 		int testId3 = 6;
 		assertNotNull(RecipeDAO.getRecipesByIds(recipeIds));
 	}
-	
+
 	/**
 	 * Test getFavouritedRecipes function is valid
 	 */

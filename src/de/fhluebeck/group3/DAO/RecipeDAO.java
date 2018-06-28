@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhluebeck.group3.model.Recipe;
-import de.fhluebeck.group3.model.User;
 
 /**
  * RecipeDAO is major responsible for Data Access in Recipe table, functions
