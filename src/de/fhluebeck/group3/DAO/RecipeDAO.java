@@ -26,11 +26,11 @@ public final class RecipeDAO {
 	 * 
 	 * @return recipes: a list of recipes owned by the user.
 	 */
-	public static List<Recipe> getRecipesByUser(User user) {
-		List<Recipe> recipes = new ArrayList<Recipe>();
-
-		return recipes;
-	}
+	// public static List<Recipe> getRecipesByUser(User user) {
+	// List<Recipe> recipes = new ArrayList<Recipe>();
+	//
+	// return recipes;
+	// }
 
 	/**
 	 * This method is called after a new recipe is inserted into the DB to retrive
@@ -636,21 +636,21 @@ public final class RecipeDAO {
 
 		// List<Recipe> recipes = getFavRecipeByName("hong", 1);
 
-		Recipe recipe = new Recipe();
-		recipe.setRecipeID(5);
-		System.out.println(recipe.getRecipeID());
-		recipe.setOwnerId(1);
-		recipe.setRecipeName("asdasdartyutyrt");
-		recipe.setDescription("asdasda");
-		recipe.setPreparationTime(67);
-		recipe.setCookingTime(34);
-		recipe.setImagePath("steamedEgg.jpg");
-		recipe.setAvailablePeople(12);
+//		 Recipe recipe = new Recipe();
+//		 recipe.setRecipeID(5);
+//		 System.out.println(recipe.getRecipeID());
+//		 recipe.setOwnerId(1);
+//		 recipe.setRecipeName("asdasdartyutyrt");
+//		 recipe.setDescription("asdasda");
+//		 recipe.setPreparationTime(67);
+//		 recipe.setCookingTime(34);
+//		 recipe.setImagePath("steamedEgg.jpg");
+//		 recipe.setAvailablePeople(12);
 
 		// System.out.println(RecipeDAO.getRecipeID(recipe));
 
 		// System.out.println(RecipeDAO.addRecipe(recipe));
-		System.out.println(RecipeDAO.updateRecipe(recipe));
+//		 System.out.println(RecipeDAO.updateRecipe(recipe));
 
 		/**
 		 * print basic information of step, you can set, in the database, some step's
