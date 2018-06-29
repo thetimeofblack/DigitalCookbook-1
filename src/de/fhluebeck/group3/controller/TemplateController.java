@@ -172,7 +172,9 @@ public final class TemplateController implements Initializable {
 		// Create the custom dialog.
 		Dialog<Pair<String, String>> dialog = new Dialog<>();
 		dialog.setTitle("Registration Dialog");
-		dialog.setHeaderText("Please fill the following form to finish the registration procedure");
+		dialog.setHeaderText(
+				"Please fill the following form to finish the registration procedure: We strongly recommend you to use your name "
+						+ "as Username such as 'yichen.Hua'");
 
 		// Set the icon (must be included in the project).
 		// dialog.setGraphic(
