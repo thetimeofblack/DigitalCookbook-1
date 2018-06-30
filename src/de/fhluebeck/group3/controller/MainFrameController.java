@@ -672,14 +672,16 @@ public final class MainFrameController implements Initializable {
 					// Set the picture of the red-heart button.
 					if (isShowFavorite) {
 						likeButtonTriggered = true;
-						setIconImage("src/de/fhluebeck/group3/resources/system/like_redheart.png", addFavoriteButton);
+						setIconImage(MainFrameController.SYSTEM_IMAGE_DEFAULT_PATH + "like_redheart.png", addFavoriteButton);
 					} else {
 						List<Recipe> favRecipes = Template.getCurrentUser().getFavoriteRecipes();
-						setIconImage("src/de/fhluebeck/group3/resources/system/like_out.png", addFavoriteButton);
+						setIconImage(MainFrameController.SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", addFavoriteButton);
 						likeButtonTriggered = false;
-						for (Recipe recipe : favRecipes) {
-							if (recipe.getRecipeID().equals(selectedRecipe.getRecipeID())) {
-								setIconImage("src/de/fhluebeck/group3/resources/system/like_redheart.png",
+						for (int i = 0; i < favRecipes.size() - 1; i += 1) {
+							if (favRecipes.get(i).getRecipeID().equals(selectedRecipe.getRecipeID())) { // If user is
+																										// like the
+																										// recipe.
+								setIconImage(MainFrameController.SYSTEM_IMAGE_DEFAULT_PATH + "like_redheart.png",
 										addFavoriteButton);
 								likeButtonTriggered = true;
 								break;

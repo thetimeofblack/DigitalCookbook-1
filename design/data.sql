@@ -197,10 +197,10 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` VALUES (1,'admin','8106417f482b5b3a30a433f4a31704bf',1),
-(2,'eason','8106417f482b5b3a30a433f4a31704bf',1),
-(3,'jungang','8106417f482b5b3a30a433f4a31704bf',0),
-(4,'jiaxiang','8106417f482b5b3a30a433f4a31704bf',1),
-(5,'kongyu','8106417f482b5b3a30a433f4a31704bf',1);
+(2,'yichen.hua','8106417f482b5b3a30a433f4a31704bf',1),
+(3,'jungang.wang','8106417f482b5b3a30a433f4a31704bf',1),
+(4,'jiaxiang.shan','8106417f482b5b3a30a433f4a31704bf',1),
+(5,'yu.kong','8106417f482b5b3a30a433f4a31704bf',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
