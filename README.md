@@ -1,6 +1,6 @@
 # Digital Cookbook
 
-This is the Digital Cookbook system created by Group3 of Software Engineering II in University of Applied Sciences in Luebeck, Germany, 2018.<br>
+This is the Digital Cook book system created by Group3 of Software Engineering II in University of Applied Sciences in Luebeck, Germany, 2018.<br>
 
 COPYRIGHT © 2018  Group “Are You Hungry” (Hua Yichen, Kong Yu, Wang Jungang, Shan Jiaxiang)  SWE II Java Project at FachHochSchule Lübeck  <br>
 
@@ -8,11 +8,11 @@ Professor & Supervisor: Prof. Mrs. Lenka Hanesová & Mr. Malte Grebe<br>
 
 If you had any questions or constructive suggestions regarding our projects, feel free to write us an e-mail : yichen.hua@stud.fh-luebeck.de<br>
 
-Project is also presented on [Github](https://github.com/easonHua97/DigitalCookbook)<br>
+Project is also presented on [GitHub](https://github.com/easonHua97/DigitalCookbook)<br>
 
 ## Brief Introduction to our System
 ***
-Digital Cookbook is a JavaSE-based system which can be run as a desktop application.
+Digital Cook book is a JavaSE-based system which can be run as a desktop application.
 To use our system, the user must firstly register or login. After login into our system, the user can 
 either create new recipes, edit or delete recipes that is owned by the user, add/remove recipes as favorite
 or export the recipes as PDF file containing basic information of the recipe.<br><br>
@@ -39,32 +39,33 @@ Here are some screen-shot of our system:
 1. Operation System: Windows XP/7/8/10, Linux (e.g. CentOS 7), MacOS.<br><br>
 2. Java Environment(JREs 5.0+): [Java 8.0](http://www.oracle.com/technetwork/cn/java/javase/downloads/jdk8-downloads-2133151-zhs.html) is recommended.<br><br>
 3. Integrated Development Environment Tools: [Eclipse Oxygen](https://www.eclipse.org) or [IntelliJ IDEA](https://www.jetbrains.com/idea/)
-With Git plugins.<br><br>
-4. MySQL Database Server:  [MySQL Server Community 5.7](https://dev.mysql.com/downloads/mysql/5.7.html#downloads) Recommended.
+With GIT plugins.<br><br>
+4. MySQL Database Server:  [MySQL Server Community 5.7 and 8.0](https://dev.mysql.com/downloads/mysql/5.7.html#downloads).
 
 ### Download and run codes Procedure <br>
-1. Fork our project codes from my [Github Repository](https://github.com/easonHua97/DigitalCookbook)<br><br>
-2. After you fork our codes and open them successfully in your IDE, please add two external JARs (mysql-connector-java-5.1.42-bin.jar
+1. Fork our project codes from my [GitHub Repository](https://github.com/easonHua97/DigitalCookbook)<br><br>
+2. After you fork our codes and open them successfully in your IDE, please add two external JARs (mysql-connector-java-5.1.46-bin.jar
  and itextpdf-5.1.1.jar) to your **project structure**.<br><br>
-3. Make sure that you have your Mysql root account with the password "root", Or you have to 
-change database connection code in **de.fhluebeck.group3.DAO.BaseDAO.java**, see as follows:<br><br>
+3. Make sure that you the right MySQL account with the userName "cookbookUser" and password "123" in 
+database connection code in **de.fhluebeck.group3.DAO.BaseDAO.java**, see as follows:<br><br>
 ```Java
 	/**
 	 * Basic attributes for database.
 	 */
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost:3306/cookbook_group3?characterEncoding=utf-8&useSSL=false";
-	private static final String USERNAME = "your username";
-	private static final String PASSWORD = "your password";
+	private static final String USERNAME = "cookbookUser";
+	private static final String PASSWORD = "123";
 ```
 <br><br>
+The userName and password will be created automatically when you execute the SQL file.<br>
 4. Execute the SQL file in the folder **design** called data.sql in your database.<br><br>
-5. The Entrance of our Digital Cookbook is at **de.fhluebeck.group3.entrance.CookbookApp.java**
+5. The Entrance of our Digital Cook book is at **de.fhluebeck.group3.entrance.CookbookApp.java**
 find and run it as Java Application.<br><br>
 6. When you see the correct Welcome Navigator, it means all codes are working well. Enjoy yourself
-in our Digital Cookbook.<br>
+in our Digital Cook book.<br>
 
-## CopyRight Declearation
+## CopyRight Declaration
 ***
 The MIT License (MIT)
 
