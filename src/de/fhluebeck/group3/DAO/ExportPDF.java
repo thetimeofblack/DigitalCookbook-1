@@ -132,7 +132,7 @@ public final class ExportPDF {
 
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("Digital Cookbook Recipe \n").append(recipe.getRecipeName() + "\n");
+		builder.append("Digital Cookbook Download Recipe \n").append(recipe.getRecipeName() + "\n");
 		// .append("By Group3 on SWEII, Luebeck University of Applied Sciences,
 		// Germany");
 
@@ -145,7 +145,10 @@ public final class ExportPDF {
 
 		title.setAlignment(Element.ALIGN_CENTER);
 
-		title = new Paragraph("\n By Group3 on SWEII, Luebeck University of Applied Sciences, Germany", subTitleFont);
+		title = new Paragraph(
+				"\n By Group3 on SWEII, Luebeck University of Applied Sciences, Germany \n Members: Hua Yichen, Wang Jungang"
+						+ "Shan Jiaxiang and Kong Yu",
+				subTitleFont);
 
 		// add title to a cell
 		cell.addElement(title);

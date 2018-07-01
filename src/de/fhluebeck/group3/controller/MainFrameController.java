@@ -672,12 +672,13 @@ public final class MainFrameController implements Initializable {
 					// Set the picture of the red-heart button.
 					if (isShowFavorite) {
 						likeButtonTriggered = true;
-						setIconImage(MainFrameController.SYSTEM_IMAGE_DEFAULT_PATH + "like_redheart.png", addFavoriteButton);
+						setIconImage(MainFrameController.SYSTEM_IMAGE_DEFAULT_PATH + "like_redheart.png",
+								addFavoriteButton);
 					} else {
 						List<Recipe> favRecipes = Template.getCurrentUser().getFavoriteRecipes();
 						setIconImage(MainFrameController.SYSTEM_IMAGE_DEFAULT_PATH + "like_out.png", addFavoriteButton);
 						likeButtonTriggered = false;
-						for (int i = 0; i < favRecipes.size() - 1; i += 1) {
+						for (int i = 0; i < favRecipes.size(); i += 1) {
 							if (favRecipes.get(i).getRecipeID().equals(selectedRecipe.getRecipeID())) { // If user is
 																										// like the
 																										// recipe.
@@ -775,6 +776,7 @@ public final class MainFrameController implements Initializable {
 		User user = null;
 		if ((user = Template.getCurrentUser()) != null) {
 			user.setFavoriteRecipes(RecipeDAO.getFavoritedRecipes(user.getUserId()));
+			System.out.println(user.getFavoriteRecipes().size());
 		}
 	}
 

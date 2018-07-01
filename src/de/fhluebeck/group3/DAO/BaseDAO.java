@@ -17,14 +17,14 @@ public final class BaseDAO {
 	/**
 	 * Basic attributes for database.
 	 * 
-	 * CREATE USER 'user'@'localhost' IDENTIFIED WITH mysql_native_password BY '123';
-     * grant all privileges on cookbook_group3.* to 'user'@'localhost';
+	 * CREATE USER 'user'@'localhost' IDENTIFIED WITH mysql_native_password BY
+	 * '123'; grant all privileges on cookbook_group3.* to 'user'@'localhost';
 	 * select * from mysql.user;
 	 */
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost:3306/cookbook_group3?characterEncoding=utf-8&useSSL=false";
-	private static final String USERNAME = "root";
-	private static final String PASSWORD = "root";
+	private static final String USERNAME = "cookbookUser";
+	private static final String PASSWORD = "123";
 
 	/**
 	 * Load the driver for database connection at the beginning of the system.
