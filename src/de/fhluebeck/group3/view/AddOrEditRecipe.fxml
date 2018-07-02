@@ -73,7 +73,7 @@
 						</VBox>
 						<VBox prefHeight="86.0" prefWidth="196.0">
 							<children>
-								<Label prefHeight="44.0" prefWidth="250.0" text="Preparing Time">
+								<Label prefHeight="44.0" prefWidth="250.0" text="Preparing Time (min)">
 									<font>
 										<Font name="System Bold Italic" size="18.0" />
 									</font>
@@ -87,7 +87,7 @@
 						</VBox>
 						<VBox prefHeight="80.0" prefWidth="210.0">
 							<children>
-								<Label prefHeight="39.0" prefWidth="266.0" text="Cooking Time">
+								<Label prefHeight="39.0" prefWidth="266.0" text="Cooking Time (min)">
 									<font>
 										<Font name="System Bold Italic" size="18.0" />
 									</font>
